@@ -1,0 +1,29 @@
+{
+  "id": "security-governance-001",
+  "templateId": "security-governance",
+  "componentName": "SecurityGovernanceCard",
+  "data": {
+    "title": "安全、合规 & 运维控制",
+    "summary": "**安全与合规能力分析**\n\n产品在安全和合规方面具备企业级能力，通过多项安全认证，支持细粒度的权限控制。\n\n· 安全认证：通过ISO 27001、SOC 2、等保三级认证，支持数据加密和传输加密。\n\n· 权限控制：支持RBAC角色权限管理，支持多租户隔离，支持API访问控制。\n\n· 合规能力：符合GDPR、CCPA等数据保护法规，支持数据本地化部署。\n\n· 运维控制：支持审计日志、操作记录、资源配额管理，支持自动化运维和监控告警。",
+    "icon": "Shield",
+    "security": {
+      "certifications": ["ISO 27001", "SOC 2", "等保三级"],
+      "accessControl": "RBAC、多租户、API控制",
+      "compliance": "GDPR、CCPA、数据本地化",
+      "operations": "审计日志、配额管理、自动运维"
+    },
+    "chartData": [
+      { "label": "安全认证", "status": "成熟", "value": 95 },
+      { "label": "权限控制", "status": "成熟", "value": 90 },
+      { "label": "合规能力", "status": "成熟", "value": 88 },
+      { "label": "运维控制", "status": "发展中", "value": 80 }
+    ],
+    "actionText": "查看安全详细分析"
+  },
+  "metadata": {
+    "category": "product",
+    "tags": ["安全", "合规", "运维"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

@@ -1,0 +1,50 @@
+{
+  "id": "ai-industry-report-v1",
+  "name": "AI产业报告",
+  "category": "industry",
+  "version": 1,
+  "layoutType": "tabs-sticky",
+  "tabs": [
+    {
+      "id": "structure",
+      "label": "结构 & 趋势",
+      "cardIds": [
+        "industry-stack-001",
+        "trend-radar-001",
+        "structural-shift-001",
+        "tech-timeline-001",
+        "industry-pace-001"
+      ]
+    },
+    {
+      "id": "capital",
+      "label": "资金 & 生态",
+      "cardIds": [
+        "capital-flow-001",
+        "capital-ecosystem-001",
+        "player-impact-001",
+        "narrative-capital-001",
+        "supply-chain-health-001",
+        "ecosystem-map-001"
+      ]
+    },
+    {
+      "id": "strategy",
+      "label": "战略 & 人物",
+      "cardIds": [
+        "strategy-window-001",
+        "influencer-001",
+        "scenario-001",
+        "shock-simulation-001",
+        "factor-weighting-001",
+        "insight-compression-001"
+      ]
+    }
+  ],
+  "metadata": {
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-01-01T00:00:00Z",
+    "totalCards": 16
+  }
+}
+

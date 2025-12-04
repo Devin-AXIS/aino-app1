@@ -1,0 +1,39 @@
+{
+  "id": "supply-chain-health-001",
+  "templateId": "supply-chain-health",
+  "componentName": "SupplyChainHealthCard",
+  "data": {
+    "title": "供应链脆弱性",
+    "summary": "虽然本体制造能力成熟，但在核心零部件上仍存在显著断点。'精密减速器'和'端侧算力芯片'被标记为红色高风险区域，高度依赖海外供应链。这构成了行业规模化量产前必须解决的'卡脖子'隐患。",
+    "icon": "Network",
+    "items": [
+      {
+        "name": "精密减速器",
+        "status": "critical",
+        "text": "高度依赖进口"
+      },
+      {
+        "name": "六维力传感器",
+        "status": "warning",
+        "text": "产能爬坡中"
+      },
+      {
+        "name": "空心杯电机",
+        "status": "healthy",
+        "text": "国产替代成熟"
+      },
+      {
+        "name": "端侧算力芯片",
+        "status": "critical",
+        "text": "地缘政治风险"
+      }
+    ],
+    "actionText": "查看供应链深度地图"
+  },
+  "metadata": {
+    "category": "industry",
+    "tags": ["供应链", "风险分析"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

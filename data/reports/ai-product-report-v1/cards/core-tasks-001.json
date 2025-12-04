@@ -1,0 +1,39 @@
+{
+  "id": "core-tasks-001",
+  "templateId": "core-tasks",
+  "componentName": "CoreTasksCard",
+  "data": {
+    "title": "核心任务 & 使用场景",
+    "summary": "**用户核心使用场景**\n\n用户主要通过平台完成三大核心任务：模型训练、模型部署、模型优化。\n\n· 模型训练：用户上传数据，选择模型架构，配置训练参数，启动分布式训练任务。\n\n· 模型部署：将训练好的模型一键部署到生产环境，支持多种推理引擎和硬件加速。\n\n· 模型优化：对已部署模型进行性能优化，包括模型压缩、量化、剪枝等技术。",
+    "icon": "Target",
+    "tasks": [
+      {
+        "name": "模型训练",
+        "frequency": "高频",
+        "complexity": "中等"
+      },
+      {
+        "name": "模型部署",
+        "frequency": "中频",
+        "complexity": "低"
+      },
+      {
+        "name": "模型优化",
+        "frequency": "低频",
+        "complexity": "高"
+      }
+    ],
+    "chartData": [
+      { "label": "模型训练", "value": 90 },
+      { "label": "模型部署", "value": 70 },
+      { "label": "模型优化", "value": 40 }
+    ],
+    "actionText": "查看场景详细分析"
+  },
+  "metadata": {
+    "category": "product",
+    "tags": ["核心任务", "使用场景"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

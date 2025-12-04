@@ -1,0 +1,23 @@
+{
+  "id": "talent-culture-001",
+  "templateId": "talent-culture",
+  "componentName": "TalentCultureCard",
+  "data": {
+    "title": "人才 & 文化画像",
+    "summary": "**核心团队背景与文化风格**\n\n公司核心团队以技术背景为主，CEO和CTO均来自清华，曾在头部互联网公司担任技术负责人，具备丰富的AI基础设施研发经验。\n\n· 研发团队中，60%来自清华、中科院等顶尖院校，30%来自BAT等互联网公司，技术实力较强。\n\n· 公司文化偏向工程派，注重技术深度和产品稳定性，但在产品迭代速度和市场响应方面相对保守。\n\n· 人才流失率较低（年流失率<10%），但招聘难度较高，特别是在算法和系统架构领域，人才竞争激烈。",
+    "icon": "Users",
+    "team": {
+      "background": "技术为主",
+      "education": "清华/中科院60%",
+      "culture": "工程派",
+      "turnover": "<10%"
+    },
+    "actionText": "查看人才详细分析"
+  },
+  "metadata": {
+    "category": "company",
+    "tags": ["人才", "文化"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

@@ -1,0 +1,57 @@
+{
+  "id": "feature-heatmap-001",
+  "templateId": "feature-heatmap",
+  "componentName": "FeatureHeatmapCard",
+  "data": {
+    "title": "功能使用热度 & 模块权重",
+    "summary": "**功能使用情况分析**\n\n平台核心功能使用热度差异明显，模型训练功能使用率最高（90%），模型优化功能使用率最低（30%）。\n\n· 高频功能：模型训练（90%）、模型部署（85%）、数据管理（75%）。\n\n· 中频功能：模型评估（60%）、资源监控（55%）、API调用（50%）。\n\n· 低频功能：模型优化（30%）、高级配置（25%）、协作功能（20%）。",
+    "icon": "Zap",
+    "features": [
+      {
+        "name": "模型训练",
+        "usage": 90,
+        "importance": "核心"
+      },
+      {
+        "name": "模型部署",
+        "usage": 85,
+        "importance": "核心"
+      },
+      {
+        "name": "数据管理",
+        "usage": 75,
+        "importance": "重要"
+      },
+      {
+        "name": "模型评估",
+        "usage": 60,
+        "importance": "重要"
+      },
+      {
+        "name": "资源监控",
+        "usage": 55,
+        "importance": "辅助"
+      },
+      {
+        "name": "模型优化",
+        "usage": 30,
+        "importance": "高级"
+      }
+    ],
+    "chartData": [
+      { "label": "模型训练", "value": 90 },
+      { "label": "模型部署", "value": 85 },
+      { "label": "数据管理", "value": 75 },
+      { "label": "模型评估", "value": 60 },
+      { "label": "资源监控", "value": 55 },
+      { "label": "模型优化", "value": 30 }
+    ],
+    "actionText": "查看功能详细分析"
+  },
+  "metadata": {
+    "category": "product",
+    "tags": ["功能热度", "模块权重"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

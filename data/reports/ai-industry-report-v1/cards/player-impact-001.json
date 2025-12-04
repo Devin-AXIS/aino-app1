@@ -1,0 +1,43 @@
+{
+  "id": "player-impact-001",
+  "templateId": "player-impact",
+  "componentName": "PlayerImpactCard",
+  "data": {
+    "title": "领军企业象限",
+    "summary": "OpenAI 凭借模型能力占据生态顶端，Tesla 依靠数据闭环和制造能力紧随其后。Figure AI 作为后起之秀，通过与 OpenAI 的深度绑定迅速上位。传统机器人巨头 Boston Dynamics 虽然控制技术顶尖，但在通用智能叙事中略显边缘化。",
+    "icon": "Target",
+    "players": [
+      {
+        "name": "OpenAI",
+        "value": 98,
+        "type": "Brain",
+        "color": "bg-success"
+      },
+      {
+        "name": "Tesla",
+        "value": 92,
+        "type": "System",
+        "color": "bg-foreground"
+      },
+      {
+        "name": "Figure",
+        "value": 85,
+        "type": "Integrator",
+        "color": "bg-primary"
+      },
+      {
+        "name": "Boston",
+        "value": 75,
+        "type": "Control",
+        "color": "bg-warning"
+      }
+    ],
+    "actionText": "查看企业竞争力对比"
+  },
+  "metadata": {
+    "category": "industry",
+    "tags": ["企业分析", "竞争力"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

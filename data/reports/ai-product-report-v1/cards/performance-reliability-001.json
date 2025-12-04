@@ -1,0 +1,45 @@
+{
+  "id": "performance-reliability-001",
+  "templateId": "performance-reliability",
+  "componentName": "PerformanceReliabilityCard",
+  "data": {
+    "title": "性能 & 可靠性画像",
+    "summary": "**系统性能与稳定性分析**\n\n产品在性能和可靠性方面表现优秀，系统可用性达到99.9%，平均响应时间<200ms。\n\n· 性能指标：API平均响应时间150ms，训练任务启动时间<30秒，推理延迟<50ms（P99）。\n\n· 可靠性指标：系统可用性99.9%，故障恢复时间<5分钟，数据备份频率每小时。\n\n· 扩展能力：支持水平扩展，单集群可支持10万+并发用户，支持多地域部署。\n\n· 监控能力：实时监控系统性能、资源使用、错误率，支持告警和自动扩容。",
+    "icon": "Gauge",
+    "metrics": [
+      {
+        "name": "可用性",
+        "value": "99.9%",
+        "status": "优秀"
+      },
+      {
+        "name": "响应时间",
+        "value": "150ms",
+        "status": "优秀"
+      },
+      {
+        "name": "故障恢复",
+        "value": "<5分钟",
+        "status": "良好"
+      },
+      {
+        "name": "并发支持",
+        "value": "10万+",
+        "status": "优秀"
+      }
+    ],
+    "chartData": [
+      { "name": "可用性", "value": 99.9 },
+      { "name": "响应时间", "value": 95 },
+      { "name": "故障恢复", "value": 85 },
+      { "name": "并发支持", "value": 90 }
+    ],
+    "actionText": "查看性能详细分析"
+  },
+  "metadata": {
+    "category": "product",
+    "tags": ["性能", "可靠性"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

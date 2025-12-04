@@ -1,0 +1,41 @@
+{
+  "id": "company-snapshot-001",
+  "templateId": "company-snapshot",
+  "componentName": "CompanySnapshotCard",
+  "data": {
+    "title": "企业一屏总览",
+    "summary": "**公司定位与阶段**\n\n这是一家专注于AI大模型训练与推理服务的科技公司，处于B轮融资阶段，总部位于北京。\n\n· 核心业务聚焦于为企业和开发者提供高性能的AI模型训练与推理基础设施。\n\n· 技术栈以自研的分布式训练框架和推理引擎为核心，在模型压缩与加速领域具备领先优势。\n\n· 当前处于从技术验证向规模化商业化的关键转折点，客户主要集中在金融、电商和智能制造领域。",
+    "icon": "Building2",
+    "companyName": "示例AI公司",
+    "tags": ["上市", "北京", "B轮"],
+    "metrics": [
+      {
+        "label": "营收规模",
+        "value": "5-10亿",
+        "icon": "DollarSign"
+      },
+      {
+        "label": "员工数",
+        "value": "500-1000",
+        "icon": "Users"
+      },
+      {
+        "label": "估值",
+        "value": "50-100亿",
+        "icon": "TrendingUp"
+      },
+      {
+        "label": "成立时间",
+        "value": "2018年",
+        "icon": "Calendar"
+      }
+    ],
+    "actionText": "查看完整企业画像"
+  },
+  "metadata": {
+    "category": "company",
+    "tags": ["企业总览", "一屏概览"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

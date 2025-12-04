@@ -1,0 +1,42 @@
+{
+  "id": "user-growth-001",
+  "templateId": "user-growth",
+  "componentName": "UserGrowthCard",
+  "data": {
+    "title": "用户增长 & 渠道结构",
+    "summary": "**用户增长与获客渠道**\n\n产品用户增长主要来自内容营销、技术社区、合作伙伴推荐三大渠道，月增长率约15%。\n\n· 内容营销：技术博客、技术大会、在线课程，贡献40%新用户。\n\n· 技术社区：GitHub、Stack Overflow、技术论坛，贡献35%新用户。\n\n· 合作伙伴：云厂商、AI公司、系统集成商，贡献25%新用户。\n\n· 增长趋势：过去6个月用户数从2000增长到5000，付费转化率从5%提升到12%。",
+    "icon": "TrendingUp",
+    "channels": [
+      {
+        "channel": "内容营销",
+        "percentage": 40,
+        "growth": "+20%"
+      },
+      {
+        "channel": "技术社区",
+        "percentage": 35,
+        "growth": "+15%"
+      },
+      {
+        "channel": "合作伙伴",
+        "percentage": 25,
+        "growth": "+25%"
+      }
+    ],
+    "chartData": [
+      { "label": "1月", "value1": 2000, "value2": 1800 },
+      { "label": "2月", "value1": 2300, "value2": 2000 },
+      { "label": "3月", "value1": 2800, "value2": 2400 },
+      { "label": "4月", "value1": 3200, "value2": 2800 },
+      { "label": "5月", "value1": 3800, "value2": 3200 },
+      { "label": "6月", "value1": 4500, "value2": 3800 }
+    ],
+    "actionText": "查看增长详细分析"
+  },
+  "metadata": {
+    "category": "product",
+    "tags": ["用户增长", "渠道结构"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

@@ -1,0 +1,36 @@
+{
+  "id": "event-related-entities-001",
+  "templateId": "event-related-entities",
+  "componentName": "EventRelatedEntitiesCard",
+  "data": {
+    "networkGraph": true,
+    "entities": [
+      {
+        "type": "企业",
+        "name": "竞品 A",
+        "role": "本次事件的直接发起者，通过低价策略抢占市场"
+      },
+      {
+        "type": "产业",
+        "name": "SaaS 中端市场",
+        "role": "本次事件的核心战场，竞争最激烈的细分市场"
+      },
+      {
+        "type": "产品",
+        "name": "Pro Lite 套餐",
+        "role": "竞品 A 推出的低价套餐，功能精简但价格优势明显"
+      },
+      {
+        "type": "企业",
+        "name": "渠道商 B",
+        "role": "与竞品 A 联合促销的主要渠道合作伙伴"
+      }
+    ]
+  },
+  "metadata": {
+    "category": "event",
+    "tags": ["相关实体", "网络"],
+    "createdAt": "2025-12-04T13:42:00Z"
+  }
+}
+

@@ -1,0 +1,25 @@
+{
+  "id": "ownership-capital-001",
+  "templateId": "ownership-capital",
+  "componentName": "OwnershipCapitalCard",
+  "data": {
+    "title": "股权结构 & 资金来源",
+    "summary": "**股权结构与融资情况**\n\n公司目前处于B轮融资阶段，最新估值约80亿元，主要股东包括：创始团队（35%）、A轮投资机构（25%）、B轮投资机构（30%）、员工期权池（10%）。\n\n· 创始团队持股比例较高，控制权稳定，但后续融资空间有限。\n\n· A轮和B轮投资机构均为知名VC，具备丰富的AI行业投资经验，可为公司提供战略资源和行业资源。\n\n· 员工期权池占比10%，激励力度适中，但相比头部公司（15-20%）仍有提升空间。",
+    "icon": "DollarSign",
+    "ownership": {
+      "founders": 35,
+      "seriesA": 25,
+      "seriesB": 30,
+      "optionPool": 10
+    },
+    "valuation": "80亿元",
+    "round": "B轮",
+    "actionText": "查看股权详细分析"
+  },
+  "metadata": {
+    "category": "company",
+    "tags": ["股权", "资金来源"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

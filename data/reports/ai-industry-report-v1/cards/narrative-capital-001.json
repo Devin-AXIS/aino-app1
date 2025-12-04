@@ -1,0 +1,35 @@
+{
+  "id": "narrative-capital-001",
+  "templateId": "narrative-capital",
+  "componentName": "NarrativeCapitalCard",
+  "data": {
+    "title": "叙事与资本共振",
+    "summary": "我们的相关性分析模型显示，具身智能领域的'社交媒体热度'与'一级市场资金流入'呈现高达 0.85 的强正相关性。每一次技术 Demo 的病毒式传播（如 Figure 的咖啡视频），都在随后 2-4 周内引发了显著的资本动作。",
+    "icon": "FileText",
+    "chartData": [
+      { "label": "Week 1", "value1": 20, "value2": 25 },
+      { "label": "Week 2", "value1": 40, "value2": 35 },
+      { "label": "Week 3", "value1": 35, "value2": 50 },
+      { "label": "Week 4", "value1": 60, "value2": 65 },
+      { "label": "Week 5", "value1": 85, "value2": 80 },
+      { "label": "Week 6", "value1": 80, "value2": 90 }
+    ],
+    "chartConfig": {
+      "line1": {
+        "name": "社交媒体热度",
+        "color": "hsl(var(--chart-secondary))"
+      },
+      "line2": {
+        "name": "资本流入",
+        "color": "hsl(var(--chart-primary))"
+      }
+    },
+    "actionText": "查看舆情分析报告"
+  },
+  "metadata": {
+    "category": "industry",
+    "tags": ["舆情分析", "资本"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

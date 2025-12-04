@@ -1,0 +1,44 @@
+{
+  "id": "factor-weighting-001",
+  "templateId": "factor-weighting",
+  "componentName": "FactorWeightingCard",
+  "data": {
+    "title": "驱动因素权重",
+    "summary": "通过对行业 50+ 变量的回归分析，我们发现'推理成本'目前拥有最高的权重（28%）。这意味着，即使模型能力再强，如果无法将单次任务成本降至人类劳动力之下，商业闭环就无法开启。",
+    "icon": "DollarSign",
+    "factors": [
+      {
+        "name": "推理成本",
+        "value": 28,
+        "color": "hsl(var(--chart-primary))"
+      },
+      {
+        "name": "多模态",
+        "value": 22,
+        "color": "hsl(var(--chart-secondary))"
+      },
+      {
+        "name": "供应链",
+        "value": 18,
+        "color": "hsl(var(--success))"
+      },
+      {
+        "name": "场景",
+        "value": 17,
+        "color": "hsl(var(--warning))"
+      },
+      {
+        "name": "泛化",
+        "value": 15,
+        "color": "hsl(var(--muted-foreground))"
+      }
+    ],
+    "actionText": "查看完整因子模型"
+  },
+  "metadata": {
+    "category": "industry",
+    "tags": ["驱动因素", "权重分析"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

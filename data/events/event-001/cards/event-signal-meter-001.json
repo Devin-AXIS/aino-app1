@@ -1,0 +1,16 @@
+{
+  "id": "event-signal-meter-001",
+  "templateId": "event-signal-meter",
+  "componentName": "EventSignalMeterCard",
+  "data": {
+    "opportunityScore": 68,
+    "riskScore": 45,
+    "timeWindow": "3–6 个月机会窗口"
+  },
+  "metadata": {
+    "category": "event",
+    "tags": ["信号", "机会", "风险"],
+    "createdAt": "2025-12-04T13:42:00Z"
+  }
+}
+

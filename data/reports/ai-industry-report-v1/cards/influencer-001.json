@@ -1,0 +1,34 @@
+{
+  "id": "influencer-001",
+  "templateId": "influencer",
+  "componentName": "InfluencerCard",
+  "data": {
+    "title": "关键人物图谱",
+    "summary": "少数技术与商业领袖正在定义行业的叙事方向。Elon Musk 激进的量产计划正在倒逼供应链成熟；Sam Altman 则通过模型能力设定了智能的天花板。关注这些领袖的公开言论与推文，往往能提前捕捉到行业的战略转向信号。",
+    "icon": "Users",
+    "people": [
+      {
+        "name": "Elon Musk",
+        "title": "Tesla",
+        "role": "量产推动者"
+      },
+      {
+        "name": "Sam Altman",
+        "title": "OpenAI",
+        "role": "模型定义者"
+      },
+      {
+        "name": "Brett Adcock",
+        "title": "Figure",
+        "role": "商业化先锋"
+      }
+    ],
+    "actionText": "查看人物观点库"
+  },
+  "metadata": {
+    "category": "industry",
+    "tags": ["关键人物", "影响力"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

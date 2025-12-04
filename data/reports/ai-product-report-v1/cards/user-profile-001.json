@@ -1,0 +1,33 @@
+{
+  "id": "user-profile-001",
+  "templateId": "user-profile",
+  "componentName": "UserProfileCard",
+  "data": {
+    "title": "用户画像 & 核心人群",
+    "summary": "**目标用户群体分析**\n\n产品主要服务于两类核心用户：企业技术团队（占比60%）和AI创业公司（占比40%）。\n\n· 企业技术团队：中大型企业的AI研发部门，需要快速构建内部AI能力，对稳定性和安全性要求高。\n\n· AI创业公司：专注于AI产品开发的初创团队，对成本敏感，需要灵活的定价和快速迭代能力。\n\n· 用户特征：技术背景强，决策周期短，对产品性能和易用性要求高。",
+    "icon": "Users",
+    "userSegments": [
+      {
+        "segment": "企业技术团队",
+        "percentage": 60,
+        "characteristics": "稳定性、安全性优先"
+      },
+      {
+        "segment": "AI创业公司",
+        "percentage": 40,
+        "characteristics": "成本敏感、快速迭代"
+      }
+    ],
+    "chartData": [
+      { "label": "企业技术团队", "value": 60 },
+      { "label": "AI创业公司", "value": 40 }
+    ],
+    "actionText": "查看用户详细分析"
+  },
+  "metadata": {
+    "category": "product",
+    "tags": ["用户画像", "人群分析"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

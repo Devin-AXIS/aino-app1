@@ -1,0 +1,29 @@
+{
+  "id": "personalization-001",
+  "templateId": "personalization",
+  "componentName": "PersonalizationCard",
+  "data": {
+    "title": "个性化 & 交互风格",
+    "summary": "**产品交互与个性化能力**\n\n产品采用简洁的技术风格，支持一定程度的个性化配置，但整体偏向标准化。\n\n· 交互风格：技术导向，界面简洁，信息密度高，适合专业用户快速操作。\n\n· 个性化能力：支持自定义工作台布局、快捷键配置、主题切换（深色/浅色）。\n\n· 学习曲线：新用户平均需要2-3天熟悉核心功能，高级功能需要1-2周。\n\n· 用户反馈：界面专业但学习成本较高，建议增加新手引导和模板功能。",
+    "icon": "Sparkles",
+    "personalization": {
+      "style": "技术导向、简洁高效",
+      "customization": "工作台布局、快捷键、主题",
+      "learningCurve": "2-3天（核心功能）",
+      "feedback": "专业但学习成本高"
+    },
+    "chartData": [
+      { "name": "交互风格", "value": 85 },
+      { "name": "个性化能力", "value": 60 },
+      { "name": "学习曲线", "value": 70 },
+      { "name": "用户反馈", "value": 75 }
+    ],
+    "actionText": "查看交互详细分析"
+  },
+  "metadata": {
+    "category": "product",
+    "tags": ["个性化", "交互风格"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

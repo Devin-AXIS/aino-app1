@@ -1,0 +1,39 @@
+{
+  "id": "business-model-001",
+  "templateId": "business-model",
+  "componentName": "BusinessModelCard",
+  "data": {
+    "title": "商业模式 & 付费点",
+    "summary": "**商业模式与收费策略**\n\n产品采用SaaS订阅模式，按使用量计费，提供免费版、专业版、企业版三个版本。\n\n· 免费版：面向个人开发者，提供基础训练和推理能力，有使用量限制。\n\n· 专业版：面向小团队，月费2999元，提供更多GPU资源和高级功能。\n\n· 企业版：面向中大型企业，按需定制，提供专属支持和私有化部署选项。\n\n· 付费点：GPU训练时长、推理调用次数、存储空间、高级功能（模型压缩、多机训练等）。",
+    "icon": "DollarSign",
+    "pricing": [
+      {
+        "tier": "免费版",
+        "price": "免费",
+        "target": "个人开发者"
+      },
+      {
+        "tier": "专业版",
+        "price": "2999元/月",
+        "target": "小团队"
+      },
+      {
+        "tier": "企业版",
+        "price": "按需定制",
+        "target": "中大型企业"
+      }
+    ],
+    "chartData": [
+      { "label": "免费版", "value": 30 },
+      { "label": "专业版", "value": 50 },
+      { "label": "企业版", "value": 20 }
+    ],
+    "actionText": "查看商业模式详细分析"
+  },
+  "metadata": {
+    "category": "product",
+    "tags": ["商业模式", "付费策略"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

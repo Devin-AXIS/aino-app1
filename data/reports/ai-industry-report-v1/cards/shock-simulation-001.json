@@ -1,0 +1,34 @@
+{
+  "id": "shock-simulation-001",
+  "templateId": "shock-simulation",
+  "componentName": "ShockSimulationCard",
+  "data": {
+    "title": "风险传导模拟",
+    "summary": "风险模型提示：'中美科技竞争'是当前系统中最大的外生变量，其风险强度极高且具备全链条传染性。一旦发生制裁升级，将迅速波及算力芯片与高端传感器的供应，导致整个行业的量产计划推迟 12-18 个月。",
+    "icon": "Network",
+    "risks": [
+      {
+        "name": "国际竞争",
+        "value": 90,
+        "color": "hsl(var(--destructive))"
+      },
+      {
+        "name": "供应链中断",
+        "value": 65,
+        "color": "hsl(var(--warning))"
+      },
+      {
+        "name": "数据合规",
+        "value": 40,
+        "color": "hsl(var(--info))"
+      }
+    ],
+    "actionText": "查看压力测试报告"
+  },
+  "metadata": {
+    "category": "industry",
+    "tags": ["风险分析", "压力测试"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

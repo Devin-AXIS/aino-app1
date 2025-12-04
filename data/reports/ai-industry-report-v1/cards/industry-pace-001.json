@@ -1,0 +1,39 @@
+{
+  "id": "industry-pace-001",
+  "templateId": "industry-pace",
+  "componentName": "IndustryPaceCard",
+  "data": {
+    "title": "行业节奏指征",
+    "summary": "仪表盘显示，具身智能目前处于典型的'加速临界期'。技术、资本与舆论关注度均处于 85+ 的高位，形成了强大的正向反馈循环。唯一的短板在于'商业化落地'（58分），这预示着行业即将从'讲故事'阶段进入残酷的'交作业'阶段。",
+    "icon": "Gauge",
+    "metrics": [
+      {
+        "name": "技术",
+        "value": 91,
+        "color": "hsl(var(--success))"
+      },
+      {
+        "name": "资本",
+        "value": 85,
+        "color": "hsl(var(--chart-primary))"
+      },
+      {
+        "name": "舆论",
+        "value": 88,
+        "color": "hsl(var(--info))"
+      },
+      {
+        "name": "商业",
+        "value": 58,
+        "color": "hsl(var(--warning))"
+      }
+    ],
+    "actionText": "查看行业周期定位"
+  },
+  "metadata": {
+    "category": "industry",
+    "tags": ["行业节奏", "仪表盘"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

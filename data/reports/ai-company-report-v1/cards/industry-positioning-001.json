@@ -1,0 +1,34 @@
+{
+  "id": "industry-positioning-001",
+  "templateId": "industry-positioning",
+  "componentName": "IndustryPositioningCard",
+  "data": {
+    "title": "行业位置 & 市场份额",
+    "summary": "**市场地位与竞争格局**\n\n公司在AI基础设施服务领域处于腰部位置，在细分赛道（大模型训练服务）中市场份额约8%，排名第3-4位。\n\n· 头部企业（如阿里云、腾讯云）占据60%+市场份额，但主要面向通用云服务，在垂直领域的深度不如公司。\n\n· 公司在金融、电商等垂直领域的模型训练服务具备一定优势，客户满意度较高，但品牌影响力有限。\n\n· 面临来自新兴AI公司的竞争压力，特别是在模型压缩与边缘推理领域，技术优势正在被追赶。",
+    "icon": "Target",
+    "position": "腰部",
+    "marketShare": 8,
+    "ranking": "3-4位",
+    "metrics": [
+      {
+        "name": "市场份额",
+        "value": 8
+      },
+      {
+        "name": "行业排名",
+        "value": "3-4位"
+      },
+      {
+        "name": "客户满意度",
+        "value": 85
+      }
+    ],
+    "actionText": "查看竞争格局分析"
+  },
+  "metadata": {
+    "category": "company",
+    "tags": ["行业位置", "市场份额"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

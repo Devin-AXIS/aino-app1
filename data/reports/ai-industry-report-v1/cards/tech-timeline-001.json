@@ -1,0 +1,43 @@
+{
+  "id": "tech-timeline-001",
+  "templateId": "tech-timeline",
+  "componentName": "TechTimelineCard",
+  "data": {
+    "title": "技术突破时间轴",
+    "summary": "过去 180 天是具身智能的高光时刻，我们见证了从硬件本体的迭代到 RT-X 通用控制模型的质变。接下来的两个季度，核心看点将聚焦于'端侧推理能力'的提升，这将直接决定具身智能能否走出实验室，进入家庭和工厂。",
+    "icon": "Clock",
+    "events": [
+      {
+        "date": "2024.10",
+        "category": "硬件突破",
+        "description": "Figure 02 发布",
+        "highlighted": false
+      },
+      {
+        "date": "2025.01",
+        "category": "控制突破",
+        "description": "OpenAI RT-X 模型",
+        "highlighted": true
+      },
+      {
+        "date": "2025.03",
+        "category": "供应链突破",
+        "description": "国产低成本关节",
+        "highlighted": false
+      },
+      {
+        "date": "2025.Q2",
+        "category": "推理突破",
+        "description": "端侧 7B 模型落地",
+        "highlighted": false
+      }
+    ],
+    "actionText": "查看完整技术路线图"
+  },
+  "metadata": {
+    "category": "industry",
+    "tags": ["技术突破", "时间轴"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

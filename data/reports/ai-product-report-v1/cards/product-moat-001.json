@@ -1,0 +1,46 @@
+{
+  "id": "product-moat-001",
+  "templateId": "product-moat",
+  "componentName": "ProductMoatCard",
+  "data": {
+    "title": "产品护城河 & 可复制性",
+    "summary": "**产品竞争优势分析**\n\n产品在技术、数据、生态三个维度构建护城河，但部分功能存在被复制的风险。\n\n· 技术护城河：自研的分布式训练框架和模型压缩算法，技术壁垒较高，难以复制。\n\n· 数据护城河：积累了大量用户训练数据和模型，形成数据飞轮效应，优势明显。\n\n· 生态护城河：与主流云厂商和AI公司建立合作，生态整合能力强，但依赖度高。\n\n· 可复制性：基础功能易复制，但高级功能（多机训练、模型压缩）技术门槛高，复制难度大。",
+    "icon": "Shield",
+    "moats": [
+      {
+        "dimension": "技术",
+        "strength": "高",
+        "description": "自研框架和算法"
+      },
+      {
+        "dimension": "数据",
+        "strength": "高",
+        "description": "数据飞轮效应"
+      },
+      {
+        "dimension": "生态",
+        "strength": "中",
+        "description": "合作网络但依赖高"
+      },
+      {
+        "dimension": "可复制性",
+        "strength": "低",
+        "description": "高级功能难复制"
+      }
+    ],
+    "chartData": [
+      { "subject": "技术壁垒", "value": 90 },
+      { "subject": "数据优势", "value": 85 },
+      { "subject": "生态整合", "value": 65 },
+      { "subject": "品牌认知", "value": 70 },
+      { "subject": "成本优势", "value": 60 }
+    ],
+    "actionText": "查看护城河详细分析"
+  },
+  "metadata": {
+    "category": "product",
+    "tags": ["护城河", "竞争优势"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

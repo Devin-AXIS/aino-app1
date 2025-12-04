@@ -1,0 +1,35 @@
+{
+  "id": "event-001",
+  "name": "竞品低价套餐事件",
+  "category": "event",
+  "version": 1,
+  "layoutType": "tabs-sticky",
+  "tabs": [
+    {
+      "id": "current",
+      "label": "当前报告",
+      "cardIds": [
+        "event-header-001",
+        "event-core-insight-001",
+        "event-signal-meter-001",
+        "event-multi-impact-001",
+        "event-action-list-001",
+        "event-decision-record-001",
+        "event-timeline-001",
+        "event-history-001",
+        "event-related-entities-001"
+      ]
+    },
+    {
+      "id": "history",
+      "label": "历史报告",
+      "cardIds": []
+    }
+  ],
+  "metadata": {
+    "createdAt": "2025-12-04T13:42:00Z",
+    "updatedAt": "2025-12-04T13:42:00Z",
+    "totalCards": 9
+  }
+}
+

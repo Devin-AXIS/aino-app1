@@ -1,0 +1,29 @@
+{
+  "id": "architecture-overview-001",
+  "templateId": "architecture-overview",
+  "componentName": "ArchitectureOverviewCard",
+  "data": {
+    "title": "技术架构总览",
+    "summary": "**系统架构与技术栈**\n\n产品采用微服务架构，前后端分离，支持容器化部署和云原生扩展。\n\n· 前端：React + TypeScript，采用组件化设计，支持多端适配。\n\n· 后端：Go + Python混合架构，Go负责API网关和业务逻辑，Python负责AI模型训练和推理。\n\n· 基础设施：Kubernetes容器编排，支持多云部署，使用Redis缓存和PostgreSQL数据库。\n\n· 核心服务：训练调度服务、推理服务、数据管理服务、监控服务。",
+    "icon": "Layers",
+    "architecture": {
+      "frontend": "React + TypeScript",
+      "backend": "Go + Python",
+      "infrastructure": "Kubernetes + Redis + PostgreSQL",
+      "services": ["训练调度", "推理服务", "数据管理", "监控服务"]
+    },
+    "chartData": [
+      { "label": "前端", "status": "成熟", "value": 95 },
+      { "label": "后端", "status": "成熟", "value": 90 },
+      { "label": "基础设施", "status": "成熟", "value": 88 },
+      { "label": "核心服务", "status": "发展中", "value": 75 }
+    ],
+    "actionText": "查看架构详细分析"
+  },
+  "metadata": {
+    "category": "product",
+    "tags": ["技术架构", "系统设计"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

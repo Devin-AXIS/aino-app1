@@ -1,0 +1,43 @@
+{
+  "id": "risk-radar-001",
+  "templateId": "risk-radar",
+  "componentName": "RiskRadarCard",
+  "data": {
+    "title": "风险雷达",
+    "summary": "**多维度风险识别与评估**\n\n公司面临的主要风险包括：技术风险（中等）、客户集中度风险（较高）、政策风险（中等）、供应链风险（较高）、财务风险（较低）。\n\n· 技术风险：模型训练技术迭代快，存在技术被超越的风险，但公司在垂直领域具备一定技术壁垒。\n\n· 客户集中度风险：前5大客户贡献60%+营收，客户集中度较高，存在大客户流失风险。\n\n· 供应链风险：对英伟达GPU依赖度较高，存在供应链中断和成本上升风险。",
+    "icon": "AlertTriangle",
+    "radarData": [
+      {
+        "subject": "技术风险",
+        "value": 50
+      },
+      {
+        "subject": "客户集中度",
+        "value": 75
+      },
+      {
+        "subject": "政策风险",
+        "value": 45
+      },
+      {
+        "subject": "供应链",
+        "value": 70
+      },
+      {
+        "subject": "财务风险",
+        "value": 30
+      },
+      {
+        "subject": "竞争风险",
+        "value": 60
+      }
+    ],
+    "actionText": "查看风险详细分析"
+  },
+  "metadata": {
+    "category": "company",
+    "tags": ["风险", "雷达"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

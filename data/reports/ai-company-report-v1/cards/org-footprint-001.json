@@ -1,0 +1,43 @@
+{
+  "id": "org-footprint-001",
+  "templateId": "org-footprint",
+  "componentName": "OrgFootprintCard",
+  "data": {
+    "title": "组织 & 地理布局",
+    "summary": "**组织架构与地理分布**\n\n公司采用总部+研发中心+办事处的组织架构，总部位于北京（400人），研发中心分别位于上海（200人）和深圳（150人），海外在硅谷设有办事处（50人）。\n\n· 北京总部主要负责战略决策、核心产品研发、以及大客户服务，技术团队以算法工程师和系统架构师为主。\n\n· 上海研发中心专注于推理引擎优化和模型压缩技术，深圳研发中心主要负责边缘计算和硬件适配。\n\n· 硅谷办事处主要承担前沿技术跟踪、人才招聘、以及海外市场拓展职能。",
+    "icon": "MapPin",
+    "locations": [
+      {
+        "name": "北京总部",
+        "type": "总部",
+        "people": 400,
+        "function": "战略/核心研发"
+      },
+      {
+        "name": "上海研发",
+        "type": "研发中心",
+        "people": 200,
+        "function": "推理引擎优化"
+      },
+      {
+        "name": "深圳研发",
+        "type": "研发中心",
+        "people": 150,
+        "function": "边缘计算"
+      },
+      {
+        "name": "硅谷",
+        "type": "办事处",
+        "people": 50,
+        "function": "技术跟踪/招聘"
+      }
+    ],
+    "actionText": "查看组织架构详情"
+  },
+  "metadata": {
+    "category": "company",
+    "tags": ["组织", "地理布局"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

@@ -1,0 +1,55 @@
+{
+  "id": "financial-health-001",
+  "templateId": "financial-health",
+  "componentName": "FinancialHealthCard",
+  "data": {
+    "title": "财务健康度 & 现金流",
+    "summary": "**财务状况与现金流分析**\n\n公司目前处于亏损状态，但亏损幅度在收窄，预计12-18个月内实现盈亏平衡。\n\n· 营收规模：2023年营收约6亿元，年增速80%，主要来自模型训练服务。\n\n· 毛利率：整体毛利率约45%，其中模型优化咨询业务毛利率最高（70%+），推理基础设施业务毛利率较低（30%）。\n\n· 现金流：账上现金约8亿元，按当前烧钱速度（月均5000万）可支撑16个月，现金流相对安全。",
+    "icon": "TrendingUp",
+    "healthScore": 75,
+    "financialData": [
+      {
+        "period": "2024/H1",
+        "cashFlow": -59.07,
+        "yoyGrowth": 45.98,
+        "revenue": 30000,
+        "grossMargin": 42
+      },
+      {
+        "period": "2024/9M",
+        "cashFlow": 326.0,
+        "yoyGrowth": 334.12,
+        "revenue": 45000,
+        "grossMargin": 44
+      },
+      {
+        "period": "2024/FY",
+        "cashFlow": 711.1,
+        "yoyGrowth": 520.37,
+        "revenue": 60000,
+        "grossMargin": 45
+      },
+      {
+        "period": "2025/Q1",
+        "cashFlow": -278.9,
+        "yoyGrowth": -844.23,
+        "revenue": 15000,
+        "grossMargin": 43
+      },
+      {
+        "period": "2025/H1",
+        "cashFlow": -557.8,
+        "yoyGrowth": -844.23,
+        "revenue": 32000,
+        "grossMargin": 44
+      }
+    ],
+    "actionText": "查看财务详细分析"
+  },
+  "metadata": {
+    "category": "company",
+    "tags": ["财务", "现金流"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

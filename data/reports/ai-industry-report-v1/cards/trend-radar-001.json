@@ -1,0 +1,25 @@
+{
+  "id": "trend-radar-001",
+  "templateId": "trend-radar",
+  "componentName": "TrendRadarCard",
+  "data": {
+    "title": "核心趋势雷达",
+    "summary": "当前行业最强的上升趋势集中在'多模态融合'与'大模型控制'，这标志着具身智能正从'预编程'时代迈向'自主学习'时代。与此同时，为了适应商业化落地，'本地推理'能力的权重正在显著提升，边缘计算芯片将迎来爆发。",
+    "icon": "TrendingUp",
+    "chartData": [
+      { "subject": "多模态融合", "value": 95 },
+      { "subject": "本地推理", "value": 88 },
+      { "subject": "大模型控制", "value": 92 },
+      { "subject": "云端协同", "value": 65 },
+      { "subject": "成本下降", "value": 75 },
+      { "subject": "泛化能力", "value": 80 }
+    ],
+    "actionText": "查看趋势演进预测"
+  },
+  "metadata": {
+    "category": "industry",
+    "tags": ["趋势分析", "雷达图"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

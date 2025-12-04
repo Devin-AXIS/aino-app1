@@ -1,0 +1,48 @@
+{
+  "id": "ai-company-report-v1",
+  "name": "AI企业分析",
+  "category": "company",
+  "version": 1,
+  "layoutType": "tabs-sticky",
+  "tabs": [
+    {
+      "id": "business",
+      "label": "业务 & 基础",
+      "cardIds": [
+        "business-mix-001",
+        "product-tech-map-001",
+        "customer-use-case-001",
+        "org-footprint-001"
+      ]
+    },
+    {
+      "id": "competitiveness",
+      "label": "竞争力 & 生态",
+      "cardIds": [
+        "industry-positioning-001",
+        "moat-map-001",
+        "peer-comparison-001",
+        "ecosystem-embedding-001",
+        "talent-culture-001"
+      ]
+    },
+    {
+      "id": "capital",
+      "label": "资本 & 未来",
+      "cardIds": [
+        "financial-health-001",
+        "ownership-capital-001",
+        "risk-radar-001",
+        "strategic-moves-001",
+        "future-growth-001",
+        "ai-executive-insight-001"
+      ]
+    }
+  ],
+  "metadata": {
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-01-01T00:00:00Z",
+    "totalCards": 15
+  }
+}
+

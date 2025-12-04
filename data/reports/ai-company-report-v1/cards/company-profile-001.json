@@ -1,0 +1,35 @@
+{
+  "id": "company-profile-001",
+  "templateId": "company-profile",
+  "componentName": "CompanyProfileCard",
+  "data": {
+    "title": "公司基础档案",
+    "summary": "**核心信息与规模指标**\n\n公司成立于2018年，专注于AI大模型基础设施服务，目前处于B轮融资阶段。\n\n· 总部位于北京，在上海、深圳设有研发中心，海外在硅谷设有办事处。\n\n· 员工规模约800人，其中研发人员占比超过60%，技术团队背景以清华、中科院为主。\n\n· 主要客户包括3家头部金融机构、5家大型电商平台，以及10+家智能制造企业。",
+    "icon": "FileText",
+    "metrics": [
+      {
+        "name": "成立时间",
+        "value": "2018年"
+      },
+      {
+        "name": "员工总数",
+        "value": "800人"
+      },
+      {
+        "name": "研发占比",
+        "value": "60%"
+      },
+      {
+        "name": "客户数量",
+        "value": "18家"
+      }
+    ],
+    "actionText": "查看完整档案"
+  },
+  "metadata": {
+    "category": "company",
+    "tags": ["基础信息", "档案"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

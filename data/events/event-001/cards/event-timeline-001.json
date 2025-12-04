@@ -1,0 +1,42 @@
+{
+  "id": "event-timeline-001",
+  "templateId": "event-timeline",
+  "componentName": "EventTimelineCard",
+  "data": {
+    "timeline": [
+      {
+        "time": "2025-12-03 10:00",
+        "type": "产品发布",
+        "fact": "竞品 A 发布 Pro Lite 套餐",
+        "meaning": "定价比标准套餐低 30%，功能精简但核心功能保留"
+      },
+      {
+        "time": "2025-12-03 14:30",
+        "type": "渠道合作",
+        "fact": "宣布与 3 家主要渠道商联合促销",
+        "meaning": "预计覆盖 60% 的中端市场渠道"
+      },
+      {
+        "time": "2025-12-04 08:00",
+        "type": "市场反应",
+        "fact": "社交媒体讨论量激增 2.3 倍",
+        "meaning": "中端客户对低价套餐关注度显著提升"
+      },
+      {
+        "time": "2025-12-04 13:42",
+        "type": "AI 分析",
+        "fact": "系统检测到潜在客户流失风险",
+        "meaning": "预计 3 个月内中端市场份额下降 5-8%"
+      }
+    ],
+    "sparkline": {
+      "label": "本事件后 24h，讨论量约为过去 7 天日均的 2.3 倍"
+    }
+  },
+  "metadata": {
+    "category": "event",
+    "tags": ["时间线", "脉络"],
+    "createdAt": "2025-12-04T13:42:00Z"
+  }
+}
+

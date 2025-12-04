@@ -1,0 +1,43 @@
+{
+  "id": "capital-ecosystem-001",
+  "templateId": "capital-ecosystem",
+  "componentName": "CapitalEcosystemCard",
+  "data": {
+    "title": "资金生态",
+    "summary": "**真实场景 · 付费雷达**\n\n具身智能现在真实落地，主要集中在「仓储物流」和「制造工厂」。\n\n· 持续真金白银付费的，还是大电商、3PL 仓储和中大型制造企业。\n\n· 园区 / 商业空间多处在试点与展示阶段，预算更偏品牌与形象。\n\n· 家庭 / 个人场景仍以 Demo 与试验为主，离规模化付费还有距离。",
+    "icon": "DollarSign",
+    "radarData": [
+      {
+        "subject": "仓储物流",
+        "value": 90
+      },
+      {
+        "subject": "制造工厂",
+        "value": 85
+      },
+      {
+        "subject": "大电商/3PL",
+        "value": 88
+      },
+      {
+        "subject": "中大型制造",
+        "value": 82
+      },
+      {
+        "subject": "园区/商业空间",
+        "value": 45
+      },
+      {
+        "subject": "家庭/个人",
+        "value": 20
+      }
+    ],
+    "actionText": "查看完整资金生态分析"
+  },
+  "metadata": {
+    "category": "capital",
+    "tags": ["资金生态", "付费雷达", "商业化"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

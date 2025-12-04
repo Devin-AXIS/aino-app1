@@ -1,0 +1,41 @@
+{
+  "id": "capability-engine-001",
+  "templateId": "capability-engine",
+  "componentName": "CapabilityEngineCard",
+  "data": {
+    "title": "能力引擎 & 算法逻辑",
+    "summary": "**核心AI能力分析**\n\n产品核心能力包括分布式训练引擎、模型压缩引擎、推理加速引擎三大模块。\n\n· 分布式训练引擎：支持数据并行、模型并行、流水线并行，可扩展到1000+ GPU。\n\n· 模型压缩引擎：支持量化、剪枝、知识蒸馏，可将模型压缩至原大小的1/10。\n\n· 推理加速引擎：支持TensorRT、ONNX Runtime，推理延迟降低50%+。\n\n· 算法优势：自研的梯度同步算法，训练效率较开源框架提升30%。",
+    "icon": "Zap",
+    "engines": [
+      {
+        "name": "分布式训练",
+        "capability": "1000+ GPU扩展",
+        "performance": "效率提升30%"
+      },
+      {
+        "name": "模型压缩",
+        "capability": "压缩至1/10",
+        "performance": "精度损失<2%"
+      },
+      {
+        "name": "推理加速",
+        "capability": "延迟降低50%+",
+        "performance": "吞吐提升3倍"
+      }
+    ],
+    "chartData": [
+      { "subject": "分布式训练", "value": 95 },
+      { "subject": "模型压缩", "value": 88 },
+      { "subject": "推理加速", "value": 92 },
+      { "subject": "算法优化", "value": 85 },
+      { "subject": "资源调度", "value": 80 }
+    ],
+    "actionText": "查看能力详细分析"
+  },
+  "metadata": {
+    "category": "product",
+    "tags": ["能力引擎", "算法逻辑"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

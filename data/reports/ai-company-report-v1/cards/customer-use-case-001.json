@@ -1,0 +1,39 @@
+{
+  "id": "customer-use-case-001",
+  "templateId": "customer-use-case",
+  "componentName": "CustomerUseCaseCard",
+  "data": {
+    "title": "客户 & 使用场景分布",
+    "summary": "**客户画像与落地场景**\n\n公司主要服务B2B客户，其中金融机构占比40%，电商平台占比30%，智能制造企业占比20%，其他行业占比10%。\n\n· 金融机构主要用于智能客服、风控模型训练、量化交易策略优化等场景，单客户年合同金额在500万-2000万区间。\n\n· 电商平台主要用于推荐系统优化、商品图像识别、供应链预测等场景，场景成熟度较高。\n\n· 智能制造企业主要用于质量检测、预测性维护、生产优化等场景，目前多处于试点阶段。",
+    "icon": "Users",
+    "customerTypes": [
+      {
+        "type": "金融机构",
+        "percentage": 40,
+        "maturity": "高"
+      },
+      {
+        "type": "电商平台",
+        "percentage": 30,
+        "maturity": "高"
+      },
+      {
+        "type": "智能制造",
+        "percentage": 20,
+        "maturity": "中"
+      },
+      {
+        "type": "其他",
+        "percentage": 10,
+        "maturity": "低"
+      }
+    ],
+    "actionText": "查看客户详细分析"
+  },
+  "metadata": {
+    "category": "company",
+    "tags": ["客户", "使用场景"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

@@ -1,0 +1,35 @@
+{
+  "id": "retention-engagement-001",
+  "templateId": "retention-engagement",
+  "componentName": "RetentionEngagementCard",
+  "data": {
+    "title": "留存、粘性 & 习惯养成",
+    "summary": "**用户留存与活跃度分析**\n\n产品用户留存表现优秀，30日留存率达到75%，用户平均每周使用3-4次。\n\n· 留存指标：次日留存60%，7日留存70%，30日留存75%，90日留存65%。\n\n· 使用频率：活跃用户平均每周使用3-4次，每次使用时长约1-2小时。\n\n· 习惯养成：新用户首次成功训练模型后，留存率提升至85%，形成使用习惯。\n\n· 粘性因素：核心功能易用性、训练任务稳定性、社区支持是主要粘性因素。",
+    "icon": "Target",
+    "retention": {
+      "day1": 60,
+      "day7": 70,
+      "day30": 75,
+      "day90": 65
+    },
+    "engagement": {
+      "frequency": "3-4次/周",
+      "duration": "1-2小时/次",
+      "habitFormation": "首次成功训练后留存85%"
+    },
+    "chartData": [
+      { "label": "第1天", "value1": 60, "value2": 55 },
+      { "label": "第7天", "value1": 70, "value2": 65 },
+      { "label": "第30天", "value1": 75, "value2": 70 },
+      { "label": "第60天", "value1": 70, "value2": 68 },
+      { "label": "第90天", "value1": 65, "value2": 62 }
+    ],
+    "actionText": "查看留存详细分析"
+  },
+  "metadata": {
+    "category": "product",
+    "tags": ["留存", "粘性", "习惯"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

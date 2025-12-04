@@ -1,0 +1,49 @@
+{
+  "id": "ai-product-report-v1",
+  "name": "AI产品分析",
+  "category": "product",
+  "version": 1,
+  "layoutType": "tabs-sticky",
+  "tabs": [
+    {
+      "id": "user-experience",
+      "label": "用户 & 体验",
+      "cardIds": [
+        "user-profile-001",
+        "core-tasks-001",
+        "experience-journey-001",
+        "feature-heatmap-001",
+        "personalization-001"
+      ]
+    },
+    {
+      "id": "technology",
+      "label": "技术 & 能力",
+      "cardIds": [
+        "architecture-overview-001",
+        "capability-engine-001",
+        "data-integration-001",
+        "performance-reliability-001",
+        "security-governance-001"
+      ]
+    },
+    {
+      "id": "business-growth",
+      "label": "商业 & 增长",
+      "cardIds": [
+        "business-model-001",
+        "user-growth-001",
+        "retention-engagement-001",
+        "product-moat-001",
+        "roadmap-risks-001",
+        "ai-product-insight-001"
+      ]
+    }
+  ],
+  "metadata": {
+    "createdAt": "2024-01-01T00:00:00Z",
+    "updatedAt": "2024-01-01T00:00:00Z",
+    "totalCards": 16
+  }
+}
+

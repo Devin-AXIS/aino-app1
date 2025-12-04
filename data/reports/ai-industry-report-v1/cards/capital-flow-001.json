@@ -1,0 +1,23 @@
+{
+  "id": "capital-flow-001",
+  "templateId": "capital-flow",
+  "componentName": "CapitalFlowCard",
+  "data": {
+    "title": "资金流向追踪",
+    "summary": "过去 12 个月的融资数据显示，资金正在从传统的'硬件本体'与'零部件'制造，大规模倾斜向'具身智能模型'研发。超过 55% 的一级市场资金流向了模型层，这表明资本市场已达成共识：软件定义的通用大脑才是行业最大的护城河。",
+    "icon": "Sparkles",
+    "chartData": [
+      { "label": "硬件本体", "value": 20 },
+      { "label": "零部件", "value": 15 },
+      { "label": "具身模型", "value": 55 },
+      { "label": "垂直应用", "value": 10 }
+    ],
+    "actionText": "查看融资事件列表"
+  },
+  "metadata": {
+    "category": "industry",
+    "tags": ["资金流向", "融资"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

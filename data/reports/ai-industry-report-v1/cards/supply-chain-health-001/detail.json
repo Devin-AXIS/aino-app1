@@ -1,0 +1,86 @@
+{
+  "tabs": [
+    {
+      "id": "analysis",
+      "label": "深度分析",
+      "content": [
+        {
+          "type": "markdown",
+          "content": "# 供应链脆弱性深度分析\n\n虽然本体制造能力成熟，但在核心零部件上仍存在显著断点。'精密减速器'和'端侧算力芯片'被标记为红色高风险区域，高度依赖海外供应链。这构成了行业规模化量产前必须解决的'卡脖子'隐患。\n\n## 核心问题\n\n1. **精密减速器**：目前90%以上依赖日本、德国进口，国内替代率不足10%\n2. **端侧算力芯片**：受地缘政治影响，高端芯片获取受限\n3. **六维力传感器**：国产化进程加速，但产能仍在爬坡期\n4. **空心杯电机**：国产替代相对成熟，但高端产品仍有差距"
+        },
+        {
+          "type": "chart",
+          "component": "StatusGridChart",
+          "props": {
+            "data": [
+              {
+                "name": "精密减速器",
+                "status": "critical",
+                "text": "高度依赖进口"
+              },
+              {
+                "name": "六维力传感器",
+                "status": "warning",
+                "text": "产能爬坡中"
+              },
+              {
+                "name": "空心杯电机",
+                "status": "success",
+                "text": "国产替代成熟"
+              },
+              {
+                "name": "端侧算力芯片",
+                "status": "critical",
+                "text": "地缘政治风险"
+              }
+            ]
+          },
+          "title": "供应链风险状态",
+          "subtitle": "各核心零部件的风险等级评估"
+        },
+        {
+          "type": "markdown",
+          "content": "## 影响分析\n\n供应链脆弱性直接影响行业的规模化量产能力。特别是在关键零部件上，一旦出现断供，将导致整个产业链停滞。"
+        }
+      ]
+    },
+    {
+      "id": "companies",
+      "label": "相关企业",
+      "content": [
+        {
+          "type": "list",
+          "listType": "companies",
+          "title": "核心供应商",
+          "data": [
+            {
+              "name": "哈默纳科",
+              "value": 95,
+              "type": "减速器",
+              "color": "bg-primary"
+            },
+            {
+              "name": "纳博特斯克",
+              "value": 88,
+              "type": "减速器",
+              "color": "bg-primary"
+            },
+            {
+              "name": "ATI",
+              "value": 82,
+              "type": "传感器",
+              "color": "bg-success"
+            },
+            {
+              "name": "Maxon",
+              "value": 75,
+              "type": "电机",
+              "color": "bg-warning"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+

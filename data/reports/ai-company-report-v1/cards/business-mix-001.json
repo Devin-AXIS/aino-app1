@@ -1,0 +1,37 @@
+{
+  "id": "business-mix-001",
+  "templateId": "business-mix",
+  "componentName": "BusinessMixCard",
+  "data": {
+    "title": "业务结构 & 收入构成",
+    "summary": "**收入来源与业务线分析**\n\n公司收入主要来自三大业务线：模型训练服务（45%）、推理基础设施（35%）、模型优化咨询（20%）。\n\n· 模型训练服务是核心业务，年增速超过80%，主要服务于大模型研发企业。\n\n· 推理基础设施业务增长稳定，年增速约40%，客户粘性高但竞争激烈。\n\n· 模型优化咨询业务占比虽小，但毛利率最高（70%+），是未来重点拓展方向。",
+    "icon": "PieChart",
+    "businessLines": [
+      {
+        "name": "模型训练",
+        "percentage": 45,
+        "growth": 80,
+        "isCore": true
+      },
+      {
+        "name": "推理基础设施",
+        "percentage": 35,
+        "growth": 40,
+        "isCore": true
+      },
+      {
+        "name": "模型优化咨询",
+        "percentage": 20,
+        "growth": 60,
+        "isCore": false
+      }
+    ],
+    "actionText": "查看业务详细分析"
+  },
+  "metadata": {
+    "category": "company",
+    "tags": ["业务结构", "收入构成"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

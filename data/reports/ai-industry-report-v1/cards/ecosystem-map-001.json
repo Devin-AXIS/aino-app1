@@ -1,0 +1,17 @@
+{
+  "id": "ecosystem-map-001",
+  "templateId": "ecosystem-map",
+  "componentName": "EcosystemMapCard",
+  "data": {
+    "title": "生态网络拓扑",
+    "summary": "行业正在形成'一核多星'的生态格局：以通用大模型厂商（如 OpenAI）为核心，外围环绕着专业的机器人本体制造商、场景解决方案商和零部件供应商。模型能力的边界，正在定义整个生态的协作接口标准。",
+    "icon": "GitBranch",
+    "actionText": "查看全景生态图谱"
+  },
+  "metadata": {
+    "category": "industry",
+    "tags": ["生态网络", "拓扑"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

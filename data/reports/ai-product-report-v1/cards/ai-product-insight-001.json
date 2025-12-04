@@ -1,0 +1,35 @@
+{
+  "id": "ai-product-insight-001",
+  "templateId": "ai-product-insight",
+  "componentName": "AIProductInsightCard",
+  "data": {
+    "title": "AI 产品总评卡",
+    "summary": "**AI核心洞察压缩**\n\n**1. 产品定位**：面向企业开发者的AI训练与推理平台，技术门槛低但功能强大，适合快速构建AI能力。\n\n**2. 核心优势**：自研分布式训练框架性能领先，模型压缩技术成熟，系统稳定性和可靠性高。\n\n**3. 主要挑战**：学习曲线较陡，高级功能使用率低，面临大厂竞争压力。\n\n**4. 适合视角**：适合作为**技术选型对象**（性能+稳定性），**学习对象**（技术架构），**投资标的**（增长潜力+技术壁垒）。",
+    "icon": "Sparkles",
+    "insights": [
+      {
+        "title": "产品定位",
+        "content": "企业级AI训练平台，技术门槛低但功能强大"
+      },
+      {
+        "title": "核心优势",
+        "content": "自研框架性能领先，系统稳定性高"
+      },
+      {
+        "title": "主要挑战",
+        "content": "学习曲线陡，面临大厂竞争"
+      },
+      {
+        "title": "适合视角",
+        "content": "技术选型/学习对象/投资标的"
+      }
+    ],
+    "actionText": "查看完整洞察报告"
+  },
+  "metadata": {
+    "category": "product",
+    "tags": ["AI洞察", "总评"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

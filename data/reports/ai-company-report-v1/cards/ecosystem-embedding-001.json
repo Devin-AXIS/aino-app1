@@ -1,0 +1,23 @@
+{
+  "id": "ecosystem-embedding-001",
+  "templateId": "ecosystem-embedding",
+  "componentName": "EcosystemEmbeddingCard",
+  "data": {
+    "title": "生态嵌入度 & 合作网络",
+    "summary": "**在产业链中的位置与合作伙伴**\n\n公司在AI基础设施生态中处于平台位，上游依赖GPU厂商（英伟达、AMD）和云基础设施，下游服务企业和开发者，横向与数据标注公司、模型服务商有合作关系。\n\n· 上游依赖：GPU采购成本占运营成本的40%，对英伟达依赖度较高，存在供应链风险。\n\n· 下游服务：主要服务金融、电商、制造等垂直行业客户，客户粘性较高但拓展速度有限。\n\n· 横向合作：与3家头部数据标注公司建立战略合作，与2家模型服务商有技术合作，但缺乏与云厂商的深度绑定。",
+    "icon": "Network",
+    "ecosystem": {
+      "upstream": ["GPU厂商", "云基础设施"],
+      "downstream": ["金融客户", "电商客户", "制造客户"],
+      "horizontal": ["数据标注公司", "模型服务商"]
+    },
+    "position": "平台位",
+    "actionText": "查看生态网络详情"
+  },
+  "metadata": {
+    "category": "company",
+    "tags": ["生态", "合作网络"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

@@ -1,0 +1,140 @@
+{
+  "tabs": [
+    {
+      "id": "analysis",
+      "label": "竞争分析",
+      "content": [
+        {
+          "type": "markdown",
+          "content": "# 领军企业象限分析\n\n在具身智能领域，企业竞争格局呈现明显的分层特征。头部企业如OpenAI、Tesla在技术创新和资本实力上占据绝对优势，而新兴企业如Figure、Boston Dynamics则在细分领域展现出强劲竞争力。"
+        },
+        {
+          "type": "chart",
+          "component": "HorizontalBarChart",
+          "props": {
+            "data": [
+              { "label": "OpenAI", "value": 98 },
+              { "label": "Tesla", "value": 92 },
+              { "label": "Figure", "value": 85 },
+              { "label": "Boston Dynamics", "value": 75 }
+            ]
+          },
+          "title": "企业影响力排名",
+          "subtitle": "基于技术创新、资本实力、市场影响力的综合评估"
+        },
+        {
+          "type": "markdown",
+          "content": "## 竞争格局\n\n### 第一梯队：技术+资本双驱动\n\n- **OpenAI**：在AI大模型领域的技术领先优势明显\n- **Tesla**：具备完整的产业链整合能力\n\n### 第二梯队：细分领域突破\n\n- **Figure**：在人形机器人商业化方面进展迅速\n- **Boston Dynamics**：在运动控制技术上积累深厚"
+        }
+      ]
+    },
+    {
+      "id": "companies",
+      "label": "企业列表",
+      "content": [
+        {
+          "type": "list",
+          "listType": "companies",
+          "title": "核心企业列表",
+          "data": [
+            {
+              "name": "OpenAI",
+              "value": 98,
+              "type": "Brain",
+              "color": "bg-success"
+            },
+            {
+              "name": "Tesla",
+              "value": 92,
+              "type": "System",
+              "color": "bg-foreground"
+            },
+            {
+              "name": "Figure",
+              "value": 85,
+              "type": "Integrator",
+              "color": "bg-primary"
+            },
+            {
+              "name": "Boston Dynamics",
+              "value": 75,
+              "type": "Control",
+              "color": "bg-warning"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "data",
+      "label": "数据表格",
+      "content": [
+        {
+          "type": "markdown",
+          "content": "# 企业数据对比\n\n以下是主要企业的详细数据对比（表格支持横向滚动）：\n\n| 企业名称 | 技术评分 | 资本实力 | 市场影响力 | 综合得分 | 备注 | 状态 |\n|---------|---------|---------|-----------|---------|------|------|\n| OpenAI | 98 | 95 | 97 | 96.7 | 技术领先 | 优秀 |\n| Tesla | 92 | 99 | 90 | 93.7 | 产业链整合 | 优秀 |\n| Figure | 85 | 80 | 88 | 84.3 | 商业化进展 | 良好 |\n| Boston Dynamics | 88 | 70 | 75 | 77.7 | 运动控制 | 良好 |\n| Google DeepMind | 95 | 98 | 92 | 95.0 | AI 研究 | 优秀 |\n| Microsoft | 90 | 96 | 94 | 93.3 | 云服务 | 优秀 |\n\n## 数据说明\n\n- **技术评分**：基于核心算法、硬件创新、专利数量等\n- **资本实力**：融资规模、市值、研发投入等\n- **市场影响力**：品牌认知度、市场份额、用户规模等"
+        },
+        {
+          "type": "chart",
+          "component": "RadarChart",
+          "props": {
+            "data": [
+              { "label": "技术", "value": 98 },
+              { "label": "资本", "value": 95 },
+              { "label": "市场", "value": 97 },
+              { "label": "团队", "value": 96 },
+              { "label": "产品", "value": 94 }
+            ],
+            "title": "OpenAI 综合能力雷达图"
+          }
+        }
+      ]
+    },
+    {
+      "id": "html-css",
+      "label": "HTML/CSS 测试",
+      "content": [
+        {
+          "type": "markdown",
+          "content": "# 高级 HTML/CSS 内容表达测试\n\n## 1. 系统架构图（SVG 绘制）\n\n<svg width=\"100%\" height=\"300\" viewBox=\"0 0 800 300\" style=\"margin: 16px 0; background: #f9fafb; border-radius: 12px; padding: 20px;\">\n  <!-- 数据层 -->\n  <rect x=\"50\" y=\"200\" width=\"120\" height=\"60\" rx=\"8\" fill=\"#667eea\" opacity=\"0.9\"/>\n  <text x=\"110\" y=\"235\" text-anchor=\"middle\" fill=\"white\" font-weight=\"600\" font-size=\"14\">数据层</text>\n  \n  <!-- 处理层 -->\n  <rect x=\"250\" y=\"120\" width=\"120\" height=\"60\" rx=\"8\" fill=\"#f093fb\" opacity=\"0.9\"/>\n  <text x=\"310\" y=\"155\" text-anchor=\"middle\" fill=\"white\" font-weight=\"600\" font-size=\"14\">处理层</text>\n  \n  <!-- 应用层 -->\n  <rect x=\"450\" y=\"40\" width=\"120\" height=\"60\" rx=\"8\" fill=\"#4facfe\" opacity=\"0.9\"/>\n  <text x=\"510\" y=\"75\" text-anchor=\"middle\" fill=\"white\" font-weight=\"600\" font-size=\"14\">应用层</text>\n  \n  <!-- 用户界面 -->\n  <rect x=\"650\" y=\"40\" width=\"120\" height=\"60\" rx=\"8\" fill=\"#43e97b\" opacity=\"0.9\"/>\n  <text x=\"710\" y=\"75\" text-anchor=\"middle\" fill=\"white\" font-weight=\"600\" font-size=\"14\">用户界面</text>\n  \n  <!-- 连接线 -->\n  <line x1=\"170\" y1=\"230\" x2=\"250\" y2=\"150\" stroke=\"#9ca3af\" stroke-width=\"2\" marker-end=\"url(#arrowhead)\"/>\n  <line x1=\"370\" y1=\"150\" x2=\"450\" y2=\"70\" stroke=\"#9ca3af\" stroke-width=\"2\" marker-end=\"url(#arrowhead)\"/>\n  <line x1=\"570\" y1=\"70\" x2=\"650\" y2=\"70\" stroke=\"#9ca3af\" stroke-width=\"2\" marker-end=\"url(#arrowhead)\"/>\n  \n  <!-- 箭头标记 -->\n  <defs>\n    <marker id=\"arrowhead\" markerWidth=\"10\" markerHeight=\"10\" refX=\"9\" refY=\"3\" orient=\"auto\">\n      <polygon points=\"0 0, 10 3, 0 6\" fill=\"#9ca3af\"/>\n    </marker>\n  </defs>\n  \n  <!-- 标签 -->\n  <text x=\"110\" y=\"280\" text-anchor=\"middle\" fill=\"#6b7280\" font-size=\"12\">数据存储</text>\n  <text x=\"310\" y=\"100\" text-anchor=\"middle\" fill=\"#6b7280\" font-size=\"12\">业务逻辑</text>\n  <text x=\"510\" y=\"20\" text-anchor=\"middle\" fill=\"#6b7280\" font-size=\"12\">API 服务</text>\n  <text x=\"710\" y=\"20\" text-anchor=\"middle\" fill=\"#6b7280\" font-size=\"12\">前端展示</text>\n</svg>\n\n<p style=\"color: #6b7280; font-size: 12px; margin: 8px 0;\">使用 SVG 绘制的系统架构图，展示数据流向和层次结构</p>\n\n## 2. 数据流程图（HTML + CSS）\n\n<div style=\"position: relative; margin: 24px 0; padding: 20px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%); border-radius: 12px;\">\n  <div style=\"display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;\">\n    <div style=\"flex: 1; min-width: 120px; text-align: center; padding: 16px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\n      <div style=\"width: 40px; height: 40px; margin: 0 auto 8px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;\">1</div>\n      <p style=\"margin: 0; font-weight: 600; color: #1f2937;\">数据采集</p>\n      <p style=\"margin: 4px 0 0 0; font-size: 12px; color: #6b7280;\">收集原始数据</p>\n    </div>\n    \n    <div style=\"flex: 0 0 24px; text-align: center; color: #9ca3af; font-size: 20px;\">→</div>\n    \n    <div style=\"flex: 1; min-width: 120px; text-align: center; padding: 16px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\n      <div style=\"width: 40px; height: 40px; margin: 0 auto 8px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;\">2</div>\n      <p style=\"margin: 0; font-weight: 600; color: #1f2937;\">数据处理</p>\n      <p style=\"margin: 4px 0 0 0; font-size: 12px; color: #6b7280;\">清洗和转换</p>\n    </div>\n    \n    <div style=\"flex: 0 0 24px; text-align: center; color: #9ca3af; font-size: 20px;\">→</div>\n    \n    <div style=\"flex: 1; min-width: 120px; text-align: center; padding: 16px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\n      <div style=\"width: 40px; height: 40px; margin: 0 auto 8px; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;\">3</div>\n      <p style=\"margin: 0; font-weight: 600; color: #1f2937;\">数据分析</p>\n      <p style=\"margin: 4px 0 0 0; font-size: 12px; color: #6b7280;\">提取洞察</p>\n    </div>\n    \n    <div style=\"flex: 0 0 24px; text-align: center; color: #9ca3af; font-size: 20px;\">→</div>\n    \n    <div style=\"flex: 1; min-width: 120px; text-align: center; padding: 16px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);\">\n      <div style=\"width: 40px; height: 40px; margin: 0 auto 8px; background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 600;\">4</div>\n      <p style=\"margin: 0; font-weight: 600; color: #1f2937;\">结果展示</p>\n      <p style=\"margin: 4px 0 0 0; font-size: 12px; color: #6b7280;\">可视化呈现</p>\n    </div>\n  </div>\n</div>\n\n## 3. 动画效果展示\n\n### 加载动画\n\n<div style=\"display: flex; gap: 16px; margin: 24px 0; flex-wrap: wrap;\">\n  <div style=\"flex: 1; min-width: 120px; text-align: center; padding: 20px; background: #f9fafb; border-radius: 12px;\">\n    <div style=\"width: 40px; height: 40px; margin: 0 auto 12px; border: 4px solid #e5e7eb; border-top-color: #667eea; border-radius: 50%; animation: spin 1s linear infinite;\"></div>\n    <p style=\"margin: 0; font-weight: 600; color: #1f2937;\">旋转加载</p>\n    <p style=\"margin: 4px 0 0 0; font-size: 12px; color: #6b7280;\">spin animation</p>\n  </div>\n  \n  <div style=\"flex: 1; min-width: 120px; text-align: center; padding: 20px; background: #f9fafb; border-radius: 12px;\">\n    <div style=\"display: flex; gap: 4px; justify-content: center; margin-bottom: 12px;\">\n      <div style=\"width: 8px; height: 24px; background: #667eea; border-radius: 4px; animation: bounce 1.4s ease-in-out infinite;\"></div>\n      <div style=\"width: 8px; height: 24px; background: #f093fb; border-radius: 4px; animation: bounce 1.4s ease-in-out 0.2s infinite;\"></div>\n      <div style=\"width: 8px; height: 24px; background: #4facfe; border-radius: 4px; animation: bounce 1.4s ease-in-out 0.4s infinite;\"></div>\n    </div>\n    <p style=\"margin: 0; font-weight: 600; color: #1f2937;\">弹跳加载</p>\n    <p style=\"margin: 4px 0 0 0; font-size: 12px; color: #6b7280;\">bounce animation</p>\n  </div>\n  \n  <div style=\"flex: 1; min-width: 120px; text-align: center; padding: 20px; background: #f9fafb; border-radius: 12px;\">\n    <div style=\"width: 40px; height: 40px; margin: 0 auto 12px; position: relative;\">\n      <div style=\"position: absolute; width: 100%; height: 100%; border: 3px solid transparent; border-top-color: #667eea; border-right-color: #f093fb; border-radius: 50%; animation: spin 1s linear infinite;\"></div>\n      <div style=\"position: absolute; width: 60%; height: 60%; top: 20%; left: 20%; border: 3px solid transparent; border-bottom-color: #4facfe; border-left-color: #43e97b; border-radius: 50%; animation: spin 0.8s linear infinite reverse;\"></div>\n    </div>\n    <p style=\"margin: 0; font-weight: 600; color: #1f2937;\">双环旋转</p>\n    <p style=\"margin: 4px 0 0 0; font-size: 12px; color: #6b7280;\">dual ring</p>\n  </div>\n</div>\n\n<style>\n  @keyframes spin {\n    from { transform: rotate(0deg); }\n    to { transform: rotate(360deg); }\n  }\n  @keyframes bounce {\n    0%, 80%, 100% { transform: scaleY(0.4); }\n    40% { transform: scaleY(1); }\n  }\n</style>\n\n### 进度动画\n\n<div style=\"margin: 24px 0; padding: 20px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%); border-radius: 12px;\">\n  <h3 style=\"margin: 0 0 16px 0; color: #1f2937;\">技术能力评估</h3>\n  \n  <div style=\"margin-bottom: 16px;\">\n    <div style=\"display: flex; justify-content: space-between; margin-bottom: 8px;\">\n      <span style=\"font-weight: 600; color: #1f2937;\">AI 算法</span>\n      <span style=\"color: #6b7280; font-size: 14px;\">95%</span>\n    </div>\n    <div style=\"background: #e5e7eb; height: 10px; border-radius: 5px; overflow: hidden; position: relative;\">\n      <div style=\"background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); height: 100%; width: 95%; transition: width 1s ease-out; position: relative; overflow: hidden;\">\n        <div style=\"position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); animation: shimmer 2s infinite;\"></div>\n      </div>\n    </div>\n  </div>\n  \n  <div style=\"margin-bottom: 16px;\">\n    <div style=\"display: flex; justify-content: space-between; margin-bottom: 8px;\">\n      <span style=\"font-weight: 600; color: #1f2937;\">硬件集成</span>\n      <span style=\"color: #6b7280; font-size: 14px;\">88%</span>\n    </div>\n    <div style=\"background: #e5e7eb; height: 10px; border-radius: 5px; overflow: hidden; position: relative;\">\n      <div style=\"background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%); height: 100%; width: 88%; transition: width 1s ease-out 0.2s; position: relative; overflow: hidden;\">\n        <div style=\"position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); animation: shimmer 2s infinite 0.2s;\"></div>\n      </div>\n    </div>\n  </div>\n  \n  <div>\n    <div style=\"display: flex; justify-content: space-between; margin-bottom: 8px;\">\n      <span style=\"font-weight: 600; color: #1f2937;\">系统优化</span>\n      <span style=\"color: #6b7280; font-size: 14px;\">92%</span>\n    </div>\n    <div style=\"background: #e5e7eb; height: 10px; border-radius: 5px; overflow: hidden; position: relative;\">\n      <div style=\"background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%); height: 100%; width: 92%; transition: width 1s ease-out 0.4s; position: relative; overflow: hidden;\">\n        <div style=\"position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent); animation: shimmer 2s infinite 0.4s;\"></div>\n      </div>\n    </div>\n  </div>\n</div>\n\n<style>\n  @keyframes shimmer {\n    0% { left: -100%; }\n    100% { left: 100%; }\n  }\n</style>\n\n## 4. 时间线可视化\n\n<div style=\"position: relative; margin: 24px 0; padding: 20px 0;\">\n  <div style=\"position: absolute; left: 20px; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, #667eea 0%, #f093fb 50%, #4facfe 100%);\"></div>\n  \n  <div style=\"position: relative; padding-left: 50px; margin-bottom: 24px;\">\n    <div style=\"position: absolute; left: 12px; top: 4px; width: 16px; height: 16px; background: #667eea; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 0 2px #667eea;\"></div>\n    <h4 style=\"margin: 0 0 4px 0; color: #1f2937; font-weight: 600;\">2024 Q1</h4>\n    <p style=\"margin: 0; color: #6b7280; font-size: 14px;\">核心技术突破，完成感知模块开发</p>\n  </div>\n  \n  <div style=\"position: relative; padding-left: 50px; margin-bottom: 24px;\">\n    <div style=\"position: absolute; left: 12px; top: 4px; width: 16px; height: 16px; background: #f093fb; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 0 2px #f093fb;\"></div>\n    <h4 style=\"margin: 0 0 4px 0; color: #1f2937; font-weight: 600;\">2024 Q2</h4>\n    <p style=\"margin: 0; color: #6b7280; font-size: 14px;\">决策引擎优化，性能提升 40%</p>\n  </div>\n  \n  <div style=\"position: relative; padding-left: 50px; margin-bottom: 24px;\">\n    <div style=\"position: absolute; left: 12px; top: 4px; width: 16px; height: 16px; background: #4facfe; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 0 2px #4facfe;\"></div>\n    <h4 style=\"margin: 0 0 4px 0; color: #1f2937; font-weight: 600;\">2024 Q3</h4>\n    <p style=\"margin: 0; color: #6b7280; font-size: 14px;\">商业化落地，获得首轮融资</p>\n  </div>\n  \n  <div style=\"position: relative; padding-left: 50px;\">\n    <div style=\"position: absolute; left: 12px; top: 4px; width: 16px; height: 16px; background: #43e97b; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 0 2px #43e97b;\"></div>\n    <h4 style=\"margin: 0 0 4px 0; color: #1f2937; font-weight: 600;\">2024 Q4</h4>\n    <p style=\"margin: 0; color: #6b7280; font-size: 14px;\">市场拓展，用户规模突破 10 万</p>\n  </div>\n</div>\n\n## 2. 复杂布局系统\n\n### Grid 网格布局\n\n<div style=\"display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0;\">\n  <div style=\"background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 16px; border-radius: 8px; color: white;\">\n    <p style=\"margin: 0; font-weight: 600;\">Grid 1</p>\n  </div>\n  <div style=\"background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 16px; border-radius: 8px; color: white;\">\n    <p style=\"margin: 0; font-weight: 600;\">Grid 2</p>\n  </div>\n  <div style=\"background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 16px; border-radius: 8px; color: white;\">\n    <p style=\"margin: 0; font-weight: 600;\">Grid 3</p>\n  </div>\n  <div style=\"background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); padding: 16px; border-radius: 8px; color: white; grid-column: span 2;\">\n    <p style=\"margin: 0; font-weight: 600;\">Grid 4 (跨2列)</p>\n  </div>\n  <div style=\"background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); padding: 16px; border-radius: 8px; color: white;\">\n    <p style=\"margin: 0; font-weight: 600;\">Grid 5</p>\n  </div>\n</div>\n\n### Flex 高级布局\n\n<div style=\"display: flex; flex-wrap: wrap; gap: 12px; margin: 16px 0;\">\n  <div style=\"flex: 1 1 200px; background: #dbeafe; padding: 16px; border-radius: 8px; min-width: 150px;\">\n    <p style=\"margin: 0; font-weight: 600;\">Flex Item 1</p>\n    <p style=\"margin: 4px 0 0 0; font-size: 12px; color: #6b7280;\">最小宽度 150px</p>\n  </div>\n  <div style=\"flex: 2 1 200px; background: #fce7f3; padding: 16px; border-radius: 8px; min-width: 150px;\">\n    <p style=\"margin: 0; font-weight: 600;\">Flex Item 2 (2倍宽度)</p>\n    <p style=\"margin: 4px 0 0 0; font-size: 12px; color: #6b7280;\">flex: 2 1 200px</p>\n  </div>\n  <div style=\"flex: 1 1 200px; background: #d1fae5; padding: 16px; border-radius: 8px; min-width: 150px;\">\n    <p style=\"margin: 0; font-weight: 600;\">Flex Item 3</p>\n    <p style=\"margin: 4px 0 0 0; font-size: 12px; color: #6b7280;\">自动换行</p>\n  </div>\n</div>\n\n## 3. 高级视觉效果\n\n### 多层阴影和光晕\n\n<div style=\"background: white; padding: 24px; border-radius: 16px; margin: 16px 0; box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.05);\">\n  <h3 style=\"margin: 0 0 8px 0; color: #1f2937;\">多层阴影卡片</h3>\n  <p style=\"margin: 0; color: #6b7280;\">使用多层 box-shadow 创造深度感</p>\n</div>\n\n<div style=\"background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%); padding: 24px; border-radius: 16px; margin: 16px 0; border: 1px solid rgba(102, 126, 234, 0.2); backdrop-filter: blur(10px);\">\n  <h3 style=\"margin: 0 0 8px 0; color: #1f2937;\">毛玻璃效果</h3>\n  <p style=\"margin: 0; color: #6b7280;\">使用 backdrop-filter 实现的毛玻璃效果</p>\n</div>\n\n### 3D 变换效果\n\n<div style=\"display: flex; gap: 16px; margin: 16px 0; perspective: 1000px;\">\n  <div style=\"flex: 1; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 12px; color: white; transform: rotateY(-5deg); transition: transform 0.3s ease;\">\n    <h4 style=\"margin: 0 0 8px 0;\">3D 旋转 1</h4>\n    <p style=\"margin: 0; font-size: 12px; opacity: 0.9;\">rotateY(-5deg)</p>\n  </div>\n  <div style=\"flex: 1; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 20px; border-radius: 12px; color: white; transform: rotateY(5deg); transition: transform 0.3s ease;\">\n    <h4 style=\"margin: 0 0 8px 0;\">3D 旋转 2</h4>\n    <p style=\"margin: 0; font-size: 12px; opacity: 0.9;\">rotateY(5deg)</p>\n  </div>\n</div>\n\n## 4. 交互式元素\n\n### 进度条和状态指示\n\n<div style=\"margin: 16px 0;\">\n  <div style=\"display: flex; justify-content: space-between; margin-bottom: 8px;\">\n    <span style=\"font-weight: 600; color: #1f2937;\">技术评分</span>\n    <span style=\"color: #6b7280; font-size: 14px;\">98%</span>\n  </div>\n  <div style=\"background: #e5e7eb; height: 8px; border-radius: 4px; overflow: hidden;\">\n    <div style=\"background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); height: 100%; width: 98%; transition: width 0.3s ease;\"></div>\n  </div>\n</div>\n\n<div style=\"margin: 16px 0;\">\n  <div style=\"display: flex; justify-content: space-between; margin-bottom: 8px;\">\n    <span style=\"font-weight: 600; color: #1f2937;\">资本实力</span>\n    <span style=\"color: #6b7280; font-size: 14px;\">95%</span>\n  </div>\n  <div style=\"background: #e5e7eb; height: 8px; border-radius: 4px; overflow: hidden;\">\n    <div style=\"background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%); height: 100%; width: 95%; transition: width 0.3s ease;\"></div>\n  </div>\n</div>\n\n### 徽章和标签\n\n<div style=\"display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0;\">\n  <span style=\"background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;\">技术领先</span>\n  <span style=\"background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;\">资本雄厚</span>\n  <span style=\"background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;\">市场主导</span>\n  <span style=\"background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: white; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;\">创新驱动</span>\n</div>\n\n## 5. 高级 HTML 元素\n\n### Details/Summary 折叠面板\n\n<details style=\"background: #f9fafb; padding: 16px; border-radius: 8px; margin: 16px 0; border: 1px solid #e5e7eb;\">\n  <summary style=\"font-weight: 600; color: #1f2937; cursor: pointer; user-select: none;\">点击展开详细信息</summary>\n  <div style=\"margin-top: 12px; padding-top: 12px; border-top: 1px solid #e5e7eb;\">\n    <p style=\"margin: 0; color: #6b7280;\">这是使用 HTML5 &lt;details&gt; 和 &lt;summary&gt; 标签实现的折叠面板。点击标题可以展开或收起内容。</p>\n  </div>\n</details>\n\n### 引用和强调\n\n<blockquote style=\"margin: 16px 0; padding: 16px 20px; background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%); border-left: 4px solid #667eea; border-radius: 0 8px 8px 0;\">\n  <p style=\"margin: 0 0 8px 0; font-style: italic; color: #1f2937;\">\"在具身智能领域，技术创新和资本实力是决定企业竞争力的关键因素。\"</p>\n  <p style=\"margin: 0; font-size: 12px; color: #6b7280;\">— 行业分析报告</p>\n</blockquote>\n\n## 6. 响应式设计测试\n\n<div style=\"display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin: 16px 0;\">\n  <div style=\"background: #dbeafe; padding: 16px; border-radius: 8px; text-align: center;\">\n    <p style=\"margin: 0; font-weight: 600;\">响应式 1</p>\n  </div>\n  <div style=\"background: #fce7f3; padding: 16px; border-radius: 8px; text-align: center;\">\n    <p style=\"margin: 0; font-weight: 600;\">响应式 2</p>\n  </div>\n  <div style=\"background: #d1fae5; padding: 16px; border-radius: 8px; text-align: center;\">\n    <p style=\"margin: 0; font-weight: 600;\">响应式 3</p>\n  </div>\n  <div style=\"background: #fef3c7; padding: 16px; border-radius: 8px; text-align: center;\">\n    <p style=\"margin: 0; font-weight: 600;\">响应式 4</p>\n  </div>\n</div>\n\n<p style=\"color: #6b7280; font-size: 12px; margin: 8px 0;\">使用 <code>grid-template-columns: repeat(auto-fit, minmax(150px, 1fr))</code> 实现自适应网格布局</p>"
+        }
+      ]
+    },
+    {
+      "id": "code",
+      "label": "代码示例",
+      "content": [
+        {
+          "type": "markdown",
+          "content": "# 技术实现示例\n\n以下是具身智能系统的核心代码实现：\n\n## 感知模块\n\n```python\nclass PerceptionModule:\n    def __init__(self, sensor_config):\n        self.sensors = self._init_sensors(sensor_config)\n        self.processor = SensorProcessor()\n    \n    def process_frame(self, frame):\n        # 多模态感知处理\n        visual_data = self.processor.extract_features(frame)\n        return visual_data\n```\n\n## 决策模块\n\n```typescript\ninterface DecisionEngine {\n  processContext(context: SensorContext): Action;\n  updatePolicy(reward: number): void;\n}\n\nclass RLDecisionEngine implements DecisionEngine {\n  private model: NeuralNetwork;\n  \n  processContext(context: SensorContext): Action {\n    const state = this.encodeState(context);\n    return this.model.predict(state);\n  }\n}\n```\n\n> **注意**：以上代码仅为示例，实际实现需要根据具体场景调整。"
+        }
+      ]
+    },
+    {
+      "id": "media",
+      "label": "媒体内容",
+      "content": [
+        {
+          "type": "markdown",
+          "content": "# 产品演示\n\n以下是具身智能产品的实际应用场景："
+        },
+        {
+          "type": "image",
+          "src": "https://via.placeholder.com/800x400?text=Product+Demonstration",
+          "alt": "产品演示图",
+          "caption": "Figure 人形机器人在实际工作场景中的应用"
+        },
+        {
+          "type": "markdown",
+          "content": "## 视频演示\n\n观看完整的产品演示视频："
+        },
+        {
+          "type": "video",
+          "src": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+          "poster": "https://via.placeholder.com/800x450?text=Video+Poster",
+          "caption": "具身智能系统完整演示视频"
+        }
+      ]
+    }
+  ]
+}
+

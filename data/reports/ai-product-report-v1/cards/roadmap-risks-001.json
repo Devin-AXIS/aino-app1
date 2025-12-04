@@ -1,0 +1,50 @@
+{
+  "id": "roadmap-risks-001",
+  "templateId": "roadmap-risks",
+  "componentName": "RoadmapRisksCard",
+  "data": {
+    "title": "路线图 & 风险点",
+    "summary": "**产品发展规划与风险识别**\n\n产品未来6个月将重点发展多模态训练、边缘推理、AutoML三大方向，同时面临技术、竞争、合规等风险。\n\n· 短期路线图（3个月）：优化训练性能，支持更多模型架构，增强监控能力。\n\n· 中期路线图（6个月）：推出多模态训练能力，支持边缘设备推理，上线AutoML功能。\n\n· 主要风险：技术风险（新功能开发难度大）、竞争风险（大厂推出类似产品）、合规风险（数据安全法规变化）。\n\n· 应对策略：加快技术迭代，强化差异化优势，提前布局合规能力。",
+    "icon": "Clock",
+    "roadmap": [
+      {
+        "timeline": "3个月",
+        "focus": "性能优化、模型支持、监控增强"
+      },
+      {
+        "timeline": "6个月",
+        "focus": "多模态训练、边缘推理、AutoML"
+      }
+    ],
+    "risks": [
+      {
+        "type": "技术风险",
+        "level": "中",
+        "description": "新功能开发难度大"
+      },
+      {
+        "type": "竞争风险",
+        "level": "高",
+        "description": "大厂推出类似产品"
+      },
+      {
+        "type": "合规风险",
+        "level": "中",
+        "description": "数据安全法规变化"
+      }
+    ],
+    "chartData": [
+      { "label": "技术风险", "value": 60 },
+      { "label": "竞争风险", "value": 80 },
+      { "label": "合规风险", "value": 55 },
+      { "label": "市场风险", "value": 45 }
+    ],
+    "actionText": "查看路线图详细分析"
+  },
+  "metadata": {
+    "category": "product",
+    "tags": ["路线图", "风险分析"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

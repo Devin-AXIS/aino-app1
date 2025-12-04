@@ -1,0 +1,44 @@
+{
+  "id": "industry-stack-001",
+  "templateId": "industry-stack",
+  "componentName": "IndustryStackCard",
+  "data": {
+    "title": "产业结构分层",
+    "summary": "具身智能的价值链呈现出典型的'倒金字塔'结构：底层硬件趋于标准化，价值正在快速向中间的模型层与决策层迁移。多模态大模型（VLA）正成为连接物理世界与数字大脑的核心枢纽，掌握模型定义权的企业将主导未来的生态分配。",
+    "icon": "Layers",
+    "levels": [
+      {
+        "name": "应用层 (App)",
+        "description": "仓储 / 家庭 / 制造",
+        "color": "bg-primary/10 text-primary"
+      },
+      {
+        "name": "执行层 (Action)",
+        "description": "具身 Agent / 调度",
+        "color": "bg-info/10 text-info"
+      },
+      {
+        "name": "决策层 (Brain)",
+        "description": "规划 / 记忆 / 策略",
+        "color": "bg-success/10 text-success"
+      },
+      {
+        "name": "模型层 (Model)",
+        "description": "多模态大模型 (VLA)",
+        "color": "bg-warning/10 text-warning"
+      },
+      {
+        "name": "硬件层 (Body)",
+        "description": "本体 / 传感器 / 芯片",
+        "color": "bg-muted/30 text-muted-foreground"
+      }
+    ],
+    "actionText": "查看各层级详细报告"
+  },
+  "metadata": {
+    "category": "industry",
+    "tags": ["产业结构", "价值链"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

@@ -1,0 +1,29 @@
+{
+  "id": "data-integration-001",
+  "templateId": "data-integration",
+  "componentName": "DataIntegrationCard",
+  "data": {
+    "title": "数据 & 集成能力",
+    "summary": "**数据处理与系统集成**\n\n产品支持多种数据格式和存储方式，提供丰富的API和SDK用于系统集成。\n\n· 数据支持：支持图像、文本、音频、视频等多种数据类型，支持CSV、JSON、Parquet等格式。\n\n· 存储能力：支持本地存储、对象存储（S3兼容）、分布式文件系统，单数据集最大支持100TB。\n\n· 集成能力：提供REST API、Python SDK、Java SDK，支持与主流MLOps工具集成。\n\n· 数据安全：支持数据加密、访问控制、审计日志，符合GDPR和等保要求。",
+    "icon": "Network",
+    "capabilities": {
+      "dataFormats": ["图像", "文本", "音频", "视频"],
+      "storage": "本地/S3/分布式，最大100TB",
+      "integration": "REST API、Python SDK、Java SDK",
+      "security": "加密、访问控制、审计日志"
+    },
+    "chartData": [
+      { "label": "数据格式支持", "status": "成熟", "value": 90 },
+      { "label": "存储能力", "status": "成熟", "value": 85 },
+      { "label": "集成能力", "status": "发展中", "value": 75 },
+      { "label": "安全能力", "status": "成熟", "value": 88 }
+    ],
+    "actionText": "查看集成详细分析"
+  },
+  "metadata": {
+    "category": "product",
+    "tags": ["数据能力", "系统集成"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

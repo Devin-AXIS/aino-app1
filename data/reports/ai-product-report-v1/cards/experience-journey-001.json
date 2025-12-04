@@ -1,0 +1,51 @@
+{
+  "id": "experience-journey-001",
+  "templateId": "experience-journey",
+  "componentName": "ExperienceJourneyCard",
+  "data": {
+    "title": "体验路径 & 关键流程",
+    "summary": "**用户使用流程分析**\n\n用户从注册到首次成功部署模型的完整路径包含5个关键节点，平均完成时间约2小时。\n\n· 注册与认证：用户注册账号，完成企业认证，平均耗时10分钟。\n\n· 环境配置：创建训练环境，配置GPU资源，上传数据集，平均耗时30分钟。\n\n· 首次训练：创建训练任务，监控训练进度，平均耗时60分钟。\n\n· 模型评估：查看训练结果，评估模型性能，平均耗时15分钟。\n\n· 模型部署：选择部署方式，配置推理服务，平均耗时5分钟。",
+    "icon": "GitBranch",
+    "journey": [
+      {
+        "step": "注册认证",
+        "duration": "10分钟",
+        "completion": 95
+      },
+      {
+        "step": "环境配置",
+        "duration": "30分钟",
+        "completion": 80
+      },
+      {
+        "step": "首次训练",
+        "duration": "60分钟",
+        "completion": 65
+      },
+      {
+        "step": "模型评估",
+        "duration": "15分钟",
+        "completion": 70
+      },
+      {
+        "step": "模型部署",
+        "duration": "5分钟",
+        "completion": 55
+      }
+    ],
+    "chartData": [
+      { "name": "注册认证", "value": 95 },
+      { "name": "环境配置", "value": 80 },
+      { "name": "首次训练", "value": 65 },
+      { "name": "模型评估", "value": 70 },
+      { "name": "模型部署", "value": 55 }
+    ],
+    "actionText": "查看体验详细分析"
+  },
+  "metadata": {
+    "category": "product",
+    "tags": ["体验路径", "用户流程"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

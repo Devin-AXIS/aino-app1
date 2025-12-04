@@ -1,0 +1,37 @@
+{
+  "id": "future-growth-001",
+  "templateId": "future-growth",
+  "componentName": "FutureGrowthCard",
+  "data": {
+    "title": "未来增长引擎",
+    "summary": "**未来3-5年核心增长线**\n\n公司未来增长主要依赖三条线：垂直领域深化（主叙事）、边缘计算拓展（次叙事）、国际化扩张（长期叙事）。\n\n· 垂直领域深化：在金融、电商、制造等垂直领域持续深耕，提供行业定制化解决方案，预计3年内营收占比提升至70%。\n\n· 边缘计算拓展：基于模型压缩技术，拓展边缘推理市场，预计5年内成为新的增长点，营收占比达到20%。\n\n· 国际化扩张：通过硅谷办事处，拓展海外市场，预计5年内海外营收占比达到15%。",
+    "icon": "Rocket",
+    "growthEngines": [
+      {
+        "name": "垂直领域深化",
+        "priority": "主叙事",
+        "timeline": "3年",
+        "target": "营收占比70%"
+      },
+      {
+        "name": "边缘计算拓展",
+        "priority": "次叙事",
+        "timeline": "5年",
+        "target": "营收占比20%"
+      },
+      {
+        "name": "国际化扩张",
+        "priority": "长期叙事",
+        "timeline": "5年",
+        "target": "海外营收15%"
+      }
+    ],
+    "actionText": "查看增长详细分析"
+  },
+  "metadata": {
+    "category": "company",
+    "tags": ["未来", "增长引擎"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

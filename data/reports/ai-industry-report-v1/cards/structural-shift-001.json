@@ -1,0 +1,22 @@
+{
+  "id": "structural-shift-001",
+  "templateId": "structural-shift",
+  "componentName": "StructuralShiftCard",
+  "data": {
+    "title": "价值重心迁移",
+    "summary": "这是一场深刻的权力交接：行业控制权正从传统的'机器人系统集成商'（SI），慢慢迁移到'具身智能模型平台'手中。未来，硬件将成为躯壳，而通用的具身大脑将成为新的操作系统，重新定义产业利润的分配规则。",
+    "icon": "GitBranch",
+    "shiftData": {
+      "from": "集成商主导",
+      "to": "模型定义",
+      "label": "VALUE SHIFT"
+    },
+    "actionText": "查看价值链重构分析"
+  },
+  "metadata": {
+    "category": "industry",
+    "tags": ["价值迁移", "产业结构"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

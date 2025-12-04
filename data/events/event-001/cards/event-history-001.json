@@ -1,0 +1,22 @@
+{
+  "id": "event-history-001",
+  "templateId": "event-history",
+  "componentName": "EventHistoryCard",
+  "data": {
+    "similarEvents": [
+      {
+        "title": "2023-08 某云厂商低价抢占中小客户",
+        "time": "2023-08",
+        "description": "当时发生了什么：头部云厂商推出低价套餐，目标中小企业和个人开发者。",
+        "similarities": "都是头部玩家向下探价，目标中端客户。",
+        "differences": "当时宏观环境衰退，这次需求仍在增长。"
+      }
+    ]
+  },
+  "metadata": {
+    "category": "event",
+    "tags": ["历史", "先例"],
+    "createdAt": "2025-12-04T13:42:00Z"
+  }
+}
+

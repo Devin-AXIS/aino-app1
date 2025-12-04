@@ -1,0 +1,39 @@
+{
+  "id": "moat-map-001",
+  "templateId": "moat-map",
+  "componentName": "MoatMapCard",
+  "data": {
+    "title": "护城河 & 关键优势结构",
+    "summary": "**核心竞争优势分析**\n\n公司在技术、数据、渠道、品牌四个维度构建护城河，其中技术优势最为突出（85分），数据优势次之（70分），渠道和品牌相对较弱（50-60分）。\n\n· 技术优势：自研的分布式训练框架在模型并行优化方面领先行业，推理延迟较竞品低30%，模型压缩技术可达到10倍压缩比。\n\n· 数据优势：积累了大量金融、电商领域的训练数据，在垂直领域的模型效果优于通用平台。\n\n· 渠道劣势：主要依赖直销，缺乏与云厂商的深度合作，市场拓展速度受限。",
+    "icon": "Shield",
+    "advantages": [
+      {
+        "dimension": "技术",
+        "score": 85,
+        "description": "分布式训练框架领先"
+      },
+      {
+        "dimension": "数据",
+        "score": 70,
+        "description": "垂直领域数据积累"
+      },
+      {
+        "dimension": "渠道",
+        "score": 50,
+        "description": "直销为主，渠道有限"
+      },
+      {
+        "dimension": "品牌",
+        "score": 60,
+        "description": "行业知名度中等"
+      }
+    ],
+    "actionText": "查看护城河详细分析"
+  },
+  "metadata": {
+    "category": "company",
+    "tags": ["护城河", "竞争优势"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

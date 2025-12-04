@@ -1,0 +1,41 @@
+{
+  "id": "product-snapshot-001",
+  "templateId": "product-snapshot",
+  "componentName": "ProductSnapshotCard",
+  "data": {
+    "title": "产品一屏总览",
+    "summary": "**产品定位与核心价值**\n\n这是一款面向企业开发者的AI大模型训练与推理平台，提供从模型训练到部署的全链路服务。\n\n· 核心定位：降低AI模型训练与推理的技术门槛，让企业快速构建和部署自己的AI能力。\n\n· 目标用户：主要面向中大型企业的技术团队，以及AI创业公司的研发团队。\n\n· 核心指标：平台日活用户约5000+，月训练任务数超过10000次，推理调用量日均500万次，客户留存率85%+。",
+    "icon": "Layers",
+    "productName": "AI训练平台 Pro",
+    "tags": ["SaaS", "B2B", "企业级"],
+    "metrics": [
+      {
+        "label": "日活用户",
+        "value": "5000+",
+        "icon": "Users"
+      },
+      {
+        "label": "月训练任务",
+        "value": "10000+",
+        "icon": "Zap"
+      },
+      {
+        "label": "日均调用",
+        "value": "500万",
+        "icon": "TrendingUp"
+      },
+      {
+        "label": "客户留存",
+        "value": "85%",
+        "icon": "Target"
+      }
+    ],
+    "actionText": "查看完整产品画像"
+  },
+  "metadata": {
+    "category": "product",
+    "tags": ["产品总览", "一屏概览"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

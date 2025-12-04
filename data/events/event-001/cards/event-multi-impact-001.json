@@ -1,0 +1,44 @@
+{
+  "id": "event-multi-impact-001",
+  "templateId": "event-multi-impact",
+  "componentName": "EventMultiImpactCard",
+  "data": {
+    "dimensions": [
+      { "id": "business", "label": "业务 / 产品" },
+      { "id": "market", "label": "市场 / 销售" },
+      { "id": "competition", "label": "竞争格局" },
+      { "id": "finance", "label": "资金" }
+    ],
+    "currentDimension": "business",
+    "impactData": {
+      "business": {
+        "chartData": [4, 3, 5, 2, 4],
+        "analysis": [
+          "产品层面：需要评估是否推出类似 Pro Lite 的轻量版本，或调整现有套餐结构。",
+          "业务影响：中端客户流失可能导致月度经常性收入（MRR）下降 8-12%。"
+        ],
+        "suggestions": [
+          "产品团队评估 2-3 个'功能更窄但价格更轻'的试探性组合",
+          "不对外公布，仅内部测算 ROI"
+        ]
+      },
+      "market": {
+        "chartData": [5, 4, 3, 4, 3],
+        "analysis": [
+          "销售层面：需要加强中端客户的留存策略，可能需要提供短期优惠或增值服务。",
+          "市场影响：竞品的低价策略可能引发行业价格战，需要提前准备应对方案。"
+        ],
+        "suggestions": [
+          "销售团队制定中端客户挽留计划",
+          "市场团队监控竞品动态和行业反应"
+        ]
+      }
+    }
+  },
+  "metadata": {
+    "category": "event",
+    "tags": ["影响", "多维分析"],
+    "createdAt": "2025-12-04T13:42:00Z"
+  }
+}
+

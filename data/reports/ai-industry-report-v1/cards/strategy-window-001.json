@@ -1,0 +1,34 @@
+{
+  "id": "strategy-window-001",
+  "templateId": "strategy-window",
+  "componentName": "StrategyWindowCard",
+  "data": {
+    "title": "战略机遇窗口",
+    "summary": "我们正处于'算法成熟 + 成本下探 + 场景试运营'三线叠加的关键窗口期。未来 6-12 个月是卡位垂直场景（如汽车制造、物流仓储）的黄金时间。对于初创公司而言，现在是验证 PMF（产品市场契合度）的最后机会，之后巨头将通过规模效应清场。",
+    "icon": "Crosshair",
+    "timeline": [
+      {
+        "label": "Now",
+        "text": "试运营",
+        "color": "bg-primary"
+      },
+      {
+        "label": "+6M",
+        "text": "规模验证",
+        "color": "bg-muted"
+      },
+      {
+        "label": "+12M",
+        "text": "成本拐点",
+        "color": "bg-muted"
+      }
+    ],
+    "actionText": "查看时间窗口推演"
+  },
+  "metadata": {
+    "category": "industry",
+    "tags": ["战略窗口", "机遇"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

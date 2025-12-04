@@ -1,0 +1,34 @@
+{
+  "id": "scenario-001",
+  "templateId": "scenario",
+  "componentName": "ScenarioCard",
+  "data": {
+    "title": "未来情景推演",
+    "summary": "基于蒙特卡洛模拟，未来 12 个月行业走向存在三种可能路径：最可能的情景（40%概率）是在特定垂直场景内实现局部爆发；悲观情景（30%概率）是因技术瓶颈导致资本回调；乐观情景（30%概率）则是通用人形机器人从 B 端走向 C 端。",
+    "icon": "GitBranch",
+    "scenarios": [
+      {
+        "name": "Base Case",
+        "probability": 40,
+        "color": "primary"
+      },
+      {
+        "name": "Bear Case",
+        "probability": 30,
+        "color": "muted"
+      },
+      {
+        "name": "Bull Case",
+        "probability": 30,
+        "color": "success"
+      }
+    ],
+    "actionText": "查看详细推演参数"
+  },
+  "metadata": {
+    "category": "industry",
+    "tags": ["情景推演", "预测"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+

@@ -1,0 +1,29 @@
+{
+  "id": "insight-compression-001",
+  "templateId": "insight-compression",
+  "componentName": "InsightCompressionCard",
+  "data": {
+    "title": "AI Strategy Core",
+    "summary": "\"综合全维数据，具身智能产业未来 6-12 个月的唯一核心变量是推理成本的指数级下降与稳定可复现的场景验证。谁能率先跑通低成本的垂直场景闭环，谁就掌握了定义下一代智能硬件的话语权。\"",
+    "icon": "Lightbulb",
+    "generatedAt": "2025.11.29",
+    "strategies": [
+      {
+        "type": "win",
+        "label": "Win Strategy",
+        "text": "深耕垂直场景数据闭环"
+      },
+      {
+        "type": "avoid",
+        "label": "Avoid",
+        "text": "纯硬件堆料无算法壁垒"
+      }
+    ]
+  },
+  "metadata": {
+    "category": "industry",
+    "tags": ["核心洞察", "战略总结"],
+    "createdAt": "2024-01-01T00:00:00Z"
+  }
+}
+
