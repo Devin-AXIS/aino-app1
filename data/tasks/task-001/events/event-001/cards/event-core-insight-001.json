@@ -1,0 +1,21 @@
+{
+  "id": "event-core-insight-001",
+  "templateId": "event-core-insight",
+  "componentName": "EventCoreInsightCard",
+  "data": {
+    "tags": ["趋势", "风险"],
+    "title": "竞品A发布低价套餐",
+    "subtitle": "过去 24 小时发布 Pro Lite 套餐 + 渠道联合促销，目标中型客户。",
+    "content": [
+      "市场走势：竞品 A 的 Pro Lite 套餐定价比你的标准套餐低 30%，预计将吸引 15-20% 的中端客户转向。",
+      "位置变化：你在中端市场的份额可能在未来 3 个月内下降 5-8 个百分点，高端市场暂时不受影响。",
+      "时间窗口：这是一个 3-6 个月的机会窗口，需要快速响应以保护市场份额。"
+    ]
+  },
+  "metadata": {
+    "category": "event",
+    "tags": ["竞品", "市场", "风险"],
+    "createdAt": "2025-12-04T13:42:00Z"
+  }
+}
+

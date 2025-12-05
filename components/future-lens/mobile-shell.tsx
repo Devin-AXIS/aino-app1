@@ -5,6 +5,7 @@ import { motion } from "framer-motion"
 import { useRouter, useSearchParams } from "next/navigation" // Import useRouter and useSearchParams for navigation
 import { User, Plus, Search, Globe, Layers } from "lucide-react"
 import { CardFactory } from "./cards/card-factory"
+import { CardRenderer } from "./ai-report/card-renderer"
 import { AIOrb } from "./ui/ai-orb"
 import { useAppConfig } from "@/lib/future-lens/config-context"
 import { translations } from "@/lib/future-lens/i18n"
@@ -15,6 +16,8 @@ import { DesignTokens } from "@/lib/future-lens/design-tokens"
 import { FloatingDock } from "./nav/floating-dock" // Import FloatingDock component
 import { BottomFadeOverlay } from "./nav/bottom-fade-overlay" // Import BottomFadeOverlay component
 import { NotificationBell } from "./ui/notification-bell" // Import notification bell
+import { getAllEvents } from "@/lib/future-lens/api/task-event-api-mock" // Import event API
+import type { ReportWithCards, CardInstance } from "@/lib/future-lens/types/card-types"
 
 // 懒加载大型视图组件（按需加载，提升首次加载性能）
 const DesignSystemGallery = lazy(() => import("./views/design-system-gallery").then(m => ({ default: m.DesignSystemGallery })))
@@ -55,36 +58,7 @@ const LoadingFallback = () => (
   </div>
 )
 
-// Mock Data
-const INSIGHTS_DATA: InsightData[] = [
-  {
-    id: 1,
-    type: "trend",
-    timeStr: "13:42",
-    headline: "AI Infra 算力热度飙升",
-    subheadline: "基础设施关注度异常上涨，GPU租赁价格波动，这通常是行情启动的前兆。",
-    impact: "短期套利窗口开放，重点关注二级市场标的及下午2点资金流向。",
-    isUnread: true,
-  },
-  {
-    id: 2,
-    type: "opportunity",
-    timeStr: "09:15",
-    headline: "多模态模型权重泄露",
-    subheadline: "Mistral 新模型权重流出，GitHub 活跃度激增，开源爆发点已现。",
-    impact: "项目架构兼容，建议今晚安排性能测试，预计效率提升20%。",
-    isUnread: false,
-  },
-  {
-    id: 3,
-    type: "risk",
-    timeStr: "Yesterday",
-    headline: "文案生成领域风险预警",
-    subheadline: "自动化代理（Agent）在营销文案领域的替代率已突破临界点。",
-    impact: "技能栈重合度高，建议立即启动“创意指导”技能树学习计划，以应对潜在的岗位风险。",
-    isUnread: true,
-  },
-]
+// 任务数据现在通过 API 加载，不再硬编码
 
 const AI_DISCOVER_DATA = {
   industry: [
@@ -152,6 +126,26 @@ export function MobileShell() {
   const [isChartsOpen, setIsChartsOpen] = useState(false) // Add charts state
   const [isTaskActionSheetOpen, setIsTaskActionSheetOpen] = useState(false) // Add task action sheet state
   const [selectedTask, setSelectedTask] = useState<any>(null) // Selected task for creation
+  // 事件列表数据（首页显示所有事件，跨任务）
+  const [eventsList, setEventsList] = useState<CardInstance[]>([])
+  const [eventsLoading, setEventsLoading] = useState(true)
+
+  // 加载所有事件（统一的数据加载方式）
+  useEffect(() => {
+    const loadEvents = async () => {
+      try {
+        setEventsLoading(true)
+        const data = await getAllEvents()
+        setEventsList(data)
+      } catch (error) {
+        console.error("[MobileShell] 加载事件列表失败:", error)
+      } finally {
+        setEventsLoading(false)
+      }
+    }
+
+    loadEvents()
+  }, [])
   const [messages, setMessages] = useState<Message[]>([])
   const [isThinking, setIsThinking] = useState(false)
   const [isDiscoverScrolled, setIsDiscoverScrolled] = useState(false) // Add scroll state for discover tab header
@@ -849,18 +843,47 @@ export function MobileShell() {
           <div className={`${DesignTokens.layout.containerPadding} mt-1`}>
             {activeTab === "push" && (
               <>
-                {INSIGHTS_DATA.map((item) => (
-                  <CardFactory
-                    key={item.id}
-                    data={item}
-                    onClick={() => {
-                      // 跳转到事件详情页
-                      // 目前所有卡片都跳转到 event-001 作为示例
-                      // 后续可以根据卡片数据动态生成事件 ID
-                      router.push(`/event/event-001`)
-                    }}
-                  />
-                ))}
+                {/* 预留：任务筛选器（现在不显示，但结构已预留） */}
+                {/* <TaskFilter tasks={tasks} onFilterChange={handleFilterChange} /> */}
+
+                {eventsLoading ? (
+                  <div className="p-8 flex flex-col items-center justify-center opacity-40">
+                    <div className="flex gap-1.5 mb-3">
+                      <motion.div
+                        className="w-1.5 h-1.5 rounded-full bg-muted-foreground"
+                        animate={{ opacity: [0.3, 1, 0.3] }}
+                        transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
+                      />
+                      <motion.div
+                        className="w-1.5 h-1.5 rounded-full bg-muted-foreground"
+                        animate={{ opacity: [0.3, 1, 0.3] }}
+                        transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY, delay: 0.2 }}
+                      />
+                      <motion.div
+                        className="w-1.5 h-1.5 rounded-full bg-muted-foreground"
+                        animate={{ opacity: [0.3, 1, 0.3] }}
+                        transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY, delay: 0.4 }}
+                      />
+                    </div>
+                    <span className="text-[10px] font-bold text-muted-foreground tracking-[0.2em] uppercase">
+                      加载中...
+                    </span>
+                  </div>
+                ) : (
+                  eventsList.map((card: CardInstance) => {
+                    const eventId = card.metadata?.eventId || "event-001"
+                    return (
+                      <CardRenderer
+                        key={card.id}
+                        card={card}
+                        onClick={() => {
+                          // 点击事件卡片，直接跳转到事件详情页
+                          router.push(`/event/${eventId}`)
+                        }}
+                      />
+                    )
+                  })
+                )}
 
                 {/* Loading State */}
                 <div className="p-8 flex flex-col items-center justify-center opacity-40 mt-2">
@@ -905,7 +928,7 @@ export function MobileShell() {
               >
                 <Suspense fallback={<LoadingFallback />}>
                   <UserProfileView
-                    onNavigate={setActiveTab}
+                    onNavigate={(tabId) => setActiveTab(tabId as TabId)}
                     onOpenArchive={() => setIsArchiveOpen(true)}
                     onOpenInvite={() => setIsInviteOpen(true)}
                     onOpenCharts={() => setIsChartsOpen(true)} // Added charts handler
@@ -946,7 +969,7 @@ export function MobileShell() {
         <FloatingDock
           items={navItems}
           activeId={activeTab}
-          onTabChange={setActiveTab}
+          onTabChange={(id) => setActiveTab(id as TabId)}
           onChatClick={() => setIsChatOpen(true)}
         />
 

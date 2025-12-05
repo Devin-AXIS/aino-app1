@@ -1,0 +1,46 @@
+{
+  "id": "event-001",
+  "name": "竞品A发布低价套餐",
+  "category": "event",
+  "taskId": "task-001",
+  "version": 1,
+  "layoutType": "tabs-sticky",
+  "tabs": [
+    {
+      "id": "current",
+      "label": "当前报告",
+      "cardIds": [
+        "event-header-001",
+        "event-quick-read-001",
+        "event-core-insight-001",
+        "event-signal-meter-001",
+        "event-comparison-001",
+        "event-multi-impact-001",
+        "event-timeline-prediction-001",
+        "event-action-list-001",
+        "event-decision-support-001",
+        "event-decision-record-001",
+        "event-timeline-001",
+        "event-history-001",
+        "event-related-entities-001"
+      ],
+      "taskSummaryCardIds": [
+        "task-monitor-scope-001",
+        "task-statistics-001",
+        "task-trend-001"
+      ]
+    },
+    {
+      "id": "history",
+      "label": "历史事件",
+      "cardIds": []
+    }
+  ],
+  "metadata": {
+    "createdAt": "2025-12-04T13:42:00Z",
+    "updatedAt": "2025-12-05T13:42:00Z",
+    "totalCards": 13,
+    "urgency": "high",
+    "impact": "high"
+  }
+}

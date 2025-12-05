@@ -1,0 +1,21 @@
+{
+  "id": "task-monitor-scope-001",
+  "templateId": "task-monitor-scope",
+  "componentName": "TaskMonitorScopeCard",
+  "data": {
+    "title": "监控范围",
+    "targets": [
+      { "name": "竞品A", "type": "主要竞品", "status": "active" },
+      { "name": "竞品B", "type": "主要竞品", "status": "active" },
+      { "name": "竞品C", "type": "次要竞品", "status": "active" }
+    ],
+    "keywords": ["产品发布", "价格调整", "融资", "功能更新"],
+    "channels": ["官网", "社交媒体", "新闻媒体", "招聘信息"]
+  },
+  "metadata": {
+    "category": "task",
+    "tags": ["监控范围", "任务配置"],
+    "createdAt": "2025-12-01T00:00:00Z"
+  }
+}
+

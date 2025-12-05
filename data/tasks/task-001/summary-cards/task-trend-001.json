@@ -1,0 +1,22 @@
+{
+  "id": "task-trend-001",
+  "templateId": "task-trend",
+  "componentName": "TaskTrendCard",
+  "data": {
+    "title": "任务趋势",
+    "period": "过去30天",
+    "summary": "过去30天发现3个事件，主要集中在竞品A（2个事件）。竞品A动作频繁，需要重点关注。",
+    "insights": [
+      "竞品A在价格策略上动作频繁",
+      "竞品B相对稳定，但需要持续监控",
+      "整体竞争环境趋于活跃"
+    ],
+    "recommendation": "建议重点关注竞品A的后续动作，特别是价格和产品策略的变化。"
+  },
+  "metadata": {
+    "category": "task",
+    "tags": ["趋势", "洞察"],
+    "createdAt": "2025-12-01T00:00:00Z"
+  }
+}
+

@@ -1,0 +1,17 @@
+{
+  "id": "event-quick-read-001",
+  "templateId": "event-quick-read",
+  "componentName": "EventQuickReadCard",
+  "data": {
+    "urgency": "高紧急度",
+    "urgencyScore": 75,
+    "oneLiner": "竞品A低价套餐可能让你损失15-20%中端客户，需本周内评估应对方案",
+    "quickAdvice": "本周内请销售团队汇报最近30天中端客户流失情况，并评估是否需要推出针对性套餐"
+  },
+  "metadata": {
+    "category": "event",
+    "tags": ["速读", "紧急度"],
+    "createdAt": "2025-12-04T13:42:00Z"
+  }
+}
+

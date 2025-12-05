@@ -1,0 +1,18 @@
+{
+  "id": "task-list-default",
+  "name": "任务列表",
+  "category": "task",
+  "version": 1,
+  "layoutType": "single-page",
+  "cardIds": [
+    "task-001",
+    "task-002",
+    "task-003"
+  ],
+  "metadata": {
+    "createdAt": "2025-12-05T00:00:00Z",
+    "updatedAt": "2025-12-05T00:00:00Z",
+    "totalCards": 3
+  }
+}
+

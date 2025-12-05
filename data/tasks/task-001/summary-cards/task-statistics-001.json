@@ -1,0 +1,27 @@
+{
+  "id": "task-statistics-001",
+  "templateId": "task-statistics",
+  "componentName": "TaskStatisticsCard",
+  "data": {
+    "title": "任务统计",
+    "status": "有变化",
+    "statusColor": "success",
+    "statistics": {
+      "totalEvents": 3,
+      "thisWeek": 2,
+      "thisMonth": 3,
+      "lastUpdate": "2小时前"
+    },
+    "eventBreakdown": {
+      "high": 1,
+      "medium": 1,
+      "low": 1
+    }
+  },
+  "metadata": {
+    "category": "task",
+    "tags": ["统计", "任务状态"],
+    "createdAt": "2025-12-01T00:00:00Z"
+  }
+}
+

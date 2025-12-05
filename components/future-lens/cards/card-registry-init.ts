@@ -79,6 +79,11 @@ import {
   EventTimelinePredictionCard,
   EventDecisionSupportCard,
 } from "../event-detail/event-cards"
+import {
+  TaskMonitorScopeCard,
+  TaskStatisticsCard,
+  TaskTrendCard,
+} from "../event-detail/task-summary-cards"
 
 /**
  * 初始化卡片注册表
@@ -166,6 +171,10 @@ export function initCardRegistry() {
   registerCard("EventComparisonCard", EventComparisonCard)
   registerCard("EventTimelinePredictionCard", EventTimelinePredictionCard)
   registerCard("EventDecisionSupportCard", EventDecisionSupportCard)
+  // ===== 任务总结卡片 =====
+  registerCard("TaskMonitorScopeCard", TaskMonitorScopeCard)
+  registerCard("TaskStatisticsCard", TaskStatisticsCard)
+  registerCard("TaskTrendCard", TaskTrendCard)
 }
 
 // 自动初始化（在模块加载时执行）

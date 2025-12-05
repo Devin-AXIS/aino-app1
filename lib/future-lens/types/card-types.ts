@@ -84,6 +84,12 @@ export type CardTemplateId =
   | "event-comparison"       // 对比分析卡片（专业版）
   | "event-timeline-prediction" // 时间线预测卡片（专业版）
   | "event-decision-support"    // 决策支持卡片（专业版）
+  // 任务总结卡片模板
+  | "task-monitor-scope"         // 任务监控范围卡
+  | "task-statistics"            // 任务统计卡
+  | "task-trend"                 // 任务趋势卡
+  | "task-rules"                 // 任务规则卡（可选）
+  | "task-insights"              // 任务洞察卡（可选）
 
 /**
  * 报告类别（语义化）

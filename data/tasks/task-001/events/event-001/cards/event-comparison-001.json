@@ -1,0 +1,32 @@
+{
+  "id": "event-comparison-001",
+  "templateId": "event-comparison",
+  "componentName": "EventComparisonCard",
+  "data": {
+    "priceComparison": {
+      "matrixData": [
+        { "name": "竞品A", "x": 75, "y": 60, "z": 500 },
+        { "name": "我们", "x": 65, "y": 85, "z": 600 }
+      ]
+    },
+    "featureComparison": {
+      "features": [
+        { "name": "核心功能完整性", "competitorScore": 85, "ourScore": 90 },
+        { "name": "价格竞争力", "competitorScore": 95, "ourScore": 65 },
+        { "name": "客户服务", "competitorScore": 70, "ourScore": 88 },
+        { "name": "技术稳定性", "competitorScore": 75, "ourScore": 92 }
+      ]
+    },
+    "customerOverlap": {
+      "overlapRate": 35,
+      "atRiskCount": 120,
+      "stableCount": 280
+    }
+  },
+  "metadata": {
+    "category": "event",
+    "tags": ["对比分析", "竞品"],
+    "createdAt": "2025-12-04T13:42:00Z"
+  }
+}
+

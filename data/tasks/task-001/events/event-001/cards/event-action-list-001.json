@@ -1,0 +1,31 @@
+{
+  "id": "event-action-list-001",
+  "templateId": "event-action-list",
+  "componentName": "EventActionListCard",
+  "data": {
+    "actions": [
+      {
+        "priority": "P1",
+        "text": "本周内请销售 & CS 汇报最近 30 天中端客户流失情况，标记是否与新套餐有关。"
+      },
+      {
+        "priority": "P2",
+        "text": "产品团队评估 2-3 个\"功能更窄但价格更轻\"的试探性组合，不对外公布，仅内部测算。"
+      },
+      {
+        "priority": "P2",
+        "text": "市场团队监控竞品 A 的渠道合作动态，评估是否需要调整我们的渠道策略。"
+      },
+      {
+        "priority": "P3",
+        "text": "财务团队测算不同应对方案的成本和收益，为决策提供数据支持。"
+      }
+    ]
+  },
+  "metadata": {
+    "category": "event",
+    "tags": ["动作", "建议"],
+    "createdAt": "2025-12-04T13:42:00Z"
+  }
+}
+

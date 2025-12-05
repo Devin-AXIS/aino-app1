@@ -1,0 +1,32 @@
+{
+  "id": "task-001",
+  "name": "竞品监控",
+  "category": "task",
+  "version": 1,
+  "description": "监控主要竞品的动态，包括产品发布、价格调整、融资等关键事件",
+  "monitorScope": {
+    "targets": ["竞品A", "竞品B", "竞品C"],
+    "keywords": ["产品发布", "价格调整", "融资", "功能更新"],
+    "channels": ["官网", "社交媒体", "新闻媒体", "招聘信息"]
+  },
+  "rules": {
+    "alertLevels": {
+      "high": ["价格调整", "重大产品发布"],
+      "medium": ["融资", "功能更新"],
+      "low": ["招聘信息", "媒体报道"]
+    },
+    "updateFrequency": "实时"
+  },
+  "summaryCardIds": [
+    "task-monitor-scope-001",
+    "task-statistics-001",
+    "task-trend-001"
+  ],
+  "metadata": {
+    "createdAt": "2025-12-01T00:00:00Z",
+    "updatedAt": "2025-12-05T13:42:00Z",
+    "status": "active",
+    "totalEvents": 3
+  }
+}
+

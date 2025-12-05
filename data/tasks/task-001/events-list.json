@@ -1,0 +1,42 @@
+{
+  "taskId": "task-001",
+  "taskName": "竞品监控",
+  "events": [
+    {
+      "id": "event-001",
+      "name": "竞品A发布低价套餐",
+      "createdAt": "2025-12-04T13:42:00Z",
+      "urgency": "high",
+      "impact": "high",
+      "status": "current"
+    },
+    {
+      "id": "event-002",
+      "name": "竞品B融资1亿美元",
+      "createdAt": "2025-12-02T09:15:00Z",
+      "urgency": "medium",
+      "impact": "medium",
+      "status": "historical"
+    },
+    {
+      "id": "event-003",
+      "name": "竞品C上线新功能",
+      "createdAt": "2025-11-28T14:30:00Z",
+      "urgency": "low",
+      "impact": "low",
+      "status": "historical"
+    }
+  ],
+  "trendSummary": {
+    "period": "过去30天",
+    "totalEvents": 3,
+    "summary": "过去30天发现3个事件，主要集中在竞品A（2个事件）。竞品A动作频繁，需要重点关注。",
+    "insights": [
+      "竞品A在价格策略上动作频繁",
+      "竞品B相对稳定，但需要持续监控",
+      "整体竞争环境趋于活跃"
+    ],
+    "recommendation": "建议重点关注竞品A的后续动作，特别是价格和产品策略的变化。"
+  }
+}
+

@@ -1,0 +1,21 @@
+{
+  "id": "task-003",
+  "templateId": "task",
+  "componentName": "InsightCard",
+  "data": {
+    "id": 3,
+    "type": "risk",
+    "timeStr": "Yesterday",
+    "headline": "文案生成领域风险预警",
+    "subheadline": "自动化代理（Agent）在营销文案领域的替代率已突破临界点。",
+    "impact": "技能栈重合度高，建议立即启动"创意指导"技能树学习计划，以应对潜在的岗位风险。",
+    "isUnread": true
+  },
+  "metadata": {
+    "category": "task",
+    "tags": ["风险", "AI替代"],
+    "createdAt": "2025-12-04T00:00:00Z",
+    "eventId": "event-001"
+  }
+}
+

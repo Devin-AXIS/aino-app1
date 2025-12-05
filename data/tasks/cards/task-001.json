@@ -1,0 +1,21 @@
+{
+  "id": "task-001",
+  "templateId": "task",
+  "componentName": "InsightCard",
+  "data": {
+    "id": 1,
+    "type": "trend",
+    "timeStr": "13:42",
+    "headline": "AI Infra 算力热度飙升",
+    "subheadline": "基础设施关注度异常上涨，GPU租赁价格波动，这通常是行情启动的前兆。",
+    "impact": "短期套利窗口开放，重点关注二级市场标的及下午2点资金流向。",
+    "isUnread": true
+  },
+  "metadata": {
+    "category": "task",
+    "tags": ["趋势", "AI基础设施"],
+    "createdAt": "2025-12-05T13:42:00Z",
+    "eventId": "event-001"
+  }
+}
+

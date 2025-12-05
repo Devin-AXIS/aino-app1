@@ -1,0 +1,21 @@
+{
+  "id": "task-002",
+  "templateId": "task",
+  "componentName": "InsightCard",
+  "data": {
+    "id": 2,
+    "type": "opportunity",
+    "timeStr": "09:15",
+    "headline": "多模态模型权重泄露",
+    "subheadline": "Mistral 新模型权重流出，GitHub 活跃度激增，开源爆发点已现。",
+    "impact": "项目架构兼容，建议今晚安排性能测试，预计效率提升20%。",
+    "isUnread": false
+  },
+  "metadata": {
+    "category": "task",
+    "tags": ["机会", "多模态"],
+    "createdAt": "2025-12-05T09:15:00Z",
+    "eventId": "event-001"
+  }
+}
+
