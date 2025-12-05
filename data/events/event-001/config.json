@@ -10,10 +10,14 @@
       "label": "当前报告",
       "cardIds": [
         "event-header-001",
+        "event-quick-read-001",
         "event-core-insight-001",
         "event-signal-meter-001",
+        "event-comparison-001",
         "event-multi-impact-001",
+        "event-timeline-prediction-001",
         "event-action-list-001",
+        "event-decision-support-001",
         "event-decision-record-001",
         "event-timeline-001",
         "event-history-001",
@@ -29,7 +33,7 @@
   "metadata": {
     "createdAt": "2025-12-04T13:42:00Z",
     "updatedAt": "2025-12-04T13:42:00Z",
-    "totalCards": 9
+    "totalCards": 13
   }
 }
 

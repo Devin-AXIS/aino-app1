@@ -20,13 +20,13 @@
 
 ### 2. 数据图表展示页面
 - **文件**：`components/future-lens/views/charts-registry-view.tsx`
-- **用途**：展示所有 `charts/` 目录下的图表组件
-- **分类**：通过 `charts/registry.json` 自动分类
+- **用途**：展示所有 `components/future-lens/charts/` 目录下的图表组件
+- **分类**：通过 `chart-metadata/registry.json` 自动分类
 
 ## 添加新组件的步骤
 
 ### 步骤1：创建组件
-在 `ds/` 或 `charts/` 目录下创建新组件。
+在 `ds/` 或 `components/future-lens/charts/` 目录下创建新组件。
 
 ### 步骤2：添加到展示页面
 
@@ -35,8 +35,8 @@
 2. 在对应的分类中添加预览示例
 3. 添加描述和使用说明
 
-#### 如果是图表组件（`charts/`）：
-1. 在 `charts/registry.json` 中添加组件信息
+#### 如果是图表组件（`components/future-lens/charts/`）：
+1. 在 `chart-metadata/registry.json` 中添加组件信息
 2. 在 `charts-registry-view.tsx` 的 `chartComponents` 中添加懒加载
 3. 确保组件有 JSDoc 示例
 
@@ -71,7 +71,7 @@ import { PlayerList } from "../ds/player-list"
 ### 添加图表组件
 
 ```json
-// charts/registry.json
+// chart-metadata/registry.json
 {
   "id": "my-new-chart",
   "name": "My New Chart",

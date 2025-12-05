@@ -12,7 +12,13 @@
     "currentDimension": "business",
     "impactData": {
       "business": {
-        "chartData": [4, 3, 5, 2, 4],
+        "chartData": [
+          { "dimension": "产品功能", "score": 4 },
+          { "dimension": "业务收入", "score": 3 },
+          { "dimension": "客户体验", "score": 5 },
+          { "dimension": "技术架构", "score": 2 },
+          { "dimension": "运营效率", "score": 4 }
+        ],
         "analysis": [
           "产品层面：需要评估是否推出类似 Pro Lite 的轻量版本，或调整现有套餐结构。",
           "业务影响：中端客户流失可能导致月度经常性收入（MRR）下降 8-12%。"
@@ -23,7 +29,13 @@
         ]
       },
       "market": {
-        "chartData": [5, 4, 3, 4, 3],
+        "chartData": [
+          { "dimension": "市场份额", "score": 5 },
+          { "dimension": "销售渠道", "score": 4 },
+          { "dimension": "品牌影响", "score": 3 },
+          { "dimension": "客户获取", "score": 4 },
+          { "dimension": "价格竞争", "score": 3 }
+        ],
         "analysis": [
           "销售层面：需要加强中端客户的留存策略，可能需要提供短期优惠或增值服务。",
           "市场影响：竞品的低价策略可能引发行业价格战，需要提前准备应对方案。"
@@ -31,6 +43,40 @@
         "suggestions": [
           "销售团队制定中端客户挽留计划",
           "市场团队监控竞品动态和行业反应"
+        ]
+      },
+      "competition": {
+        "chartData": [
+          { "dimension": "竞争强度", "score": 5 },
+          { "dimension": "差异化", "score": 3 },
+          { "dimension": "市场定位", "score": 4 },
+          { "dimension": "技术优势", "score": 4 },
+          { "dimension": "客户忠诚度", "score": 3 }
+        ],
+        "analysis": [
+          "竞争格局：竞品A通过低价策略直接冲击中端市场，我们的差异化优势需要重新评估。",
+          "应对策略：需要快速建立价格之外的竞争壁垒，如服务、技术或生态优势。"
+        ],
+        "suggestions": [
+          "重新评估市场定位和差异化策略",
+          "加强客户关系管理，提升客户粘性"
+        ]
+      },
+      "finance": {
+        "chartData": [
+          { "dimension": "收入影响", "score": 4 },
+          { "dimension": "成本压力", "score": 3 },
+          { "dimension": "现金流", "score": 2 },
+          { "dimension": "利润率", "score": 3 },
+          { "dimension": "投资需求", "score": 4 }
+        ],
+        "analysis": [
+          "财务影响：如果客户流失，预计3个月内MRR下降8-12%，需要评估应对成本。",
+          "资金需求：推出新套餐或调整策略可能需要额外投入，需要评估ROI。"
+        ],
+        "suggestions": [
+          "财务团队评估客户流失对收入的影响",
+          "评估应对方案的成本和预期收益"
         ]
       }
     }

@@ -1,0 +1,26 @@
+{
+  "id": "event-timeline-prediction-001",
+  "templateId": "event-timeline-prediction",
+  "componentName": "EventTimelinePredictionCard",
+  "data": {
+    "predictions": {
+      "trendData": [
+        { "label": "1月后", "value": 5 },
+        { "label": "2月后", "value": 8 },
+        { "label": "3月后", "value": 12 }
+      ]
+    },
+    "actionWindow": {
+      "optimalStart": 10,
+      "optimalEnd": 40,
+      "optimalWindow": "1-2周内",
+      "deadline": "1个月内"
+    }
+  },
+  "metadata": {
+    "category": "event",
+    "tags": ["预测", "时间窗口"],
+    "createdAt": "2025-12-04T13:42:00Z"
+  }
+}
+

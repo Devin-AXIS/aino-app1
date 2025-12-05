@@ -80,6 +80,10 @@ export type CardTemplateId =
   | "event-timeline"          // 事件脉络区
   | "event-history"           // 类似历史事件区
   | "event-related-entities" // 相关产业/企业/产品
+  | "event-quick-read"       // 30秒速读卡片（专业版）
+  | "event-comparison"       // 对比分析卡片（专业版）
+  | "event-timeline-prediction" // 时间线预测卡片（专业版）
+  | "event-decision-support"    // 决策支持卡片（专业版）
 
 /**
  * 报告类别（语义化）

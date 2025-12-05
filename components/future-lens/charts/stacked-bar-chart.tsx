@@ -50,8 +50,11 @@ export function StackedBarChart({
     let name = item.label
     if (item.label.startsWith("Q")) {
       const quarterKey = `chart_data_q${item.label.slice(1).toLowerCase()}` as keyof typeof translations.zh
-      const translated = translations[language][quarterKey]
-      name = translated || item.label
+      const langTranslations = translations[language]
+      if (langTranslations && quarterKey in langTranslations) {
+        const translated = langTranslations[quarterKey]
+        name = translated || item.label
+      }
     }
     return {
       name,
@@ -61,10 +64,11 @@ export function StackedBarChart({
     }
   })
 
+  const langTranslations = translations[language] || translations.zh
   const translatedCategories = [
-    translations[language].chart_data_product || "Product",
-    translations[language].chart_data_service || "Service",
-    translations[language].chart_data_license || "License",
+    langTranslations.chart_data_product || "Product",
+    langTranslations.chart_data_service || "Service",
+    langTranslations.chart_data_license || "License",
   ]
 
   return (

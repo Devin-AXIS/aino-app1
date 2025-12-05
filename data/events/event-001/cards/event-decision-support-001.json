@@ -1,0 +1,42 @@
+{
+  "id": "event-decision-support-001",
+  "templateId": "event-decision-support",
+  "componentName": "EventDecisionSupportCard",
+  "data": {
+    "inactionLoss": {
+      "month3": 8,
+      "month6": 15
+    },
+    "costBenefitAnalysis": {
+      "options": [
+        {
+          "name": "推出轻量版套餐",
+          "cost": "中等（2-3周开发）",
+          "benefit": "高（可保留80%风险客户）",
+          "recommendation": "推荐",
+          "description": "快速响应，成本可控，能有效应对竞品策略"
+        },
+        {
+          "name": "价格调整",
+          "cost": "低（1周内完成）",
+          "benefit": "中（可保留60%风险客户）",
+          "recommendation": "备选",
+          "description": "短期有效，但可能引发价格战，长期影响利润率"
+        },
+        {
+          "name": "加强客户服务",
+          "cost": "高（需增加人力）",
+          "benefit": "中（提升客户粘性）",
+          "recommendation": "长期",
+          "description": "长期有效，但短期无法快速应对价格冲击"
+        }
+      ]
+    }
+  },
+  "metadata": {
+    "category": "event",
+    "tags": ["决策支持", "成本收益"],
+    "createdAt": "2025-12-04T13:42:00Z"
+  }
+}
+

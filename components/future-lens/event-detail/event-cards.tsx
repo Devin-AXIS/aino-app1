@@ -2,9 +2,13 @@
 
 import type React from "react"
 import { CardBase } from "@/components/future-lens/ds/card-base"
-import { GlassPanel } from "@/components/future-lens/ds/glass-panel"
 import { useAppConfig } from "@/lib/future-lens/config-context"
 import { DesignTokens } from "@/lib/future-lens/design-tokens"
+import { RadarChart } from "@/components/future-lens/charts/radar-chart"
+import { ChartColorsRaw } from "@/components/future-lens/charts/chart-colors"
+import { PriceValueMatrix } from "@/components/future-lens/charts/price-value-matrix"
+import { TrendChart } from "@/components/future-lens/charts/trend-chart"
+import { MatrixChart } from "@/components/future-lens/charts/matrix-chart"
 import {
   Sparkles,
   TrendingUp,
@@ -30,6 +34,77 @@ import { cn } from "@/lib/utils"
 const fSize = (base: number, textScale: number) => base * textScale
 
 /**
+ * 0. 30秒速读卡片（新增 - 专业版AI分析）
+ */
+export function EventQuickReadCard({ data }: { data: any }) {
+  const { textScale } = useAppConfig()
+  const { urgency, oneLiner, quickAdvice, urgencyScore } = data
+
+  // 紧急度可视化：0-100分转换为星级和颜色
+  const urgencyLevel = urgencyScore >= 80 ? "critical" : urgencyScore >= 60 ? "high" : urgencyScore >= 40 ? "medium" : "low"
+  const urgencyStars = Math.round(urgencyScore / 20)
+  const urgencyColor = urgencyLevel === "critical" ? "text-destructive" : urgencyLevel === "high" ? "text-warning" : "text-muted-foreground"
+
+  return (
+    <CardBase className="mb-3 relative overflow-hidden border-2" style={{ borderColor: urgencyLevel === "critical" ? "rgba(239, 68, 68, 0.3)" : urgencyLevel === "high" ? "rgba(251, 191, 36, 0.3)" : "transparent" }}>
+      {/* 背景光晕 */}
+      <div 
+        className="absolute top-0 right-0 w-32 h-32 rounded-full blur-2xl opacity-20 pointer-events-none"
+        style={{ 
+          backgroundColor: urgencyLevel === "critical" ? "rgba(239, 68, 68, 0.3)" : urgencyLevel === "high" ? "rgba(251, 191, 36, 0.3)" : "rgba(59, 130, 246, 0.2)" 
+        }}
+      />
+
+      <div className="relative z-10">
+        {/* 顶部：紧急度评分 */}
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] text-muted-foreground/60 uppercase tracking-wider">紧急度</span>
+            <div className="flex items-center gap-1">
+              {[1, 2, 3, 4, 5].map((i) => (
+                <div
+                  key={i}
+                  className={cn(
+                    "w-2 h-2 rounded-full",
+                    i <= urgencyStars ? urgencyColor : "bg-muted-foreground/20"
+                  )}
+                />
+              ))}
+            </div>
+            <span className={cn("text-xs font-bold", urgencyColor)}>{urgencyScore}/100</span>
+          </div>
+          <span className="text-[9px] px-2 py-0.5 rounded-full bg-muted/50 text-muted-foreground">
+            {urgency}
+          </span>
+        </div>
+
+        {/* 一句话结论 */}
+        <h2
+          className={cn(DesignTokens.typography.title, "mb-3 font-bold leading-tight")}
+          style={{ fontSize: `${fSize(15, textScale)}px` }}
+        >
+          {oneLiner}
+        </h2>
+
+        {/* 快速建议 */}
+        <div className="flex items-start gap-2 p-2.5 rounded-lg bg-primary/5 border border-primary/20">
+          <Target size={14} className="text-primary mt-0.5 flex-shrink-0" />
+          <div>
+            <span className="text-[10px] text-muted-foreground/60 mb-1 block">快速建议</span>
+            <p
+              className="text-foreground leading-relaxed"
+              style={{ fontSize: `${fSize(12, textScale)}px` }}
+            >
+              {quickAdvice}
+            </p>
+          </div>
+        </div>
+      </div>
+    </CardBase>
+  )
+}
+
+/**
  * 1. 事件抬头区卡片
  */
 export function EventHeaderCard({ data }: { data: any }) {
@@ -41,9 +116,7 @@ export function EventHeaderCard({ data }: { data: any }) {
       <div className="flex items-center justify-between gap-3">
         {/* 左侧：任务来源标签 */}
         <div className="flex-1">
-          <GlassPanel intensity="subtle" className="px-3 py-1.5 inline-block">
-            <span className="text-xs font-medium text-muted-foreground">{taskSource}</span>
-          </GlassPanel>
+          <span className="text-xs font-medium text-muted-foreground">{taskSource}</span>
           <div className="mt-1.5 text-[10px] text-muted-foreground/60">{eventTime}</div>
         </div>
 
@@ -241,8 +314,19 @@ export function EventMultiImpactCard({ data }: { data: any }) {
 
       {/* 影响图形（小雷达图） */}
       {activeImpact?.chartData && (
-        <div className="mb-4 h-32 flex items-center justify-center bg-muted/20 rounded-xl">
-          <div className="text-xs text-muted-foreground/60">雷达图占位</div>
+        <div className="mb-4 h-40">
+          <RadarChart
+            data={activeImpact.chartData.map((item: any) => ({
+              subject: item.dimension,
+              value: item.score,
+              fullMark: 5,
+            }))}
+            height={160}
+            fillColor={ChartColorsRaw.series.primary}
+            fillOpacity={0.2}
+            strokeColor={ChartColorsRaw.series.primary}
+            strokeWidth={2}
+          />
         </div>
       )}
 
@@ -575,6 +659,333 @@ export function EventRelatedEntitiesCard({ data }: { data: any }) {
           </div>
         ))}
       </div>
+    </CardBase>
+  )
+}
+
+/**
+ * 10. 对比分析卡片（新增 - 专业版AI分析）
+ */
+export function EventComparisonCard({ data }: { data: any }) {
+  const { textScale } = useAppConfig()
+  const { featureComparison, priceComparison, customerOverlap } = data
+
+  return (
+    <CardBase className="mb-3">
+      <div className="flex items-center gap-2 mb-4">
+        <BarChart3 size={16} className="text-primary" />
+        <h3
+          className={cn(DesignTokens.typography.title)}
+          style={{ fontSize: `${fSize(14, textScale)}px` }}
+        >
+          对比分析
+        </h3>
+      </div>
+
+      {/* 价格-价值矩阵 */}
+      {priceComparison && (
+        <div className="mb-4">
+          <h4
+            className={cn(DesignTokens.typography.title, "mb-3")}
+            style={{ fontSize: `${fSize(12, textScale)}px` }}
+          >
+            价格-价值定位
+          </h4>
+          <PriceValueMatrix
+            data={priceComparison.matrixData || [
+              { name: "竞品A", x: 75, y: 60, z: 500 },
+              { name: "我们", x: 65, y: 85, z: 600 },
+            ]}
+            height={200}
+          />
+        </div>
+      )}
+
+      {/* 功能对比表 */}
+      {featureComparison && (
+        <div className="mb-4">
+          <h4
+            className={cn(DesignTokens.typography.title, "mb-3")}
+            style={{ fontSize: `${fSize(12, textScale)}px` }}
+          >
+            功能对比
+          </h4>
+          <div className="space-y-2">
+            {featureComparison.features?.map((feature: any, idx: number) => (
+              <div key={idx} className="p-2.5 rounded-lg bg-muted/20 border border-border/30">
+                <div className="flex items-center justify-between mb-1.5">
+                  <span
+                    className="text-foreground font-medium"
+                    style={{ fontSize: `${fSize(11, textScale)}px` }}
+                  >
+                    {feature.name}
+                  </span>
+                  <div className="flex items-center gap-3">
+                    <span className="text-[10px] text-muted-foreground/60">竞品A</span>
+                    <span className="text-[10px] text-muted-foreground/60">我们</span>
+                  </div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex-1 h-2 bg-muted/30 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-primary/40 rounded-full"
+                      style={{ width: `${feature.competitorScore}%` }}
+                    />
+                  </div>
+                  <div className="w-12" />
+                  <div className="flex-1 h-2 bg-muted/30 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-success/40 rounded-full"
+                      style={{ width: `${feature.ourScore}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* 客户重叠度 */}
+      {customerOverlap && (
+        <div>
+          <h4
+            className={cn(DesignTokens.typography.title, "mb-3")}
+            style={{ fontSize: `${fSize(12, textScale)}px` }}
+          >
+            客户重叠度分析
+          </h4>
+          <div className="p-3 rounded-lg bg-muted/20 border border-border/30">
+            <div className="grid grid-cols-3 gap-3 text-center">
+              <div>
+                <div
+                  className="text-lg font-bold text-foreground mb-1"
+                  style={{ fontSize: `${fSize(16, textScale)}px` }}
+                >
+                  {customerOverlap.overlapRate}%
+                </div>
+                <div className="text-[10px] text-muted-foreground/60">重叠客户</div>
+              </div>
+              <div>
+                <div
+                  className="text-lg font-bold text-warning mb-1"
+                  style={{ fontSize: `${fSize(16, textScale)}px` }}
+                >
+                  {customerOverlap.atRiskCount}
+                </div>
+                <div className="text-[10px] text-muted-foreground/60">风险客户</div>
+              </div>
+              <div>
+                <div
+                  className="text-lg font-bold text-success mb-1"
+                  style={{ fontSize: `${fSize(16, textScale)}px` }}
+                >
+                  {customerOverlap.stableCount}
+                </div>
+                <div className="text-[10px] text-muted-foreground/60">稳定客户</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </CardBase>
+  )
+}
+
+/**
+ * 11. 时间线预测卡片（新增 - 专业版AI分析）
+ */
+export function EventTimelinePredictionCard({ data }: { data: any }) {
+  const { textScale } = useAppConfig()
+  const { predictions, actionWindow } = data
+
+  return (
+    <CardBase className="mb-3">
+      <div className="flex items-center gap-2 mb-4">
+        <TrendingUp size={16} className="text-primary" />
+        <h3
+          className={cn(DesignTokens.typography.title)}
+          style={{ fontSize: `${fSize(14, textScale)}px` }}
+        >
+          时间线预测
+        </h3>
+      </div>
+
+      {/* 未来3个月预测趋势图 */}
+      {predictions && (
+        <div className="mb-4">
+          <h4
+            className={cn(DesignTokens.typography.title, "mb-3")}
+            style={{ fontSize: `${fSize(12, textScale)}px` }}
+          >
+            未来3个月影响预测
+          </h4>
+          <TrendChart
+            data={predictions.trendData || [
+              { label: "1月后", value: 5 },
+              { label: "2月后", value: 8 },
+              { label: "3月后", value: 12 },
+            ]}
+            height={160}
+          />
+        </div>
+      )}
+
+      {/* 应对窗口可视化 */}
+      {actionWindow && (
+        <div>
+          <h4
+            className={cn(DesignTokens.typography.title, "mb-3")}
+            style={{ fontSize: `${fSize(12, textScale)}px` }}
+          >
+            最佳应对窗口
+          </h4>
+          <div className="relative h-20 bg-muted/20 rounded-xl p-3">
+            <div className="absolute inset-0 flex items-center">
+              {/* 时间轴 */}
+              <div className="w-full h-1 bg-muted/50 rounded-full relative">
+                {/* 当前时间点 */}
+                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-primary border-2 border-background" />
+                {/* 最佳窗口 */}
+                <div
+                  className="absolute h-1 bg-success/40 rounded-full"
+                  style={{
+                    left: `${actionWindow.optimalStart}%`,
+                    width: `${actionWindow.optimalEnd - actionWindow.optimalStart}%`,
+                  }}
+                />
+                {/* 最后期限 */}
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-destructive border-2 border-background" />
+              </div>
+            </div>
+            <div className="relative flex items-center justify-between mt-8">
+              <div className="text-center">
+                <div className="text-[10px] text-muted-foreground/60 mb-1">现在</div>
+                <div className="text-[9px] text-primary font-medium">立即行动</div>
+              </div>
+              <div className="text-center">
+                <div className="text-[10px] text-muted-foreground/60 mb-1">最佳窗口</div>
+                <div className="text-[9px] text-success font-medium">{actionWindow.optimalWindow}</div>
+              </div>
+              <div className="text-center">
+                <div className="text-[10px] text-muted-foreground/60 mb-1">最后期限</div>
+                <div className="text-[9px] text-destructive font-medium">{actionWindow.deadline}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </CardBase>
+  )
+}
+
+/**
+ * 12. 决策支持卡片（新增 - 专业版AI分析）
+ */
+export function EventDecisionSupportCard({ data }: { data: any }) {
+  const { textScale } = useAppConfig()
+  const { inactionLoss, costBenefitAnalysis } = data
+
+  return (
+    <CardBase className="mb-3">
+      <div className="flex items-center gap-2 mb-4">
+        <Lightbulb size={16} className="text-primary" />
+        <h3
+          className={cn(DesignTokens.typography.title)}
+          style={{ fontSize: `${fSize(14, textScale)}px` }}
+        >
+          决策支持分析
+        </h3>
+      </div>
+
+      {/* 不行动损失估算 */}
+      {inactionLoss && (
+        <div className="mb-4">
+          <h4
+            className={cn(DesignTokens.typography.title, "mb-3")}
+            style={{ fontSize: `${fSize(12, textScale)}px` }}
+          >
+            不行动的损失估算
+          </h4>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="p-3 rounded-lg bg-destructive/5 border border-destructive/20">
+              <div className="text-[10px] text-muted-foreground/60 mb-1">3个月后</div>
+              <div
+                className="text-lg font-bold text-destructive mb-1"
+                style={{ fontSize: `${fSize(16, textScale)}px` }}
+              >
+                -{inactionLoss.month3 || "8"}%
+              </div>
+              <div className="text-[10px] text-muted-foreground/60">市场份额</div>
+            </div>
+            <div className="p-3 rounded-lg bg-destructive/5 border border-destructive/20">
+              <div className="text-[10px] text-muted-foreground/60 mb-1">6个月后</div>
+              <div
+                className="text-lg font-bold text-destructive mb-1"
+                style={{ fontSize: `${fSize(16, textScale)}px` }}
+              >
+                -{inactionLoss.month6 || "15"}%
+              </div>
+              <div className="text-[10px] text-muted-foreground/60">市场份额</div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 成本收益分析矩阵 */}
+      {costBenefitAnalysis && (
+        <div>
+          <h4
+            className={cn(DesignTokens.typography.title, "mb-3")}
+            style={{ fontSize: `${fSize(12, textScale)}px` }}
+          >
+            应对方案成本收益分析
+          </h4>
+          <div className="space-y-2">
+            {costBenefitAnalysis.options?.map((option: any, idx: number) => (
+              <div
+                key={idx}
+                className="p-3 rounded-lg bg-muted/20 border border-border/30"
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span
+                    className="text-foreground font-medium"
+                    style={{ fontSize: `${fSize(12, textScale)}px` }}
+                  >
+                    {option.name}
+                  </span>
+                  <span
+                    className={cn(
+                      "px-2 py-0.5 rounded text-[10px] font-medium",
+                      option.recommendation === "推荐" ? "bg-success/20 text-success" : "bg-muted-foreground/20 text-muted-foreground"
+                    )}
+                  >
+                    {option.recommendation}
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 gap-3 text-[10px]">
+                  <div>
+                    <span className="text-muted-foreground/60">成本：</span>
+                    <span className="text-foreground ml-1">{option.cost}</span>
+                  </div>
+                  <div>
+                    <span className="text-muted-foreground/60">收益：</span>
+                    <span className="text-success ml-1">{option.benefit}</span>
+                  </div>
+                </div>
+                {option.description && (
+                  <p
+                    className="text-muted-foreground/70 mt-2"
+                    style={{ fontSize: `${fSize(11, textScale)}px` }}
+                  >
+                    {option.description}
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </CardBase>
   )
 }

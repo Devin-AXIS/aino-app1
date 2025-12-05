@@ -6,10 +6,14 @@
 import type { CardInstance, ReportConfig, ReportWithCards } from "../types/card-types"
 import eventConfig from "@/data/events/event-001/config.json"
 import eventHeader001 from "@/data/events/event-001/cards/event-header-001.json"
+import eventQuickRead001 from "@/data/events/event-001/cards/event-quick-read-001.json"
 import eventCoreInsight001 from "@/data/events/event-001/cards/event-core-insight-001.json"
 import eventSignalMeter001 from "@/data/events/event-001/cards/event-signal-meter-001.json"
+import eventComparison001 from "@/data/events/event-001/cards/event-comparison-001.json"
 import eventMultiImpact001 from "@/data/events/event-001/cards/event-multi-impact-001.json"
+import eventTimelinePrediction001 from "@/data/events/event-001/cards/event-timeline-prediction-001.json"
 import eventActionList001 from "@/data/events/event-001/cards/event-action-list-001.json"
+import eventDecisionSupport001 from "@/data/events/event-001/cards/event-decision-support-001.json"
 import eventDecisionRecord001 from "@/data/events/event-001/cards/event-decision-record-001.json"
 import eventTimeline001 from "@/data/events/event-001/cards/event-timeline-001.json"
 import eventHistory001 from "@/data/events/event-001/cards/event-history-001.json"
@@ -18,10 +22,14 @@ import eventRelatedEntities001 from "@/data/events/event-001/cards/event-related
 // 卡片数据映射
 const eventCardsMap: Record<string, CardInstance> = {
   "event-header-001": { ...(eventHeader001 as CardInstance), dataSource: "api" },
+  "event-quick-read-001": { ...(eventQuickRead001 as CardInstance), dataSource: "ai-generated" },
   "event-core-insight-001": { ...(eventCoreInsight001 as CardInstance), dataSource: "ai-generated" },
   "event-signal-meter-001": { ...(eventSignalMeter001 as CardInstance), dataSource: "ai-generated" },
+  "event-comparison-001": { ...(eventComparison001 as CardInstance), dataSource: "ai-generated" },
   "event-multi-impact-001": { ...(eventMultiImpact001 as CardInstance), dataSource: "ai-generated" },
+  "event-timeline-prediction-001": { ...(eventTimelinePrediction001 as CardInstance), dataSource: "ai-generated" },
   "event-action-list-001": { ...(eventActionList001 as CardInstance), dataSource: "ai-generated" },
+  "event-decision-support-001": { ...(eventDecisionSupport001 as CardInstance), dataSource: "ai-generated" },
   "event-decision-record-001": { ...(eventDecisionRecord001 as CardInstance), dataSource: "api" },
   "event-timeline-001": { ...(eventTimeline001 as CardInstance), dataSource: "api" },
   "event-history-001": { ...(eventHistory001 as CardInstance), dataSource: "ai-generated" },

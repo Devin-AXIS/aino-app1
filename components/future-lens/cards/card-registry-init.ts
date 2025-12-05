@@ -74,6 +74,10 @@ import {
   EventTimelineCard,
   EventHistoryCard,
   EventRelatedEntitiesCard,
+  EventQuickReadCard,
+  EventComparisonCard,
+  EventTimelinePredictionCard,
+  EventDecisionSupportCard,
 } from "../event-detail/event-cards"
 
 /**
@@ -157,6 +161,11 @@ export function initCardRegistry() {
   registerCard("EventTimelineCard", EventTimelineCard)
   registerCard("EventHistoryCard", EventHistoryCard)
   registerCard("EventRelatedEntitiesCard", EventRelatedEntitiesCard)
+  // ===== 专业版AI分析卡片 =====
+  registerCard("EventQuickReadCard", EventQuickReadCard)
+  registerCard("EventComparisonCard", EventComparisonCard)
+  registerCard("EventTimelinePredictionCard", EventTimelinePredictionCard)
+  registerCard("EventDecisionSupportCard", EventDecisionSupportCard)
 }
 
 // 自动初始化（在模块加载时执行）
