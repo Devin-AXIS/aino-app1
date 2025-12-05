@@ -27,6 +27,7 @@ import { DesignTokens } from "@/lib/future-lens/design-tokens"
 import { AIOrb } from "../ui/ai-orb"
 import { useAppConfig } from "@/lib/future-lens/config-context"
 import { translations } from "@/lib/future-lens/i18n"
+import { useToast } from "@/hooks/use-toast"
 import { ModalDialog } from "../ds/modal-dialog"
 import { TextInput } from "../ds/text-input"
 import { MobileInput } from "../ds/mobile-input"
@@ -46,9 +47,10 @@ export function UserProfileView({ onNavigate, onOpenArchive, onOpenInvite, onOpe
   const router = useRouter()
   const { language, setLanguage, textScale, setTextScale, theme, setTheme } = useAppConfig() // Added theme and setTheme
   const t = translations[language] || translations["zh"]
+  const { toast } = useToast()
 
   // 从 localStorage 读取用户信息
-  const [userInfo, setUserInfo] = useState<{ name?: string; phone?: string; email?: string } | null>(null)
+  const [userInfo, setUserInfo] = useState<{ name?: string; phone?: string; email?: string; hasPassword?: boolean } | null>(null)
   
   // 辅助函数：从 i18n 对象中提取姓名
   const getNameFromI18n = (name: any, currentLanguage: string): string => {
@@ -69,10 +71,14 @@ export function UserProfileView({ onNavigate, onOpenArchive, onOpenInvite, onOpe
           const user = JSON.parse(userStr)
           // 处理姓名：可能是字符串或 i18n 对象
           const userName = getNameFromI18n(user.name, language) || user.phone || '用户'
+          // 检查用户是否有密码（从用户信息中判断，或者默认为false，因为注册时使用验证码作为临时密码）
+          // 注意：这里假设如果用户没有明确设置密码，hasPassword 为 false
+          // 实际应该从后端获取，但为了简化，我们假设注册用户默认没有设置密码
           setUserInfo({
             name: userName,
             phone: user.phone,
             email: user.email,
+            hasPassword: user.hasPassword !== undefined ? user.hasPassword : false, // 默认没有设置密码
           })
         } catch (e) {
           console.error('解析用户信息失败:', e)
@@ -86,6 +92,10 @@ export function UserProfileView({ onNavigate, onOpenArchive, onOpenInvite, onOpe
   const [isUpgradeDialogOpen, setIsUpgradeDialogOpen] = useState(false)
   const [isMobileBindOpen, setIsMobileBindOpen] = useState(false) // Added Mobile Bind state
   const [isChangePasswordOpen, setIsChangePasswordOpen] = useState(false) // Added Change Password state
+  const [oldPassword, setOldPassword] = useState("")
+  const [newPassword, setNewPassword] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("")
+  const [passwordError, setPasswordError] = useState("")
   const [isNotificationSettingsOpen, setIsNotificationSettingsOpen] = useState(false) // New state for notification settings modal
   const [isPersonalizationOpen, setIsPersonalizationOpen] = useState(false) // Added personalization state
 
@@ -418,11 +428,22 @@ export function UserProfileView({ onNavigate, onOpenArchive, onOpenInvite, onOpe
             </h4>
             <div
               className="flex items-center justify-between p-3 rounded-xl bg-secondary/30 border border-border/50 cursor-pointer hover:bg-secondary/50 transition-colors"
-              onClick={() => openSubModal(setIsChangePasswordOpen)}
+              onClick={() => {
+                setOldPassword("")
+                setNewPassword("")
+                setConfirmPassword("")
+                setPasswordError("")
+                openSubModal(setIsChangePasswordOpen)
+              }}
             >
               <div className="flex items-center gap-3">
                 <Lock size={16} className="text-muted-foreground" />
-                <span className="text-sm font-medium">{t.settings_password}</span>
+                <span className="text-sm font-medium">
+                  {userInfo?.hasPassword 
+                    ? (language === "zh" ? "修改密码" : "Change Password")
+                    : (language === "zh" ? "设置密码" : "Set Password")
+                  }
+                </span>
               </div>
               <ChevronRight size={14} className="text-muted-foreground" />
             </div>
@@ -585,34 +606,107 @@ export function UserProfileView({ onNavigate, onOpenArchive, onOpenInvite, onOpe
         </div>
       </ModalDialog>
 
-      <ModalDialog isOpen={isChangePasswordOpen} onClose={() => setIsChangePasswordOpen(false)} variant="action-sheet">
+      <ModalDialog 
+        isOpen={isChangePasswordOpen} 
+        onClose={() => {
+          setIsChangePasswordOpen(false)
+          setOldPassword("")
+          setNewPassword("")
+          setConfirmPassword("")
+          setPasswordError("")
+        }} 
+        variant="action-sheet"
+        title={userInfo?.hasPassword 
+          ? (language === "zh" ? "修改密码" : "Change Password")
+          : (language === "zh" ? "设置密码" : "Set Password")
+        }
+      >
         <div className="flex flex-col gap-6 pt-4 pb-8 w-full">
           <div className="space-y-4">
+            {/* 只有已设置密码的用户才需要输入旧密码 */}
+            {userInfo?.hasPassword && (
+              <TextInput
+                leftIcon={<KeyRound size={16} />}
+                type="password"
+                placeholder={language === "zh" ? "请输入旧密码" : "Enter old password"}
+                className="bg-secondary/30"
+                value={oldPassword}
+                onChange={(e) => setOldPassword(e.target.value)}
+              />
+            )}
             <TextInput
-              leftIcon={<KeyRound size={16} />}
+              leftIcon={<Lock size={16} />}
               type="password"
-              placeholder={t.settings_old_password_placeholder}
+              placeholder={language === "zh" ? "请输入新密码（至少6位）" : "Enter new password (min 6 characters)"}
               className="bg-secondary/30"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
             />
             <TextInput
               leftIcon={<Lock size={16} />}
               type="password"
-              placeholder={t.settings_new_password_placeholder}
+              placeholder={language === "zh" ? "请确认新密码" : "Confirm new password"}
               className="bg-secondary/30"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             />
-            <TextInput
-              leftIcon={<Lock size={16} />}
-              type="password"
-              placeholder={t.settings_confirm_password_placeholder}
-              className="bg-secondary/30"
-            />
+            {passwordError && (
+              <div className="text-sm text-red-500 px-1">{passwordError}</div>
+            )}
             <div className="pt-2">
               <PillButton
                 variant="primary"
                 className="w-full h-11 flex-shrink-0"
-                onClick={() => setIsChangePasswordOpen(false)}
+                onClick={async () => {
+                  setPasswordError("")
+                  
+                  // 验证输入
+                  if (userInfo?.hasPassword && !oldPassword) {
+                    setPasswordError(language === "zh" ? "请输入旧密码" : "Please enter old password")
+                    return
+                  }
+                  if (!newPassword || newPassword.length < 6) {
+                    setPasswordError(language === "zh" ? "新密码至少6位" : "New password must be at least 6 characters")
+                    return
+                  }
+                  if (newPassword !== confirmPassword) {
+                    setPasswordError(language === "zh" ? "两次输入的密码不一致" : "Passwords do not match")
+                    return
+                  }
+
+                  try {
+                    if (userInfo?.hasPassword) {
+                      // 修改密码
+                      await changePassword(oldPassword, newPassword)
+                    } else {
+                      // 设置密码
+                      await setPassword(newPassword)
+                      // 更新用户信息，标记已设置密码
+                      setUserInfo(prev => prev ? { ...prev, hasPassword: true } : null)
+                    }
+                    
+                    // 成功提示
+                    toast({
+                      title: language === "zh" ? "成功" : "Success",
+                      description: userInfo?.hasPassword 
+                        ? (language === "zh" ? "密码修改成功" : "Password changed successfully")
+                        : (language === "zh" ? "密码设置成功" : "Password set successfully"),
+                    })
+                    
+                    // 关闭对话框
+                    setIsChangePasswordOpen(false)
+                    setOldPassword("")
+                    setNewPassword("")
+                    setConfirmPassword("")
+                  } catch (error: any) {
+                    setPasswordError(error.message || (language === "zh" ? "操作失败，请重试" : "Operation failed, please try again"))
+                  }
+                }}
               >
-                {t.settings_save_password}
+                {userInfo?.hasPassword 
+                  ? (language === "zh" ? "保存密码" : "Save Password")
+                  : (language === "zh" ? "设置密码" : "Set Password")
+                }
               </PillButton>
             </div>
           </div>
