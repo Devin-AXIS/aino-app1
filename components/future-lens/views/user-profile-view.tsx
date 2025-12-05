@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { useRouter } from "next/navigation"
 import {
@@ -46,6 +46,40 @@ export function UserProfileView({ onNavigate, onOpenArchive, onOpenInvite, onOpe
   const router = useRouter()
   const { language, setLanguage, textScale, setTextScale, theme, setTheme } = useAppConfig() // Added theme and setTheme
   const t = translations[language] || translations["zh"]
+
+  // 从 localStorage 读取用户信息
+  const [userInfo, setUserInfo] = useState<{ name?: string; phone?: string; email?: string } | null>(null)
+  
+  // 辅助函数：从 i18n 对象中提取姓名
+  const getNameFromI18n = (name: any, currentLanguage: string): string => {
+    if (!name) return ''
+    if (typeof name === 'string') return name
+    if (typeof name === 'object' && name !== null) {
+      // 如果是 i18n 对象 { zh: "...", en: "..." }
+      return name[currentLanguage] || name.zh || name.en || ''
+    }
+    return ''
+  }
+  
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const userStr = localStorage.getItem('aino_user')
+      if (userStr) {
+        try {
+          const user = JSON.parse(userStr)
+          // 处理姓名：可能是字符串或 i18n 对象
+          const userName = getNameFromI18n(user.name, language) || user.phone || '用户'
+          setUserInfo({
+            name: userName,
+            phone: user.phone,
+            email: user.email,
+          })
+        } catch (e) {
+          console.error('解析用户信息失败:', e)
+        }
+      }
+    }
+  }, [language]) // 添加 language 依赖，当语言切换时重新解析
 
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false)
@@ -104,10 +138,10 @@ export function UserProfileView({ onNavigate, onOpenArchive, onOpenInvite, onOpe
               className={`${DesignTokens.typography.title} font-bold text-foreground transition-colors`}
               style={{ fontSize: fSize(20) }}
             >
-              Devin
+              {userInfo?.name || '用户'}
             </h2>
             <p className={`${DesignTokens.typography.caption} text-muted-foreground`} style={{ fontSize: fSize(13) }}>
-              @Future_Architect
+              {userInfo?.phone ? `@${userInfo.phone}` : '@Future_Architect'}
             </p>
           </div>
         </div>
