@@ -32,18 +32,12 @@ export function InsightDetailView({ data, onBack }: InsightDetailViewProps) {
     >
       {/* Detail Content */}
       <div className="space-y-6">
-        {/* Headline */}
+        {/* Main Title - 优化：副标题提升为主标题 */}
         <div>
-          <h1 className={`${DesignTokens.typography.title} mb-2`} style={{ fontSize: fSize(17), lineHeight: 1.4 }}>
-            {data.headline}
+          <h1 className={`${DesignTokens.typography.title} mb-2`} style={{ fontSize: fSize(18), lineHeight: 1.5 }}>
+            {data.subheadline || data.headline}
           </h1>
           <p className={`${DesignTokens.typography.caption} text-sm`}>{data.timeStr}</p>
-        </div>
-
-        {/* Subheadline */}
-        <div className="p-4 bg-muted/30 rounded-xl border border-border/50">
-          <h2 className={`${DesignTokens.typography.caption} mb-2`}>{t.background || "背景"}</h2>
-          <p className={`${DesignTokens.typography.body} text-sm`}>{data.subheadline}</p>
         </div>
 
         {/* Impact */}

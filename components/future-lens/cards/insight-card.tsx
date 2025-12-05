@@ -73,14 +73,14 @@ export const InsightCard = ({ data, onClick }: CardProps & { onClick?: () => voi
           </span>
         </div>
 
-        {/* 2. Main Text */}
+        {/* 2. Main Text - 优化：移除标题，副标题提升为主标题 */}
         <div>
-          <h3 className={`${DesignTokens.typography.title} mb-1.5`} style={{ fontSize: fSize(17) }}>
-            {headline}
+          <h3 
+            className={`${DesignTokens.typography.title} mb-0 leading-relaxed line-clamp-3`} 
+            style={{ fontSize: fSize(14), lineHeight: 1.5 }}
+          >
+            {subheadline || headline}
           </h3>
-          <p className={`${DesignTokens.typography.subtitle} line-clamp-2`} style={{ fontSize: fSize(13) }}>
-            {subheadline}
-          </p>
         </div>
 
         {/* 3. AI Action Footer */}

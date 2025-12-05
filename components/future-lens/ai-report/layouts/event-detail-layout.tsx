@@ -28,9 +28,10 @@ import { Separator } from "@/components/ui/separator"
 interface EventDetailLayoutProps {
   reportData: ReportWithCards & { taskSummaryCards?: CardInstance[] }
   onBack: () => void
+  onEventChange?: (eventId: string) => void  // 事件切换回调
 }
 
-export function EventDetailLayout({ reportData, onBack }: EventDetailLayoutProps) {
+export function EventDetailLayout({ reportData, onBack, onEventChange }: EventDetailLayoutProps) {
   const [activeTab, setActiveTab] = useState(0)
   const [showTabsInHeader, setShowTabsInHeader] = useState(false)
   const [taskEventsList, setTaskEventsList] = useState<any>(null)
@@ -217,8 +218,10 @@ export function EventDetailLayout({ reportData, onBack }: EventDetailLayoutProps
                       : "border border-border hover:border-primary/20"
                   )}
                   onClick={() => {
-                    // TODO: 切换查看其他事件
-                    console.log("Switch to event:", event.id)
+                    // 切换查看其他事件
+                    if (onEventChange) {
+                      onEventChange(event.id)
+                    }
                   }}
                 >
                   <div className="flex items-start justify-between">

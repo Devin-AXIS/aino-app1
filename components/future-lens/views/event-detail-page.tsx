@@ -10,6 +10,7 @@ import { EventDetailLayout } from "@/components/future-lens/ai-report/layouts/ev
 interface EventDetailPageProps {
   eventId: string
   onBack: () => void
+  onEventChange?: (eventId: string) => void  // 事件切换回调
 }
 
 /**
@@ -17,7 +18,7 @@ interface EventDetailPageProps {
  * 统一使用 TabsStickyLayout 布局组件，与报告页面保持一致
  * 完全通过配置驱动（config.json + cards/*.json）
  */
-export function EventDetailPage({ eventId, onBack }: EventDetailPageProps) {
+export function EventDetailPage({ eventId, onBack, onEventChange }: EventDetailPageProps) {
   const [eventData, setEventData] = useState<(ReportWithCards & { taskSummaryCards?: CardInstance[] }) | null>(null)
   const [loading, setLoading] = useState(true)
 
@@ -56,7 +57,11 @@ export function EventDetailPage({ eventId, onBack }: EventDetailPageProps) {
 
         <div className="relative z-10 h-full">
           {/* 使用 EventDetailLayout，支持事件卡片在前、任务卡片在后 */}
-          <EventDetailLayout reportData={eventData} onBack={onBack} />
+          <EventDetailLayout 
+            reportData={eventData} 
+            onBack={onBack}
+            onEventChange={onEventChange}
+          />
         </div>
       </div>
     </div>

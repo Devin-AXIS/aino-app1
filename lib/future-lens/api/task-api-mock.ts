@@ -72,3 +72,4 @@ export function getEventIdFromTask(card: CardInstance): string | null {
   return card.metadata?.eventId || null
 }
 
+

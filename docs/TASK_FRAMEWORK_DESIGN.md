@@ -440,3 +440,4 @@ export function GenericCard({ data, config }: {
 2. **短期规划**：通用卡片组件
 3. **长期规划**：AI 集成
 
+

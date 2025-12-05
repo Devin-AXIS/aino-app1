@@ -249,7 +249,16 @@ export const CARD_TEMPLATE_CONFIGS: Record<CardTemplateId, CardTemplateConfig> =
 /**
  * 获取卡片模板配置
  */
-export function getCardTemplateConfig(templateId: CardTemplateId): CardTemplateConfig {
+/**
+ * 获取卡片模板配置
+ * @param templateId - 卡片模板ID（可以是任意字符串，AI生成的新类型也支持）
+ * @returns 卡片模板配置，如果不存在则返回 undefined
+ * 
+ * @note AI友好：
+ * - 如果 templateId 在配置表中存在，返回对应配置
+ * - 如果不存在（AI生成的新类型），返回 undefined，使用通用卡片组件
+ */
+export function getCardTemplateConfig(templateId: CardTemplateId): CardTemplateConfig | undefined {
   return CARD_TEMPLATE_CONFIGS[templateId]
 }
 

@@ -72,12 +72,36 @@ export async function getTaskConfig(taskId: string): Promise<any> {
 
 /**
  * 获取事件配置（包含任务ID）
+ * 
+ * @note 目前只支持 event-001，其他事件返回降级配置
+ * 未来AI生成事件时，会动态创建事件配置
  */
 export async function getEventConfig(eventId: string): Promise<ReportConfig> {
   await new Promise((resolve) => setTimeout(resolve, 100))
   
+  // 支持 event-001（完整配置）
   if (eventId === "event-001") {
     return event001Config as ReportConfig
+  }
+  
+  // 其他事件返回降级配置（使用 event-001 的配置结构，但使用当前事件的信息）
+  // 这样可以避免错误，同时保持功能可用
+  const eventsList = eventsList001 as any
+  const event = eventsList.events?.find((e: any) => e.id === eventId)
+  
+  if (event) {
+    // 返回降级配置，使用 event-001 的结构，但替换事件信息
+    return {
+      ...event001Config,
+      id: eventId,
+      name: event.name,
+      metadata: {
+        ...event001Config.metadata,
+        createdAt: event.createdAt,
+        urgency: event.urgency,
+        impact: event.impact,
+      },
+    } as ReportConfig
   }
   
   throw new Error(`Event not found: ${eventId}`)

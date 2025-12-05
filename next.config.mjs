@@ -8,8 +8,8 @@ const nextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
   },
-  reactCompiler: true,
-  cacheComponents: true,
+  // reactCompiler: true, // 临时禁用以修复 useMemoCache 错误
+  // cacheComponents: true,
   experimental: {
     optimizePackageImports: [
       'recharts',

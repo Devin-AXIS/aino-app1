@@ -9,9 +9,18 @@ export default function EventDetailRoute({ params }: { params: Promise<{ id: str
   const router = useRouter()
   const { id } = use(params)
 
+  // 处理事件切换：更新URL并重新加载
+  const handleEventChange = (newEventId: string) => {
+    router.push(`/event/${newEventId}`)
+  }
+
   return (
     <ConfigProvider>
-      <EventDetailPage eventId={id} onBack={() => router.back()} />
+      <EventDetailPage 
+        eventId={id} 
+        onBack={() => router.back()}
+        onEventChange={handleEventChange}
+      />
     </ConfigProvider>
   )
 }
