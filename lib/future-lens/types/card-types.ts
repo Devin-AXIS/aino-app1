@@ -13,83 +13,25 @@
 export type CardDataSource = "api" | "ai-generated"
 
 /**
- * 卡片模板ID（语义化，AI易理解）
- * 对应前端的卡片组件名称
+ * 卡片模板ID（完全动态，AI可以生成任意类型）
+ * 
+ * @note AI友好设计：
+ * - 使用 string 类型，AI 可以生成任意 templateId
+ * - 预定义卡片：如 "event-header", "event-core-insight" 等
+ * - AI生成卡片：如 "event-competitor-price-comparison", "event-market-sentiment-analysis" 等
+ * - 运行时验证：通过 card-registry 检查是否存在对应组件
+ * - 降级处理：如果不存在，使用 GenericCard 或默认卡片
+ * 
+ * @example
+ * ```typescript
+ * // 预定义卡片
+ * const predefinedCard: CardTemplateId = "event-header"
+ * 
+ * // AI生成的新卡片
+ * const aiGeneratedCard: CardTemplateId = "event-competitor-price-comparison"
+ * ```
  */
-export type CardTemplateId =
-  | "industry-stack"        // 产业结构分层
-  | "trend-radar"           // 核心趋势雷达
-  | "structural-shift"      // 价值重心迁移
-  | "tech-timeline"         // 技术突破时间轴
-  | "industry-pace"         // 行业节奏指征
-  | "capital-flow"          // 资金流向追踪
-  | "player-impact"         // 领军企业象限
-  | "narrative-capital"     // 叙事与资本共振
-  | "supply-chain-health"   // 供应链脆弱性
-  | "ecosystem-map"         // 生态网络拓扑
-  | "strategy-window"        // 战略机遇窗口
-  | "influencer"            // 关键人物图谱
-  | "scenario"              // 未来情景推演
-  | "shock-simulation"      // 风险传导模拟
-  | "factor-weighting"      // 驱动因素权重
-  | "insight-compression"   // AI核心洞察压缩
-  | "report-card"           // 报告卡片（指向整个报告）
-  // 企业分析报告卡片模板
-  | "company-snapshot"      // 企业一屏总览
-  | "company-profile"       // 公司基础档案
-  | "business-mix"          // 业务结构 & 收入构成
-  | "product-tech-map"      // 产品 & 技术栈地图
-  | "customer-use-case"     // 客户 & 使用场景分布
-  | "org-footprint"         // 组织 & 地理布局
-  | "industry-positioning"  // 行业位置 & 市场份额
-  | "moat-map"              // 护城河 & 关键优势结构
-  | "peer-comparison"       // 竞品对标卡
-  | "ecosystem-embedding"   // 生态嵌入度 & 合作网络
-  | "talent-culture"        // 人才 & 文化画像
-  | "financial-health"      // 财务健康度 & 现金流
-  | "ownership-capital"     // 股权结构 & 资金来源
-  | "risk-radar"            // 风险雷达
-  | "strategic-moves"       // 战略动作时间线
-  | "future-growth"         // 未来增长引擎
-  | "ai-executive-insight"   // AI 总评洞察卡
-  // 产品分析报告卡片模板
-  | "product-snapshot"       // 产品一屏总览
-  | "user-profile"           // 用户画像 & 核心人群
-  | "core-tasks"             // 核心任务 & 使用场景
-  | "experience-journey"     // 体验路径 & 关键流程
-  | "feature-heatmap"        // 功能使用热度 & 模块权重
-  | "personalization"        // 个性化 & 交互风格
-  | "architecture-overview"  // 技术架构总览
-  | "capability-engine"      // 能力引擎 & 算法逻辑
-  | "data-integration"        // 数据 & 集成能力
-  | "performance-reliability" // 性能 & 可靠性画像
-  | "security-governance"     // 安全、合规 & 运维控制
-  | "business-model"         // 商业模式 & 付费点
-  | "user-growth"            // 用户增长 & 渠道结构
-  | "retention-engagement"   // 留存、粘性 & 习惯养成
-  | "product-moat"           // 产品护城河 & 可复制性
-  | "roadmap-risks"          // 路线图 & 风险点
-  | "ai-product-insight"      // AI 产品总评卡
-  // 事件详情页卡片模板
-  | "event-header"            // 事件抬头区
-  | "event-core-insight"      // 核心结论卡
-  | "event-signal-meter"      // 信号仪表条
-  | "event-multi-impact"      // 多维影响区
-  | "event-action-list"       // 建议动作区
-  | "event-decision-record"   // 决策记录区
-  | "event-timeline"          // 事件脉络区
-  | "event-history"           // 类似历史事件区
-  | "event-related-entities" // 相关产业/企业/产品
-  | "event-quick-read"       // 30秒速读卡片（专业版）
-  | "event-comparison"       // 对比分析卡片（专业版）
-  | "event-timeline-prediction" // 时间线预测卡片（专业版）
-  | "event-decision-support"    // 决策支持卡片（专业版）
-  // 任务总结卡片模板
-  | "task-monitor-scope"         // 任务监控范围卡
-  | "task-statistics"            // 任务统计卡
-  | "task-trend"                 // 任务趋势卡
-  | "task-rules"                 // 任务规则卡（可选）
-  | "task-insights"              // 任务洞察卡（可选）
+export type CardTemplateId = string
 
 /**
  * 报告类别（语义化）
@@ -185,6 +127,10 @@ export interface CardInstance {
     generatedReason?: string
     /** AI生成的卡片：原始查询 */
     generatedQuery?: string
+    /** 事件ID（用于事件卡片关联） */
+    eventId?: string
+    /** 任务ID（用于任务卡片关联） */
+    taskId?: string
   }
 }
 
