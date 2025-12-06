@@ -40,11 +40,11 @@ export async function registerWithPhone(phone: string, code: string, userInfo?: 
     const config = await import('./config').then(m => m.getAINOConfig())
     let applicationId = config.applicationId
     
-    // 如果还是没有，使用硬编码的默认应用（正式可用的key: app-817de16a9cb94c30）
-    // 完整应用ID: 817de16a-9cb9-4c30-b5e8-f8c92ce24f94
+    // 如果还是没有，使用硬编码的默认应用（正式可用的key: app-0a503b452b944ed6）
+    // 完整应用ID: 0a503b45-2b94-4ed6-b651-cf15e197b76c
     if (!applicationId) {
-      applicationId = '817de16a-9cb9-4c30-b5e8-f8c92ce24f94'
-      console.log('✅ 使用默认应用ID:', applicationId, '(key: app-817de16a9cb94c30)')
+      applicationId = '0a503b45-2b94-4ed6-b651-cf15e197b76c'
+      console.log('✅ 使用默认应用ID:', applicationId, '(key: app-0a503b452b944ed6)')
       
       // 保存到localStorage，方便后续使用
       if (typeof window !== 'undefined') {
@@ -170,11 +170,11 @@ export async function loginWithPhoneAndCode(phone: string, code: string) {
       applicationId = localStorage.getItem('aino_application_id') || undefined
     }
     
-    // 如果还是没有，使用硬编码的默认应用（正式可用的key: app-817de16a9cb94c30）
-    // 完整应用ID: 817de16a-9cb9-4c30-b5e8-f8c92ce24f94
+    // 如果还是没有，使用硬编码的默认应用（正式可用的key: app-0a503b452b944ed6）
+    // 完整应用ID: 0a503b45-2b94-4ed6-b651-cf15e197b76c
     if (!applicationId) {
-      applicationId = '817de16a-9cb9-4c30-b5e8-f8c92ce24f94'
-      console.log('✅ 使用默认应用ID:', applicationId, '(key: app-817de16a9cb94c30)')
+      applicationId = '0a503b45-2b94-4ed6-b651-cf15e197b76c'
+      console.log('✅ 使用默认应用ID:', applicationId, '(key: app-0a503b452b944ed6)')
       
       // 保存到localStorage，方便后续使用
       if (typeof window !== 'undefined') {
@@ -203,7 +203,14 @@ export async function loginWithPhoneAndCode(phone: string, code: string) {
     console.log('✅ 登录成功:', result)
     return result
   } catch (error: any) {
-    console.error('登录失败:', error)
+    // 如果是"手机号或密码错误"，这可能是正常的（用户未注册），让调用方尝试注册
+    // 只在非预期错误时记录详细日志
+    if (error.message && !error.message.includes('手机号或密码错误')) {
+      console.error('登录失败:', error)
+    } else {
+      // 静默处理"手机号或密码错误"，这是预期的（用户可能未注册）
+      console.log('ℹ️ 登录失败（用户可能未注册，将尝试注册）:', error.message)
+    }
     
     // 失败时返回 mock，避免应用崩溃
     if (!USE_REAL_API) {
@@ -308,7 +315,7 @@ export async function getCurrentUser() {
 /**
  * 更新用户信息
  */
-export async function updateUserInfo(data: { name?: string; avatar?: string; phone?: string }) {
+export async function updateUserInfo(data: { name?: string; avatar?: string; phone?: string; id?: string; email?: string }) {
   if (!USE_REAL_API) {
     // Mock 更新
     console.log('🔧 [Mock] 更新用户信息:', data)
@@ -324,24 +331,58 @@ export async function updateUserInfo(data: { name?: string; avatar?: string; pho
     
     // 如果还是没有，使用硬编码的默认应用
     if (!applicationId) {
-      applicationId = '817de16a-9cb9-4c30-b5e8-f8c92ce24f94'
+      applicationId = '0a503b45-2b94-4ed6-b651-cf15e197b76c'
     }
 
-    // 从 localStorage 获取当前用户ID
+    // 从 localStorage 获取当前用户ID（应用用户的 UUID）
     let userId: string | null = null
     if (typeof window !== 'undefined') {
       const userStr = localStorage.getItem('aino_user')
       if (userStr) {
         try {
           const user = JSON.parse(userStr)
-          userId = user.id || user.userId
+          console.log('🔍 updateUserInfo 从 localStorage 读取用户信息:', { 
+            hasUserId: !!user.userId, 
+            userId: user.userId,
+            hasId: !!user.id,
+            id: user.id,
+            idIsUUID: user.id && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(user.id)
+          })
+          
+          // 优先使用 userId（应用用户的 UUID），如果没有则使用 id（可能是业务数据中的 ID）
+          // 如果 id 是 UUID 格式，则使用它；否则尝试从其他字段获取
+          userId = user.userId || (user.id && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(user.id) ? user.id : null)
+          
+          // 如果还是找不到 UUID，记录详细警告信息
+          if (!userId) {
+            console.warn('⚠️ 未找到应用用户 UUID:', { 
+              user: {
+                userId: user.userId,
+                id: user.id,
+                phone: user.phone || user.phone_number,
+                name: user.name
+              }
+            })
+            
+            // 如果 id 不是 UUID（可能是手机号），尝试通过手机号查找用户
+            // 但这里我们无法直接查询，所以需要提示用户重新登录
+            throw new Error('用户信息不完整，请重新登录')
+          }
         } catch (e) {
           console.error('解析用户信息失败:', e)
+          // 如果是我们抛出的错误，直接抛出
+          if (e instanceof Error && e.message.includes('请重新登录')) {
+            throw e
+          }
+          // 其他解析错误，也提示重新登录
+          throw new Error('用户信息解析失败，请重新登录')
         }
       }
     }
 
     if (!userId) {
+      console.error('❌ updateUserInfo 未找到用户ID，localStorage 中的用户信息:', 
+        typeof window !== 'undefined' ? localStorage.getItem('aino_user') : 'N/A')
       throw new Error('未找到用户ID，请先登录')
     }
 
@@ -354,6 +395,7 @@ export async function updateUserInfo(data: { name?: string; avatar?: string; pho
           name: data.name,
           avatar: data.avatar,
           email: data.email,
+          id: data.id,
         }),
       }
     )
@@ -366,7 +408,13 @@ export async function updateUserInfo(data: { name?: string; avatar?: string; pho
       if (userStr) {
         try {
           const user = JSON.parse(userStr)
-          const updatedUser = { ...user, ...result.data }
+          // 确保保留 userId 字段（应用用户的 UUID），因为后端返回的 result.data 可能不包含它
+          const updatedUser = { 
+            ...user, 
+            ...result.data,
+            userId: user.userId || result.data.userId || (user.id && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(user.id) ? user.id : null) || result.data.userId
+          }
+          console.log('🔍 updateUserInfo 更新 localStorage，保留 userId:', updatedUser.userId)
           localStorage.setItem('aino_user', JSON.stringify(updatedUser))
         } catch (e) {
           console.error('更新localStorage用户信息失败:', e)
@@ -408,11 +456,11 @@ export async function sendVerificationCode(phone: string) {
       applicationId = localStorage.getItem('aino_application_id') || undefined
     }
     
-    // 如果还是没有，使用硬编码的默认应用（正式可用的key: app-817de16a9cb94c30）
-    // 完整应用ID: 817de16a-9cb9-4c30-b5e8-f8c92ce24f94
+    // 如果还是没有，使用硬编码的默认应用（正式可用的key: app-0a503b452b944ed6）
+    // 完整应用ID: 0a503b45-2b94-4ed6-b651-cf15e197b76c
     if (!applicationId) {
-      applicationId = '817de16a-9cb9-4c30-b5e8-f8c92ce24f94'
-      console.log('✅ 使用默认应用ID:', applicationId, '(key: app-817de16a9cb94c30)')
+      applicationId = '0a503b45-2b94-4ed6-b651-cf15e197b76c'
+      console.log('✅ 使用默认应用ID:', applicationId, '(key: app-0a503b452b944ed6)')
       
       // 保存到localStorage，方便后续使用
       if (typeof window !== 'undefined') {
@@ -463,7 +511,7 @@ export async function changePassword(oldPassword: string, newPassword: string) {
     const config = await import('./config').then(m => m.getAINOConfig())
     let applicationId = config.applicationId
     if (!applicationId) {
-      applicationId = '817de16a-9cb9-4c30-b5e8-f8c92ce24f94'
+      applicationId = '0a503b45-2b94-4ed6-b651-cf15e197b76c'
     }
 
     // 获取用户手机号
@@ -483,6 +531,18 @@ export async function changePassword(oldPassword: string, newPassword: string) {
     if (!phone) {
       throw new Error('请先登录')
     }
+
+    // 检查 token 是否存在
+    let token: string | null = null
+    if (typeof window !== 'undefined') {
+      token = localStorage.getItem('aino_token')
+      if (!token) {
+        console.warn('⚠️ 未找到 token，可能需要重新登录')
+        throw new Error('请先登录')
+      }
+    }
+
+    console.log('🔑 修改密码:', { phone, hasToken: !!token, applicationId })
 
     const result = await apiRequest(
       `/api/modules/system/user/change-password?applicationId=${applicationId}`,
@@ -517,7 +577,7 @@ export async function setPassword(newPassword: string) {
     const config = await import('./config').then(m => m.getAINOConfig())
     let applicationId = config.applicationId
     if (!applicationId) {
-      applicationId = '817de16a-9cb9-4c30-b5e8-f8c92ce24f94'
+      applicationId = '0a503b45-2b94-4ed6-b651-cf15e197b76c'
     }
 
     // 获取用户手机号
@@ -537,6 +597,18 @@ export async function setPassword(newPassword: string) {
     if (!phone) {
       throw new Error('请先登录')
     }
+
+    // 检查 token 是否存在
+    let token: string | null = null
+    if (typeof window !== 'undefined') {
+      token = localStorage.getItem('aino_token')
+      if (!token) {
+        console.warn('⚠️ 未找到 token，可能需要重新登录')
+        throw new Error('请先登录')
+      }
+    }
+
+    console.log('🔑 设置密码:', { phone, hasToken: !!token, applicationId })
 
     const result = await apiRequest(
       `/api/modules/system/user/change-password?applicationId=${applicationId}`,

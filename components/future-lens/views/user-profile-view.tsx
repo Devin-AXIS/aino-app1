@@ -28,7 +28,8 @@ import { AIOrb } from "../ui/ai-orb"
 import { useAppConfig } from "@/lib/future-lens/config-context"
 import { translations } from "@/lib/future-lens/i18n"
 import { useToast } from "@/hooks/use-toast"
-import { changePassword, setPassword } from "@/lib/aino-sdk/user-api"
+import { changePassword, setPassword, updateUserInfo } from "@/lib/aino-sdk/user-api"
+import { getCurrentUserPointsAccount } from "@/lib/aino-sdk/points-api"
 import { ModalDialog } from "../ds/modal-dialog"
 import { TextInput } from "../ds/text-input"
 import { MobileInput } from "../ds/mobile-input"
@@ -51,7 +52,10 @@ export function UserProfileView({ onNavigate, onOpenArchive, onOpenInvite, onOpe
   const { toast } = useToast()
 
   // 从 localStorage 读取用户信息
-  const [userInfo, setUserInfo] = useState<{ name?: string; phone?: string; email?: string; hasPassword?: boolean } | null>(null)
+  const [userInfo, setUserInfo] = useState<{ name?: string; phone?: string; email?: string; hasPassword?: boolean; id?: string } | null>(null)
+  // 积分账户信息
+  const [pointsBalance, setPointsBalance] = useState<number>(0)
+  const [pointsName, setPointsName] = useState<string>('积分') // 积分名称，默认为"积分"
   
   // 辅助函数：从 i18n 对象中提取姓名
   const getNameFromI18n = (name: any, currentLanguage: string): string => {
@@ -80,13 +84,82 @@ export function UserProfileView({ onNavigate, onOpenArchive, onOpenInvite, onOpe
             phone: user.phone,
             email: user.email,
             hasPassword: user.hasPassword !== undefined ? user.hasPassword : false, // 默认没有设置密码
+            id: user.id || user.phone, // 用户ID，默认是手机号
           })
+          
+          // 获取积分账户信息
+          const userId = user.userId || (user.id && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(user.id) ? user.id : null)
+          if (userId) {
+            getCurrentUserPointsAccount('points').then((account) => {
+              setPointsBalance(account.balance || 0)
+              // 使用真实的积分名称，优先使用 i18n 格式，根据当前语言显示
+              if (account.pointsNameI18n) {
+                const currentLang = (language === 'zh' || (language as string) === 'zh-CN') ? 'zh' : 'en'
+                setPointsName(account.pointsNameI18n[currentLang] || account.pointsNameI18n.zh || account.pointsName || '积分')
+              } else {
+                setPointsName(account.pointsName || '积分')
+              }
+            }).catch((error) => {
+              console.error('获取积分账户失败:', error)
+              // 失败时保持默认值
+              setPointsBalance(0)
+              setPointsName('积分')
+            })
+          }
         } catch (e) {
           console.error('解析用户信息失败:', e)
         }
       }
     }
   }, [language]) // 添加 language 依赖，当语言切换时重新解析
+
+  // 刷新积分余额的函数
+  const refreshPointsBalance = async () => {
+    if (typeof window !== 'undefined') {
+      const userStr = localStorage.getItem('aino_user')
+      if (userStr) {
+        try {
+          const user = JSON.parse(userStr)
+          const userId = user.userId || (user.id && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(user.id) ? user.id : null)
+          if (userId) {
+            try {
+              const account = await getCurrentUserPointsAccount('points')
+              setPointsBalance(account.balance || 0)
+              // 同时更新积分名称，优先使用 i18n 格式
+              if (account.pointsNameI18n) {
+                const currentLang = (language === 'zh' || language === 'zh-CN') ? 'zh' : 'en'
+                setPointsName(account.pointsNameI18n[currentLang] || account.pointsNameI18n.zh || account.pointsName || '积分')
+              } else {
+                setPointsName(account.pointsName || '积分')
+              }
+            } catch (error) {
+              console.error('刷新积分余额失败:', error)
+            }
+          }
+        } catch (e) {
+          console.error('解析用户信息失败:', e)
+        }
+      }
+    }
+  }
+
+  // 定期刷新积分余额（每30秒）
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refreshPointsBalance()
+    }, 30000) // 30秒刷新一次
+
+    return () => clearInterval(interval)
+  }, [])
+
+  // 当页面获得焦点时刷新积分余额
+  useEffect(() => {
+    const handleFocus = () => {
+      refreshPointsBalance()
+    }
+    window.addEventListener('focus', handleFocus)
+    return () => window.removeEventListener('focus', handleFocus)
+  }, [])
 
   const [isSettingsOpen, setIsSettingsOpen] = useState(false)
   const [isEditProfileOpen, setIsEditProfileOpen] = useState(false)
@@ -98,6 +171,33 @@ export function UserProfileView({ onNavigate, onOpenArchive, onOpenInvite, onOpe
   const [confirmPassword, setConfirmPassword] = useState("")
   const [passwordError, setPasswordError] = useState("")
   const [isNotificationSettingsOpen, setIsNotificationSettingsOpen] = useState(false) // New state for notification settings modal
+  
+  // 编辑个人资料的状态
+  const [editName, setEditName] = useState("")
+  const [editAvatar, setEditAvatar] = useState("")
+  const [editId, setEditId] = useState("")
+  const [isSaving, setIsSaving] = useState(false)
+
+  // 打开编辑个人资料时，初始化表单数据
+  useEffect(() => {
+    if (isEditProfileOpen && userInfo) {
+      setEditName(userInfo.name || '')
+      setEditId(userInfo.id || userInfo.phone || '')
+      // 从localStorage获取头像
+      if (typeof window !== 'undefined') {
+        const userStr = localStorage.getItem('aino_user')
+        if (userStr) {
+          try {
+            const user = JSON.parse(userStr)
+            setEditAvatar(user.avatar || '')
+            setEditId(user.id || user.phone || '')
+          } catch (e) {
+            console.error('解析用户信息失败:', e)
+          }
+        }
+      }
+    }
+  }, [isEditProfileOpen, userInfo])
   const [isPersonalizationOpen, setIsPersonalizationOpen] = useState(false) // Added personalization state
 
   const [notifySystem, setNotifySystem] = useState(true)
@@ -130,13 +230,31 @@ export function UserProfileView({ onNavigate, onOpenArchive, onOpenInvite, onOpe
           <div className="relative">
             <motion.button
               whileTap={{ scale: 0.95 }}
-              onClick={() => router.push("/auth")}
+              onClick={() => setIsEditProfileOpen(true)}
               className="w-11 h-11 rounded-full bg-gradient-to-tr from-slate-200 to-slate-100 dark:from-slate-800 dark:to-slate-700 p-0.5 ring-1 ring-border shadow-xl shadow-slate-300/40 dark:shadow-none group-hover:scale-105 transition-transform duration-300 cursor-pointer"
             >
               <div className="w-full h-full rounded-full bg-background flex items-center justify-center overflow-hidden">
-                <div className="w-full h-full bg-slate-100 dark:bg-slate-900 flex items-center justify-center text-lg">
-                  👾
-                </div>
+                {(() => {
+                  // 从localStorage获取头像
+                  if (typeof window !== 'undefined') {
+                    const userStr = localStorage.getItem('aino_user')
+                    if (userStr) {
+                      try {
+                        const user = JSON.parse(userStr)
+                        if (user.avatar) {
+                          return <img src={user.avatar} alt="Avatar" className="w-full h-full object-cover" />
+                        }
+                      } catch (e) {
+                        // 忽略解析错误
+                      }
+                    }
+                  }
+                  return (
+                    <div className="w-full h-full bg-slate-100 dark:bg-slate-900 flex items-center justify-center text-lg">
+                      👾
+                    </div>
+                  )
+                })()}
               </div>
             </motion.button>
             <div className="absolute -bottom-0.5 -right-0.5 bg-background rounded-full p-0.5 shadow-sm pointer-events-none">
@@ -152,7 +270,7 @@ export function UserProfileView({ onNavigate, onOpenArchive, onOpenInvite, onOpe
               {userInfo?.name || '用户'}
             </h2>
             <p className={`${DesignTokens.typography.caption} text-muted-foreground`} style={{ fontSize: fSize(13) }}>
-              {userInfo?.phone ? `@${userInfo.phone}` : '@Future_Architect'}
+              {userInfo?.id ? `@${userInfo.id}` : userInfo?.phone ? `@${userInfo.phone}` : '@Future_Architect'}
             </p>
           </div>
         </div>
@@ -184,11 +302,11 @@ export function UserProfileView({ onNavigate, onOpenArchive, onOpenInvite, onOpe
                   style={{ fontSize: fSize(10) }}
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
-                  {t.profile_future_coin}
+                  {pointsName}
                 </p>
                 {/* Reduced base font size from 32 to 26 to prevent layout overflow on mobile */}
                 <h3 className="font-bold text-foreground tabular-nums tracking-tight" style={{ fontSize: fSize(26) }}>
-                  2,450.00
+                  {pointsBalance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </h3>
               </div>
               {/* Redesigned Member Level to be premium "Titanium" style */}
@@ -451,7 +569,21 @@ export function UserProfileView({ onNavigate, onOpenArchive, onOpenInvite, onOpe
           </div>
 
           {/* Logout Button */}
-          <button className="w-full p-3.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-500 font-medium flex items-center justify-center gap-2 transition-colors mt-2">
+          <button 
+            onClick={() => {
+              // 清除所有登录相关的 localStorage 数据
+              if (typeof window !== 'undefined') {
+                localStorage.removeItem('aino_token')
+                localStorage.removeItem('aino_user')
+                localStorage.removeItem('aino_application_id')
+                // 清除用户信息状态
+                setUserInfo(null)
+                // 跳转到登录页面
+                router.push('/auth')
+              }
+            }}
+            className="w-full p-3.5 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-500 font-medium flex items-center justify-center gap-2 transition-colors mt-2"
+          >
             <LogOut size={16} />
             {t.settings_logout}
           </button>
@@ -555,30 +687,176 @@ export function UserProfileView({ onNavigate, onOpenArchive, onOpenInvite, onOpe
       <ModalDialog isOpen={isEditProfileOpen} onClose={() => setIsEditProfileOpen(false)} variant="action-sheet">
         <div className="flex flex-col items-center gap-6 pt-4">
           {/* Avatar Upload */}
-          <div className="relative group cursor-pointer">
-            <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-slate-200 to-slate-100 dark:from-slate-800 dark:to-slate-700 p-1 ring-2 ring-border shadow-xl">
-              <div className="w-full h-full rounded-full bg-background flex items-center justify-center overflow-hidden">
-                <div className="text-4xl">👾</div>
+          <div className="relative group">
+            <input
+              type="file"
+              accept="image/*"
+              className="hidden"
+              id="avatar-upload"
+              onChange={(e) => {
+                const file = e.target.files?.[0]
+                if (file) {
+                  // 验证文件大小（最大5MB）
+                  if (file.size > 5 * 1024 * 1024) {
+                    toast({
+                      title: language === "zh" ? "文件过大" : "File too large",
+                      description: language === "zh" ? "图片大小不能超过5MB" : "Image size must be less than 5MB",
+                      variant: "destructive",
+                    })
+                    return
+                  }
+                  
+                  // 转换为base64用于预览和上传
+                  const reader = new FileReader()
+                  reader.onloadend = () => {
+                    const base64String = reader.result as string
+                    setEditAvatar(base64String)
+                  }
+                  reader.readAsDataURL(file)
+                }
+              }}
+            />
+            <label
+              htmlFor="avatar-upload"
+              className="relative group cursor-pointer block"
+            >
+              <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-slate-200 to-slate-100 dark:from-slate-800 dark:to-slate-700 p-1 ring-2 ring-border shadow-xl">
+                <div className="w-full h-full rounded-full bg-background flex items-center justify-center overflow-hidden">
+                  {editAvatar ? (
+                    <img src={editAvatar} alt="Avatar" className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="text-4xl">👾</div>
+                  )}
+                </div>
               </div>
-            </div>
-            <div className="absolute inset-0 rounded-full bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-              <Camera className="text-white" />
-            </div>
-            <div className="absolute bottom-0 right-0 bg-primary text-primary-foreground p-1.5 rounded-full shadow-lg">
-              <Camera size={14} />
-            </div>
+              <div className="absolute inset-0 rounded-full bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                <Camera className="text-white" />
+              </div>
+              <div className="absolute bottom-0 right-0 bg-primary text-primary-foreground p-1.5 rounded-full shadow-lg pointer-events-none">
+                <Camera size={14} />
+              </div>
+            </label>
           </div>
 
           {/* Form Fields */}
           <div className="w-full space-y-4">
-            <TextInput label={t.settings_name} placeholder="Devin" icon={<User size={16} />} defaultValue="Devin" />
+            <TextInput
+              label={t.settings_name}
+              placeholder={language === "zh" ? "请输入姓名" : "Enter your name"}
+              icon={<User size={16} />}
+              value={editName}
+              onChange={(e) => setEditName(e.target.value)}
+            />
+            <TextInput
+              label={language === "zh" ? "个人ID" : "User ID"}
+              placeholder={language === "zh" ? "请输入个人ID" : "Enter your ID"}
+              icon={<User size={16} />}
+              value={editId}
+              onChange={(e) => setEditId(e.target.value)}
+            />
 
             <div className="pt-2 flex gap-3">
-              <PillButton variant="secondary" className="flex-1" onClick={() => setIsEditProfileOpen(false)}>
+              <PillButton
+                variant="secondary"
+                className="flex-1"
+                onClick={() => setIsEditProfileOpen(false)}
+                disabled={isSaving}
+              >
                 {t.settings_cancel}
               </PillButton>
-              <PillButton variant="primary" className="flex-1" onClick={() => setIsEditProfileOpen(false)}>
-                {t.settings_save}
+              <PillButton
+                variant="primary"
+                className="flex-1"
+                onClick={async () => {
+                  if (!editName.trim()) {
+                    toast({
+                      title: language === "zh" ? "姓名不能为空" : "Name cannot be empty",
+                      description: language === "zh" ? "请输入您的姓名" : "Please enter your name",
+                      variant: "destructive",
+                    })
+                    return
+                  }
+
+                  if (!editId.trim()) {
+                    toast({
+                      title: language === "zh" ? "个人ID不能为空" : "User ID cannot be empty",
+                      description: language === "zh" ? "请输入您的个人ID" : "Please enter your ID",
+                      variant: "destructive",
+                    })
+                    return
+                  }
+
+                  setIsSaving(true)
+                  try {
+                    // 调用API更新用户信息
+                    await updateUserInfo({
+                      name: editName.trim(),
+                      avatar: editAvatar || undefined,
+                      id: editId.trim(),
+                    })
+
+                    // 更新localStorage中的用户信息
+                    if (typeof window !== 'undefined') {
+                      const userStr = localStorage.getItem('aino_user')
+                      if (userStr) {
+                        try {
+                          const user = JSON.parse(userStr)
+                          // 确保保留 userId 字段（应用用户的 UUID），这是关键字段，不能丢失
+                          const updatedUser = {
+                            ...user,
+                            name: { zh: editName.trim(), en: editName.trim() },
+                            avatar: editAvatar || user.avatar,
+                            id: editId.trim(),
+                            userId: user.userId || (user.id && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(user.id) ? user.id : null),
+                          }
+                          console.log('🔍 user-profile-view 更新 localStorage，保留 userId:', updatedUser.userId)
+                          localStorage.setItem('aino_user', JSON.stringify(updatedUser))
+                        } catch (e) {
+                          console.error('更新localStorage失败:', e)
+                        }
+                      }
+                    }
+
+                    // 重新从localStorage读取用户信息以刷新UI
+                    if (typeof window !== 'undefined') {
+                      const updatedUserStr = localStorage.getItem('aino_user')
+                      if (updatedUserStr) {
+                        try {
+                          const updatedUser = JSON.parse(updatedUserStr)
+                          const userName = getNameFromI18n(updatedUser.name, language) || updatedUser.phone || '用户'
+                          setUserInfo({
+                            name: userName,
+                            phone: updatedUser.phone,
+                            email: updatedUser.email,
+                            hasPassword: updatedUser.hasPassword !== undefined ? updatedUser.hasPassword : false,
+                            id: updatedUser.id || updatedUser.phone,
+                          })
+                        } catch (e) {
+                          console.error('解析更新后的用户信息失败:', e)
+                        }
+                      }
+                    }
+
+                    toast({
+                      title: language === "zh" ? "保存成功" : "Saved",
+                      description: language === "zh" ? "个人信息已更新" : "Profile updated successfully",
+                    })
+
+                    setIsEditProfileOpen(false)
+                  } catch (error: any) {
+                    console.error('更新用户信息失败:', error)
+                    toast({
+                      title: language === "zh" ? "保存失败" : "Save failed",
+                      description: error.message || (language === "zh" ? "请重试" : "Please try again"),
+                      variant: "destructive",
+                    })
+                  } finally {
+                    setIsSaving(false)
+                  }
+                }}
+                disabled={isSaving}
+              >
+                {isSaving ? (language === "zh" ? "保存中..." : "Saving...") : t.settings_save}
               </PillButton>
             </div>
           </div>
