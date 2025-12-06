@@ -3,8 +3,26 @@
  * 用于详情页内容的安全渲染，防止 XSS 攻击
  */
 
-import DOMPurify from "isomorphic-dompurify"
 import type { Config } from "isomorphic-dompurify"
+
+// 只在客户端导入 DOMPurify，避免服务端 jsdom 问题
+let DOMPurify: any = null
+
+// 初始化 DOMPurify（只在客户端）
+if (typeof window !== "undefined") {
+  try {
+    // 使用动态导入避免服务端问题
+    import("isomorphic-dompurify")
+      .then((mod) => {
+        DOMPurify = mod.default
+      })
+      .catch((err) => {
+        console.warn("DOMPurify 加载失败，使用基础清理:", err)
+      })
+  } catch (err) {
+    console.warn("DOMPurify 初始化失败:", err)
+  }
+}
 
 /**
  * DOMPurify 配置：允许的 HTML 标签和属性
@@ -223,14 +241,40 @@ const SANITIZE_CONFIG: Config = {
 }
 
 /**
+ * 基础 HTML 清理（服务端和客户端兜底）
+ */
+function basicSanitize(html: string): string {
+  return html
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
+    .replace(/javascript:/gi, "")
+    .replace(/on\w+\s*=/gi, "")
+    .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, "")
+}
+
+/**
  * 安全地清理 HTML 内容
  * @param html 原始 HTML 字符串
  * @returns 清理后的安全 HTML 字符串
  */
 export function sanitizeHTML(html: string): string {
-  const result = DOMPurify.sanitize(html, SANITIZE_CONFIG)
-  // DOMPurify 可能返回 TrustedHTML，需要转换为 string
-  return typeof result === "string" ? result : String(result)
+  // 服务端渲染时，使用基础清理
+  if (typeof window === "undefined") {
+    return basicSanitize(html)
+  }
+  
+  // 客户端：优先使用 DOMPurify（如果已加载）
+  if (DOMPurify) {
+    try {
+      const result = DOMPurify.sanitize(html, SANITIZE_CONFIG)
+      return typeof result === "string" ? result : String(result)
+    } catch (err) {
+      console.warn("DOMPurify 清理失败，使用基础清理:", err)
+      return basicSanitize(html)
+    }
+  }
+  
+  // DOMPurify 还未加载，使用基础清理
+  return basicSanitize(html)
 }
 
 /**

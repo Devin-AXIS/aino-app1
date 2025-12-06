@@ -17,7 +17,7 @@ interface AIReportPageProps {
   onBack: () => void
 }
 
-const TopOverviewCard = () => {
+export const TopOverviewCard = () => {
   const { textScale } = useAppConfig()
   const fSize = (base: number) => base * textScale
 
