@@ -16,7 +16,7 @@ import { AppBackground } from "./ds/app-background" // Import new background com
 import { GlassPanel } from "./ds/glass-panel" // Import new glass panel
 import { DesignTokens } from "@/lib/future-lens/design-tokens"
 import { DiscoverHeader } from "./discover/discover-header"
-import { DEFAULT_AGENTS, loadCustomAgents, saveCustomAgents } from "@/lib/future-lens/data/default-agents"
+import { DEFAULT_AGENTS, loadCustomAgents, saveCustomAgents, getOrderedAndFilteredAgents } from "@/lib/future-lens/data/default-agents"
 import type { Agent, FilterState } from "@/lib/future-lens/types/agent-types"
 import { FloatingDock } from "./nav/floating-dock" // Import FloatingDock component
 import { BottomFadeOverlay } from "./nav/bottom-fade-overlay" // Import BottomFadeOverlay component
@@ -165,22 +165,33 @@ export function MobileShell() {
   const [industryReportList, setIndustryReportList] = useState<Array<any>>([]) // 动态获取的产业分析列表
   const [industryListLoading, setIndustryListLoading] = useState(false) // 加载状态
   
-  // 智能体相关状态
+  // 智能体相关状态 - 使用排序和关注筛选后的列表
   const [agents, setAgents] = useState<Agent[]>(() => {
-    // 初始化：系统智能体 + 自定义智能体
-    // 确保所有 agent 的 icon 都是有效的（组件或字符串）
-    const customAgents = loadCustomAgents()
-    // 过滤掉任何有问题的 agent（icon 是对象的情况）
-    const validCustomAgents = customAgents.filter((agent: Agent) => {
-      if (agent.icon && typeof agent.icon !== 'string' && typeof agent.icon !== 'function') {
-        // 如果 icon 是对象（可能是序列化后的无效数据），移除它
-        console.warn('发现无效的 agent icon，已移除:', agent.id)
-        return false
-      }
-      return true
-    })
-    return [...DEFAULT_AGENTS, ...validCustomAgents]
+    // 获取排序和筛选后的智能体列表
+    return getOrderedAndFilteredAgents()
   })
+  
+  // 监听 localStorage 变化，重新加载排序和筛选后的列表
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const orderedAgents = getOrderedAndFilteredAgents()
+      setAgents(orderedAgents)
+    }
+    
+    // 初始加载
+    handleStorageChange()
+    
+    // 监听 storage 事件（跨标签页同步）
+    window.addEventListener('storage', handleStorageChange)
+    
+    // 定期检查（用于同标签页内的更新）
+    const interval = setInterval(handleStorageChange, 500)
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange)
+      clearInterval(interval)
+    }
+  }, [])
   const [activeAgentId, setActiveAgentId] = useState<string>('industry')
   const [viewMode, setViewMode] = useState<'recommended' | 'all'>('all')
   const [filters, setFilters] = useState<FilterState>({})
@@ -735,8 +746,11 @@ export function MobileShell() {
   }
 
   const handleAgentsChange = (updatedAgents: Agent[]) => {
-    setAgents(updatedAgents)
+    // 保存自定义智能体
     saveCustomAgents(updatedAgents.filter(a => a.type === 'custom'))
+    // 重新加载排序和筛选后的列表
+    const orderedAgents = getOrderedAndFilteredAgents()
+    setAgents(orderedAgents)
   }
 
   // 处理智能体切换

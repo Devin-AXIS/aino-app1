@@ -129,3 +129,103 @@ export function saveCustomAgents(agents: Agent[]): void {
   }
 }
 
+/**
+ * 加载智能体排序顺序
+ */
+export function loadAgentsOrder(): string[] {
+  if (typeof window === 'undefined') return []
+  
+  try {
+    const saved = localStorage.getItem('agents-order')
+    if (saved) {
+      return JSON.parse(saved)
+    }
+  } catch (e) {
+    console.error('加载排序顺序失败:', e)
+  }
+  
+  return []
+}
+
+/**
+ * 保存智能体排序顺序
+ */
+export function saveAgentsOrder(order: string[]): void {
+  if (typeof window === 'undefined') return
+  
+  try {
+    localStorage.setItem('agents-order', JSON.stringify(order))
+  } catch (e) {
+    console.error('保存排序顺序失败:', e)
+  }
+}
+
+/**
+ * 加载关注的智能体 ID 列表
+ */
+export function loadFollowedAgents(): Set<string> {
+  if (typeof window === 'undefined') return new Set()
+  
+  try {
+    const saved = localStorage.getItem('followed-agents')
+    if (saved) {
+      const ids = JSON.parse(saved)
+      return new Set(ids)
+    }
+  } catch (e) {
+    console.error('加载关注状态失败:', e)
+  }
+  
+  // 默认关注所有系统智能体
+  return new Set(DEFAULT_AGENTS.map(a => a.id))
+}
+
+/**
+ * 保存关注的智能体 ID 列表
+ */
+export function saveFollowedAgents(followed: Set<string>): void {
+  if (typeof window === 'undefined') return
+  
+  try {
+    localStorage.setItem('followed-agents', JSON.stringify(Array.from(followed)))
+  } catch (e) {
+    console.error('保存关注状态失败:', e)
+  }
+}
+
+/**
+ * 获取排序后的智能体列表（应用排序和关注筛选）
+ */
+export function getOrderedAndFilteredAgents(): Agent[] {
+  const allAgents = [...DEFAULT_AGENTS, ...loadCustomAgents()]
+  const order = loadAgentsOrder()
+  const followed = loadFollowedAgents()
+  
+  // 如果有保存的顺序，按顺序排列
+  let orderedAgents: Agent[] = []
+  if (order.length > 0) {
+    const agentMap = new Map(allAgents.map(a => [a.id, a]))
+    
+    // 先按保存的顺序添加（只添加关注的）
+    order.forEach(id => {
+      const agent = agentMap.get(id)
+      if (agent && followed.has(id)) {
+        orderedAgents.push(agent)
+        agentMap.delete(id)
+      }
+    })
+    
+    // 添加剩余的新关注的智能体
+    agentMap.forEach((agent, id) => {
+      if (followed.has(id)) {
+        orderedAgents.push(agent)
+      }
+    })
+  } else {
+    // 没有排序，只显示关注的
+    orderedAgents = allAgents.filter(agent => followed.has(agent.id))
+  }
+  
+  return orderedAgents
+}
+

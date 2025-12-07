@@ -4,6 +4,7 @@ import type React from "react"
 import { useState, useEffect, useRef, createContext, useContext } from "react"
 import { cn } from "@/lib/utils"
 import { DesignTokens } from "@/lib/future-lens/design-tokens"
+import { useAppConfig } from "@/lib/future-lens/config-context"
 
 /**
  * StickyTabs Context - 用于在 ScrollHeaderContainer 内显示标签栏
@@ -66,6 +67,8 @@ export function StickyTabs({
   onVisibilityChange,
 }: StickyTabsProps) {
   const placeholderRef = useRef<HTMLDivElement>(null)
+  const { textScale } = useAppConfig()
+  const fSize = (base: number) => base * textScale
 
   useEffect(() => {
     if (!scrollContainerId || !placeholderRef.current || !onVisibilityChange) return
@@ -97,11 +100,12 @@ export function StickyTabs({
     <button
       onClick={() => onTabChange(idx)}
       className={cn(
-        "flex-shrink-0 px-4 py-2 rounded-full text-xs font-medium transition-all whitespace-nowrap",
+        "flex-shrink-0 px-4 py-2 rounded-full font-medium transition-all whitespace-nowrap",
         isActive
           ? "bg-primary text-primary-foreground shadow-sm"
           : "bg-secondary/50 text-muted-foreground hover:bg-secondary",
       )}
+      style={{ fontSize: `${fSize(12)}px` }}
     >
       {tab}
     </button>
@@ -127,6 +131,8 @@ export function StickyTabs({
  */
 export function StickyTabsHeader() {
   const context = useStickyTabsContext()
+  const { textScale } = useAppConfig()
+  const fSize = (base: number) => base * textScale
 
   // 如果没有 context，不显示
   if (!context) return null
@@ -138,11 +144,12 @@ export function StickyTabsHeader() {
     <button
       onClick={() => context.onTabChange(idx)}
       className={cn(
-        "flex-shrink-0 px-4 py-2 rounded-full text-xs font-medium transition-all whitespace-nowrap",
+        "flex-shrink-0 px-4 py-2 rounded-full font-medium transition-all whitespace-nowrap",
         isActive
           ? "bg-primary text-primary-foreground shadow-sm"
           : "bg-secondary/50 text-muted-foreground hover:bg-secondary",
       )}
+      style={{ fontSize: `${fSize(12)}px` }}
     >
       {tab}
     </button>

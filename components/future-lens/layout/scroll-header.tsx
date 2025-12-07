@@ -5,6 +5,7 @@ import { ChevronLeft } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { DesignTokens } from "@/lib/future-lens/design-tokens"
 import { useScrollContext } from "./scroll-header-container"
+import { useAppConfig } from "@/lib/future-lens/config-context"
 
 interface ScrollHeaderProps {
   title: string
@@ -38,6 +39,8 @@ export function ScrollHeader({
   tabs,
 }: ScrollHeaderProps) {
   const { isScrolled } = useScrollContext()
+  const { textScale } = useAppConfig()
+  const fSize = (base: number) => base * textScale
 
   return (
     <header
@@ -69,9 +72,10 @@ export function ScrollHeader({
           <h1
             className={cn(
               DesignTokens.typography.title,
-              "text-[17px] font-semibold text-foreground transition-opacity duration-300 pointer-events-auto",
+              "font-semibold text-foreground transition-opacity duration-300 pointer-events-auto",
               "opacity-100", // 永远显示标题
             )}
+            style={{ fontSize: `${fSize(17)}px` }}
           >
             {title}
           </h1>

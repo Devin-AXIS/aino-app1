@@ -124,11 +124,11 @@ const AIAnalystHeader = ({
   return (
     <div className="mb-4">
       <div className="flex items-center gap-2 mb-2.5">
-        <Icon size={16} className="text-primary flex-shrink-0" />
+        <Icon size={16 * textScale} className="text-primary flex-shrink-0" />
         <h3 className={DesignTokens.typography.title} style={{ fontSize: `${fSize(13)}px` }}>
           {title}
         </h3>
-        <Zap size={12} className="text-primary fill-primary ml-auto flex-shrink-0" />
+        <Zap size={12 * textScale} className="text-primary fill-primary ml-auto flex-shrink-0" />
       </div>
       <div className="bg-muted/30 p-4 rounded-2xl border border-border/50">
         <div
@@ -202,7 +202,7 @@ const ActionButton = ({ text, onClick, updatedAt }: { text: string; onClick?: ()
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted/30 text-foreground font-bold group-hover:bg-primary/10 group-hover:text-primary transition-colors"
           style={{ fontSize: `${fSize(11)}px` }}
         >
-          {text} <ArrowUpRight size={11} />
+          {text} <ArrowUpRight size={11 * textScale} />
         </div>
       </div>
     )
@@ -223,7 +223,7 @@ const ActionButton = ({ text, onClick, updatedAt }: { text: string; onClick?: ()
         className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted/30 text-foreground font-bold group-hover:bg-primary/10 group-hover:text-primary transition-colors"
         style={{ fontSize: `${fSize(11)}px` }}
       >
-        {text} <ArrowUpRight size={11} />
+        {text} <ArrowUpRight size={11 * textScale} />
       </div>
     </div>
   )
@@ -331,10 +331,10 @@ export const StructuralShiftCard = ({ data, onClick }: StructuralShiftCardProps)
         icon={IconComponent}
         summary={data.summary}
       />
-      <div className="flex items-center justify-between bg-muted/30 p-3 rounded-2xl border border-dashed border-border mt-2">
+        <div className="flex items-center justify-between bg-muted/30 p-3 rounded-2xl border border-dashed border-border mt-2">
         <div className="text-center opacity-50 scale-90">
           <div className="w-9 h-9 mx-auto bg-muted/50 rounded-full flex items-center justify-center mb-1.5">
-            <Sparkles size={16} />
+            <Sparkles size={16 * textScale} />
           </div>
           <div className="font-bold text-muted-foreground" style={{ fontSize: `${fSize(9)}px` }}>
             集成商主导
@@ -347,11 +347,11 @@ export const StructuralShiftCard = ({ data, onClick }: StructuralShiftCardProps)
           >
             VALUE SHIFT
           </div>
-          <ArrowUpRight className="absolute right-0 top-1/2 -translate-y-1/2 text-primary" size={13} />
+          <ArrowUpRight className="absolute right-0 top-1/2 -translate-y-1/2 text-primary" size={13 * textScale} />
         </div>
         <div className="text-center scale-110">
           <div className="w-11 h-11 mx-auto bg-primary/15 rounded-full flex items-center justify-center text-primary mb-1.5 shadow-lg">
-            <Zap size={18} />
+            <Zap size={18 * textScale} />
           </div>
           <div className="font-bold text-primary" style={{ fontSize: `${fSize(9)}px` }}>
             模型定义
@@ -1045,7 +1045,7 @@ export const InsightCompressionCard = ({ data, onClick }: InsightCompressionCard
       <div className="relative z-10">
         <div className="flex items-center gap-2.5 mb-4">
           <div className="p-2 bg-primary/20 rounded-xl border border-primary/30">
-            <IconComponent className="text-primary" size={18} />
+            <IconComponent className="text-primary" size={18 * textScale} />
           </div>
           <div>
             <h3 className="font-bold uppercase tracking-widest text-primary" style={{ fontSize: `${fSize(12)}px` }}>
@@ -1073,7 +1073,7 @@ export const InsightCompressionCard = ({ data, onClick }: InsightCompressionCard
                 className={`flex items-center gap-2 mb-1 ${s.type === "win" ? "text-success" : "text-destructive"} font-bold uppercase`}
                 style={{ fontSize: `${fSize(10)}px` }}
               >
-                {s.type === "win" ? <Hand size={11} /> : <AlertTriangle size={11} />} {s.label}
+                {s.type === "win" ? <Hand size={11 * textScale} /> : <AlertTriangle size={11 * textScale} />} {s.label}
               </div>
               <div className="text-primary-foreground/80" style={{ fontSize: `${fSize(10)}px` }}>
                 {s.text}
@@ -1162,14 +1162,14 @@ export const CompanySnapshotCard = ({ data, onClick }: CompanySnapshotCardProps)
 
         {/* Right: Icon */}
         <div className="p-2 bg-card rounded-full shadow-sm border border-border">
-          <IconComponent size={18} className="text-primary" />
+          <IconComponent size={18 * textScale} className="text-primary" />
         </div>
       </div>
 
       {/* 2. AI Core Insight */}
       <div className="relative mb-4">
         <div className="flex items-center gap-2 mb-2">
-          <Sparkles size={16} className="text-primary flex-shrink-0" />
+          <Sparkles size={16 * textScale} className="text-primary flex-shrink-0" />
           <h3 className={DesignTokens.typography.title} style={{ fontSize: `${fSize(13)}px` }}>
             核心洞察
           </h3>
@@ -1194,7 +1194,7 @@ export const CompanySnapshotCard = ({ data, onClick }: CompanySnapshotCardProps)
               key={i}
               className="flex flex-col items-center justify-center p-2.5 bg-card rounded-xl border border-border/30 shadow-sm"
             >
-              <MetricIcon size={14} className="text-primary mb-1" />
+              <MetricIcon size={14 * textScale} className="text-primary mb-1" />
               <span
                 className="font-bold text-muted-foreground mb-0.5 text-center leading-tight"
                 style={{ fontSize: `${fSize(8)}px` }}
@@ -1312,14 +1312,14 @@ export const ProductSnapshotCard = ({ data, onClick }: ProductSnapshotCardProps)
 
         {/* Right: Icon */}
         <div className="p-2 bg-card rounded-full shadow-sm border border-border">
-          <IconComponent size={18} className="text-primary" />
+          <IconComponent size={18 * textScale} className="text-primary" />
         </div>
       </div>
 
       {/* 2. AI Core Insight */}
       <div className="relative mb-4">
         <div className="flex items-center gap-2 mb-2">
-          <Sparkles size={16} className="text-primary flex-shrink-0" />
+          <Sparkles size={16 * textScale} className="text-primary flex-shrink-0" />
           <h3 className={DesignTokens.typography.title} style={{ fontSize: `${fSize(13)}px` }}>
             核心洞察
           </h3>
@@ -1344,7 +1344,7 @@ export const ProductSnapshotCard = ({ data, onClick }: ProductSnapshotCardProps)
               key={i}
               className="flex flex-col items-center justify-center p-2.5 bg-card rounded-xl border border-border/30 shadow-sm"
             >
-              <MetricIcon size={14} className="text-primary mb-1" />
+              <MetricIcon size={14 * textScale} className="text-primary mb-1" />
               <span
                 className="font-bold text-muted-foreground mb-0.5 text-center leading-tight"
                 style={{ fontSize: `${fSize(8)}px` }}

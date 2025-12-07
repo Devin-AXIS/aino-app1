@@ -8,7 +8,7 @@ import { DesignTokens } from "@/lib/future-lens/design-tokens"
 import { useAppConfig } from "@/lib/future-lens/config-context"
 import { ModalDialog } from "../ds/modal-dialog"
 import type { Agent } from "@/lib/future-lens/types/agent-types"
-import { DEFAULT_AGENTS, loadCustomAgents, saveCustomAgents } from "@/lib/future-lens/data/default-agents"
+import { DEFAULT_AGENTS, loadCustomAgents, saveCustomAgents, saveAgentsOrder, saveFollowedAgents as saveFollowedAgentsUtil } from "@/lib/future-lens/data/default-agents"
 import React from "react"
 import { Sparkles } from "lucide-react"
 
@@ -108,7 +108,7 @@ export function ManageAgentsDialog({
   const saveOrder = (newOrder: Agent[]) => {
     try {
       const order = newOrder.map(a => a.id)
-      localStorage.setItem('agents-order', JSON.stringify(order))
+      saveAgentsOrder(order)
       // 通知父组件更新智能体列表
       onAgentsChange(newOrder)
     } catch (e) {
@@ -119,7 +119,10 @@ export function ManageAgentsDialog({
   // 保存关注状态
   const saveFollowedAgents = (followed: Set<string>) => {
     try {
-      localStorage.setItem('followed-agents', JSON.stringify(Array.from(followed)))
+      saveFollowedAgentsUtil(followed)
+      // 通知父组件更新（触发重新加载）
+      const allAgents = [...DEFAULT_AGENTS, ...loadCustomAgents()]
+      onAgentsChange(allAgents)
     } catch (e) {
       console.error('保存关注状态失败:', e)
     }
@@ -190,6 +193,7 @@ export function ManageAgentsDialog({
     setDragIndex(null)
     setDragOverIndex(null)
   }
+
 
   // 恢复默认
   const handleReset = () => {
