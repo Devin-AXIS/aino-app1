@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>清除缓存</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e8f5e9;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>清除 AINO 缓存</h1>
+        <p>点击下面的按钮清除所有 localStorage 数据：</p>
+        <button onclick="clearCache()">清除缓存</button>
+        <div id="result"></div>
+    </div>
+    <script>
+        function clearCache() {
+            const items = ['aino_token', 'aino_user', 'aino_application_id'];
+            const cleared = {};
+            
+            items.forEach(key => {
+                const value = localStorage.getItem(key);
+                if (value) {
+                    cleared[key] = '已清除';
+                }
+                localStorage.removeItem(key);
+            });
+            
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = 'result';
+            resultDiv.innerHTML = `
+                <h3>✅ 缓存已清除</h3>
+                <p>已清除以下数据：</p>
+                <ul>
+                    ${items.map(key => `<li><strong>${key}</strong>: ${cleared[key] || '无数据'}</li>`).join('')}
+                </ul>
+                <p>3秒后自动跳转到应用...</p>
+            `;
+            
+            setTimeout(() => {
+                window.location.href = 'http://localhost:3000';
+            }, 3000);
+        }
+        
+        // 自动执行清除
+        window.onload = function() {
+            setTimeout(clearCache, 500);
+        };
+    </script>
+</body>
+</html>

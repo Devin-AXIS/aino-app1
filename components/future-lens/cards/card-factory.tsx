@@ -70,7 +70,7 @@ import "./card-registry-init"
  * <CardFactory data={{ componentName: 'IndustryStackCard', data: {...} }} />
  * ```
  */
-export const CardFactory = ({ data, onClick }: { data: InsightData | any; onClick?: () => void }) => {
+export const CardFactory = ({ data, onClick, taskName, showTaskName }: { data: InsightData | any; onClick?: () => void; taskName?: string; showTaskName?: boolean }) => {
   // 优先通过 componentName 查找（CardInstance 格式）
   const componentName = data?.componentName
   const cardType = data?.type || "default"
@@ -93,7 +93,18 @@ export const CardFactory = ({ data, onClick }: { data: InsightData | any; onClic
     return (
       <CardErrorBoundary>
         <MotionWrapper>
-          <InsightCard data={data as InsightData} onClick={onClick} />
+          <InsightCard data={data as InsightData} onClick={onClick} taskName={taskName} showTaskName={showTaskName} />
+        </MotionWrapper>
+      </CardErrorBoundary>
+    )
+  }
+
+  // 如果组件是 InsightCard，传递额外的 props
+  if (CardComponent === InsightCard) {
+    return (
+      <CardErrorBoundary>
+        <MotionWrapper>
+          <InsightCard data={cardData as InsightData} onClick={onClick} taskName={taskName} showTaskName={showTaskName} />
         </MotionWrapper>
       </CardErrorBoundary>
     )

@@ -7,6 +7,7 @@ import { useAppConfig } from "@/lib/future-lens/config-context"
 import { translations } from "@/lib/future-lens/i18n"
 import { useToast } from "@/hooks/use-toast"
 import { MobileInput } from "../ds/mobile-input"
+import { sendVerificationCode } from "@/lib/aino-sdk/user-api"
 
 export function PhoneInput() {
   const router = useRouter()
@@ -33,13 +34,40 @@ export function PhoneInput() {
   }, [searchParams, fromAI, countryCode, router])
 
   const handleNext = useCallback(
-    (data: Record<string, any>) => {
+    async (data: Record<string, any>) => {
       const phoneNumber = data.phone || phone
       const finalCountryCode = data.countryCode || countryCode
-      // 暂时移除验证，允许任何输入继续
+      
+      // 验证手机号格式
+      if (phoneNumber.length < 11) {
+        toast({
+          title: language === "zh" ? "手机号格式错误" : "Invalid phone number",
+          description: language === "zh" ? "请输入正确的手机号" : "Please enter a valid phone number",
+          variant: "destructive",
+        })
+        return
+      }
+
+      // 发送验证码（不阻塞跳转，即使失败也跳转）
+      try {
+        await sendVerificationCode(phoneNumber)
+        toast({
+          title: language === "zh" ? "验证码已发送" : "Code sent",
+          description: language === "zh" ? "请查收短信验证码（测试模式，可任意输入）" : "Please check your SMS (Test mode, any code works)",
+        })
+      } catch (error: any) {
+        console.error("发送验证码失败:", error)
+        // 即使发送失败，也继续跳转（测试阶段）
+        toast({
+          title: language === "zh" ? "提示" : "Notice",
+          description: language === "zh" ? "验证码发送失败，但可以继续（测试模式）" : "Code send failed, but you can continue (Test mode)",
+        })
+      }
+      
+      // 跳转到验证码页面
       router.push(`/auth/verify?phone=${finalCountryCode}${phoneNumber}&fromAI=true`)
     },
-    [phone, countryCode, router],
+    [phone, countryCode, router, language, toast],
   )
 
   // 使用 useCallback 稳定 onChange 处理函数，避免重新创建组件

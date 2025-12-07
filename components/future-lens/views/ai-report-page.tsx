@@ -17,12 +17,26 @@ interface AIReportPageProps {
   onBack: () => void
 }
 
-export const TopOverviewCard = () => {
+interface TopOverviewCardProps {
+  title?: string
+  summary?: string
+  totalMarket?: string
+  growth?: string
+  momentumData?: Array<{ m: string; growth: number; cap: number; heat: number }>
+}
+
+export const TopOverviewCard = ({ 
+  title, 
+  summary, 
+  totalMarket, 
+  growth, 
+  momentumData 
+}: TopOverviewCardProps = {}) => {
   const { textScale } = useAppConfig()
   const fSize = (base: number) => base * textScale
 
-  // 12个月数据（参考代码格式）
-  const data = [
+  // 12个月数据（从props获取，如果没有则使用默认值）
+  const defaultData = [
     { m: "Jan", growth: 35, cap: 30, heat: 45 },
     { m: "Feb", growth: 38, cap: 35, heat: 50 },
     { m: "Mar", growth: 42, cap: 42, heat: 48 },
@@ -36,6 +50,14 @@ export const TopOverviewCard = () => {
     { m: "Nov", growth: 92, cap: 95, heat: 88 },
     { m: "Dec", growth: 95, cap: 98, heat: 85 },
   ]
+  const data = momentumData || defaultData
+
+  // 如果没有传入title，使用默认值
+  const displayTitle = title || "具身智能"
+  // 如果没有传入summary，使用默认值
+  const displaySummary = summary || "具身智能正处于从实验室走向商业试运营的关键临界点。尽管资本热度与技术指标均已突破历史高位，形成了强劲的供给侧推力，但供应链的国产化替代（特别是精密减速器与传感器）以及商业化闭环的验证仍有6-9个月的滞后期。建议重点关注掌握数据闭环的平台型企业，规避纯硬件堆料的同质化竞争风险。"
+  const displayTotalMarket = totalMarket || "$12.5B"
+  const displayGrowth = growth || "+42% YoY"
 
   return (
     <CardBase className="relative z-10 w-full mb-3 overflow-hidden group">
@@ -66,7 +88,7 @@ export const TopOverviewCard = () => {
             className={`${DesignTokens.typography.title} drop-shadow-sm`}
             style={{ fontSize: `${fSize(16)}px`, lineHeight: "1.2" }}
           >
-            具身智能
+            {displayTitle}
           </h2>
         </div>
 
@@ -83,14 +105,14 @@ export const TopOverviewCard = () => {
               className={`${DesignTokens.typography.title} tracking-tighter`}
               style={{ fontSize: `${fSize(18)}px` }}
             >
-              $12.5B
+              {displayTotalMarket}
             </span>
           </div>
           <div
             className="font-bold flex items-center justify-end gap-0.5 mt-0.5"
             style={{ fontSize: `${fSize(10)}px`, color: "#10b981" }}
           >
-            <TrendingUp size={11} /> +42% YoY
+            <TrendingUp size={11} /> {displayGrowth}
           </div>
         </div>
       </div>
@@ -108,9 +130,7 @@ export const TopOverviewCard = () => {
             className="text-muted-foreground leading-relaxed line-clamp-4"
             style={{ fontSize: `${fSize(12)}px` }}
           >
-            <span className="font-semibold text-foreground">产业拐点已至：</span>
-            具身智能正处于从实验室走向商业试运营的关键临界点。尽管资本热度与技术指标均已突破历史高位，形成了强劲的供给侧推力，但供应链的国产化替代（特别是精密减速器与传感器）以及商业化闭环的验证仍有
-            6-9 个月的滞后期。建议重点关注掌握数据闭环的平台型企业，规避纯硬件堆料的同质化竞争风险。
+            {displaySummary}
           </p>
         </div>
       </div>

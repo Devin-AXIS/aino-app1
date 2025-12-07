@@ -81,6 +81,18 @@ export const CARD_TEMPLATE_CONFIGS: Record<CardTemplateId, CardTemplateConfig> =
     searchKeywords: ["资金流向", "融资", "资本", "投资"],
     description: "展示资金在不同领域的流向分布",
   },
+  "capital-ecosystem": {
+    templateId: "capital-ecosystem",
+    componentName: "CapitalEcosystemCard",
+    dataSource: "api",
+    apiConfig: {
+      endpoint: "/api/aino/capital-ecosystem",
+      cacheTTL: 3600,
+      refreshStrategy: "auto",
+    },
+    searchKeywords: ["资本生态", "投资生态", "资本网络", "生态图谱"],
+    description: "展示资本生态系统的网络结构和关系",
+  },
   "player-impact": {
     templateId: "player-impact",
     componentName: "PlayerImpactCard",

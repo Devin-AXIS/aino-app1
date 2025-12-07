@@ -11,6 +11,7 @@
     "start:clean": "./start.sh"
   },
   "dependencies": {
+    "@aino/client-sdk": "file:../AINO-client-sdk",
     "@emotion/is-prop-valid": "^1.4.0",
     "@hookform/resolvers": "^3.10.0",
     "@radix-ui/react-accordion": "1.2.2",

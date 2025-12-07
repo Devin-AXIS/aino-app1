@@ -20,7 +20,7 @@ export const CategoryTag = ({ type }: { type: CardType }) => {
 
   const styles = {
     trend: "text-foreground/80 border-border bg-muted/50",
-    risk: "text-destructive border-destructive/20 bg-destructive/5",
+    risk: "text-destructive border-destructive/30 bg-destructive/10",
     opportunity: "text-success border-success/20 bg-success/5",
     general: "text-muted-foreground border-border bg-card",
   }

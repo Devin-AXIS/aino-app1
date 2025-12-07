@@ -289,6 +289,9 @@ export const translations = {
     share_qzone: "QQ空间",
     share_douyin: "抖音",
     share_copied: "已复制链接",
+    unread: "未读",
+    unread_count: "未读 {count} 条",
+    view_unread: "查看未读",
 
     // 图表分类
     chart_category_trend: "趋势分析",
@@ -773,6 +776,9 @@ export const translations = {
     share_qzone: "Qzone",
     share_douyin: "Douyin",
     share_copied: "Link Copied",
+    unread: "Unread",
+    unread_count: "{count} unread",
+    view_unread: "View Unread",
 
     // Chart Categories
     chart_category_trend: "Trend Analysis",

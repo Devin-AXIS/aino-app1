@@ -54,6 +54,51 @@ import { StatusGridChart } from "@/components/future-lens/charts/status-grid-cha
 import { ProgressBarsChart } from "@/components/future-lens/charts/progress-bars-chart"
 import { SolidRadarChart } from "@/components/future-lens/charts/solid-radar-chart"
 
+/**
+ * 图标名称到图标组件的映射
+ */
+const iconMap: Record<string, React.ElementType> = {
+  TrendingUp,
+  DollarSign,
+  FileText,
+  Gauge,
+  Layers,
+  GitBranch,
+  Clock,
+  Network,
+  Users,
+  Target,
+  Zap,
+  AlertTriangle,
+  Lightbulb,
+  Sparkles,
+  Crosshair,
+  Hand,
+  Building2,
+  PieChart,
+  MapPin,
+  Shield,
+  GitCompare,
+  Rocket,
+  Calendar,
+}
+
+/**
+ * 根据图标名称获取图标组件
+ * @param iconName 图标名称（字符串）
+ * @param defaultIcon 默认图标组件
+ * @returns 图标组件
+ */
+function getIconComponent(iconName?: string, defaultIcon: React.ElementType = Layers): React.ElementType {
+  if (!iconName) {
+    return defaultIcon
+  }
+  // 支持大小写不敏感匹配
+  const normalizedName = iconName.trim()
+  const icon = iconMap[normalizedName] || iconMap[normalizedName.charAt(0).toUpperCase() + normalizedName.slice(1)]
+  return icon || defaultIcon
+}
+
 const getChartColors = () => ({
   primary: "hsl(var(--chart-primary))",
   secondary: "hsl(var(--chart-secondary))",
@@ -108,33 +153,60 @@ const AIAnalystHeader = ({
   )
 }
 
-// 格式化更新时间：从月开始，最多到去年
-function formatUpdateTime(date: Date): string {
+// 格式化更新时间：
+// - 如果是本年，只显示"月日"（如"9月15日"）
+// - 如果超过本年，显示"年月日"（如"2024年9月15日"）
+function formatUpdateTime(date: Date | string | undefined): string {
+  if (!date) {
+    return ""
+  }
+  
   const now = new Date()
   const updateDate = new Date(date)
+  
+  // 检查日期是否有效
+  if (isNaN(updateDate.getTime())) {
+    return ""
+  }
+  
   const currentYear = now.getFullYear()
   const updateYear = updateDate.getFullYear()
   const updateMonth = updateDate.getMonth() + 1
+  const updateDay = updateDate.getDate()
   
-  // 如果是今年，只显示月份
+  // 如果是本年，只显示"月日"
   if (updateYear === currentYear) {
-    return `${updateMonth}月`
+    return `${updateMonth}月${updateDay}日`
   }
-  // 如果是去年，显示 "去年X月"
-  if (updateYear === currentYear - 1) {
-    return `去年${updateMonth}月`
-  }
-  // 更早的年份，显示 "YYYY年X月"
-  return `${updateYear}年${updateMonth}月`
+  
+  // 如果超过本年，显示"年月日"
+  return `${updateYear}年${updateMonth}月${updateDay}日`
 }
 
-const ActionButton = ({ text, onClick, updatedAt }: { text: string; onClick?: () => void; updatedAt?: Date }) => {
+const ActionButton = ({ text, onClick, updatedAt }: { text: string; onClick?: () => void; updatedAt?: Date | string }) => {
   const { textScale } = useAppConfig()
   const fSize = (base: number) => base * textScale
   
   // 如果没有提供更新时间，使用模拟数据（3个月前）
   const defaultUpdateTime = updatedAt || new Date(Date.now() - 90 * 24 * 60 * 60 * 1000)
   const updateTimeText = formatUpdateTime(defaultUpdateTime)
+  
+  // 如果没有时间文本，不显示更新时间
+  if (!updateTimeText) {
+    return (
+      <div
+        className="mt-4 pt-3 border-t border-border/50 flex justify-end items-center group cursor-pointer"
+        onClick={onClick}
+      >
+        <div
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-muted/30 text-foreground font-bold group-hover:bg-primary/10 group-hover:text-primary transition-colors"
+          style={{ fontSize: `${fSize(11)}px` }}
+        >
+          {text} <ArrowUpRight size={11} />
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div
@@ -164,6 +236,8 @@ interface IndustryStackCardProps {
     icon?: string
     levels: Array<{ name: string; description: string; color: string  }>
     actionText?: string
+    updatedAt?: string | Date
+    createdAt?: string | Date
   }
   onClick?: () => void
 }
@@ -172,8 +246,8 @@ export const IndustryStackCard = ({ data, onClick }: IndustryStackCardProps) => 
   const { textScale } = useAppConfig()
   const fSize = (base: number) => base * textScale
 
-  // 图标映射
-  const IconComponent = Layers
+  // 根据 data.icon 动态选择图标，如果没有则使用默认图标
+  const IconComponent = getIconComponent(data.icon, Layers)
 
   return (
     <CardBase className="mb-3">
@@ -194,7 +268,7 @@ export const IndustryStackCard = ({ data, onClick }: IndustryStackCardProps) => 
           </div>
         ))}
       </div>
-      <ActionButton text={data.actionText || "查看各层级详细报告"} onClick={onClick} />
+      <ActionButton text={data.actionText || "查看各层级详细报告"} onClick={onClick} updatedAt={data.updatedAt || data.createdAt} />
     </CardBase>
   )
 }
@@ -214,8 +288,8 @@ export const TrendRadarCard = ({ data, onClick }: TrendRadarCardProps) => {
   const { textScale } = useAppConfig()
   const fSize = (base: number) => base * textScale
 
-  // 图标映射
-  const IconComponent = TrendingUp
+  // 根据 data.icon 动态选择图标，如果没有则使用默认图标
+  const IconComponent = getIconComponent(data.icon, TrendingUp)
 
   return (
     <CardBase className="mb-3">
@@ -227,7 +301,7 @@ export const TrendRadarCard = ({ data, onClick }: TrendRadarCardProps) => {
       <div style={{ width: "100%", height: `${ChartDefaults.height}px` }}>
         <RadarChart data={data.chartData} height={ChartDefaults.height} />
       </div>
-      <ActionButton text={data.actionText || "查看趋势演进预测"} onClick={onClick} />
+      <ActionButton text={data.actionText || "查看趋势演进预测"} onClick={onClick} updatedAt={(data as any).updatedAt || (data as any).createdAt} />
     </CardBase>
   )
 }
@@ -247,8 +321,8 @@ export const StructuralShiftCard = ({ data, onClick }: StructuralShiftCardProps)
   const { textScale } = useAppConfig()
   const fSize = (base: number) => base * textScale
 
-  // 图标映射
-  const IconComponent = GitBranch
+  // 根据 data.icon 动态选择图标，如果没有则使用默认图标
+  const IconComponent = getIconComponent(data.icon, GitBranch)
 
   return (
     <CardBase className="mb-3">
@@ -284,7 +358,7 @@ export const StructuralShiftCard = ({ data, onClick }: StructuralShiftCardProps)
           </div>
         </div>
       </div>
-      <ActionButton text={data.actionText || "查看价值链重构分析"} onClick={onClick} />
+      <ActionButton text={data.actionText || "查看价值链重构分析"} onClick={onClick} updatedAt={(data as any).updatedAt || (data as any).createdAt} />
     </CardBase>
   )
 }
@@ -301,8 +375,8 @@ interface TechTimelineCardProps {
 }
 
 export const TechTimelineCard = ({ data, onClick }: TechTimelineCardProps) => {
-  // 图标映射
-  const IconComponent = Clock
+  // 根据 data.icon 动态选择图标，如果没有则使用默认图标
+  const IconComponent = getIconComponent(data.icon, Clock)
 
   return (
     <CardBase className="mb-3">
@@ -312,7 +386,7 @@ export const TechTimelineCard = ({ data, onClick }: TechTimelineCardProps) => {
         summary={data.summary}
       />
       <Timeline events={data.events} />
-      <ActionButton text={data.actionText || "查看完整技术路线图"} onClick={onClick} />
+      <ActionButton text={data.actionText || "查看完整技术路线图"} onClick={onClick} updatedAt={(data as any).updatedAt || (data as any).createdAt} />
     </CardBase>
   )
 }
@@ -332,8 +406,8 @@ export const IndustryPaceCard = ({ data, onClick }: IndustryPaceCardProps) => {
   const { textScale } = useAppConfig()
   const fSize = (base: number) => base * textScale
 
-  // 图标映射
-  const IconComponent = Gauge
+  // 根据 data.icon 动态选择图标，如果没有则使用默认图标
+  const IconComponent = getIconComponent(data.icon, Gauge)
 
   return (
     <CardBase className="mb-3">
@@ -346,7 +420,7 @@ export const IndustryPaceCard = ({ data, onClick }: IndustryPaceCardProps) => {
         data={data.metrics.map(m => ({ name: m.name, value: m.value }))}
         textScale={textScale}
       />
-      <ActionButton text={data.actionText || "查看行业周期定位"} onClick={onClick} />
+      <ActionButton text={data.actionText || "查看行业周期定位"} onClick={onClick} updatedAt={(data as any).updatedAt || (data as any).createdAt} />
     </CardBase>
   )
 }
@@ -363,8 +437,8 @@ interface CapitalFlowCardProps {
 }
 
 export const CapitalFlowCard = ({ data, onClick }: CapitalFlowCardProps) => {
-  // 图标映射
-  const IconComponent = Sparkles
+  // 根据 data.icon 动态选择图标，如果没有则使用默认图标
+  const IconComponent = getIconComponent(data.icon, Sparkles)
 
   return (
     <CardBase className="mb-3">
@@ -376,7 +450,7 @@ export const CapitalFlowCard = ({ data, onClick }: CapitalFlowCardProps) => {
       <div className="mt-4">
         <HorizontalBarChart data={data.chartData} barHeight={14} gap={12} showValue={false} />
       </div>
-      <ActionButton text={data.actionText || "查看融资事件列表"} onClick={onClick} />
+      <ActionButton text={data.actionText || "查看融资事件列表"} onClick={onClick} updatedAt={(data as any).updatedAt || (data as any).createdAt} />
     </CardBase>
   )
 }
@@ -394,7 +468,7 @@ interface PlayerImpactCardProps {
 
 export const PlayerImpactCard = ({ data, onClick }: PlayerImpactCardProps) => {
   // 图标映射
-  const IconComponent = Target
+  const IconComponent = getIconComponent(data.icon, Target)
 
   return (
     <CardBase className="mb-3">
@@ -406,7 +480,7 @@ export const PlayerImpactCard = ({ data, onClick }: PlayerImpactCardProps) => {
       <div className="mt-2">
         <PlayerList players={data.players} />
       </div>
-      <ActionButton text={data.actionText || "查看企业竞争力对比"} onClick={onClick} />
+      <ActionButton text={data.actionText || "查看企业竞争力对比"} onClick={onClick} updatedAt={(data as any).updatedAt || (data as any).createdAt} />
     </CardBase>
   )
 }
@@ -428,7 +502,7 @@ interface NarrativeCapitalCardProps {
 
 export const NarrativeCapitalCard = ({ data, onClick }: NarrativeCapitalCardProps) => {
   // 图标映射
-  const IconComponent = FileText
+  const IconComponent = getIconComponent(data.icon, FileText)
 
   return (
     <CardBase className="mb-3">
@@ -453,7 +527,7 @@ export const NarrativeCapitalCard = ({ data, onClick }: NarrativeCapitalCardProp
           showYAxis={false}
         />
       </div>
-      <ActionButton text={data.actionText || "查看舆情分析报告"} onClick={onClick} />
+      <ActionButton text={data.actionText || "查看舆情分析报告"} onClick={onClick} updatedAt={(data as any).updatedAt || (data as any).createdAt} />
     </CardBase>
   )
 }
@@ -471,7 +545,7 @@ interface SupplyChainHealthCardProps {
 
 export const SupplyChainHealthCard = ({ data, onClick }: SupplyChainHealthCardProps) => {
   // 图标映射
-  const IconComponent = Network
+  const IconComponent = getIconComponent(data.icon, Network)
 
   return (
     <CardBase className="mb-3">
@@ -483,7 +557,7 @@ export const SupplyChainHealthCard = ({ data, onClick }: SupplyChainHealthCardPr
       <div className="mt-2">
         <StatusGridChart data={data.items} />
       </div>
-      <ActionButton text={data.actionText || "查看供应链深度地图"} onClick={onClick} />
+      <ActionButton text={data.actionText || "查看供应链深度地图"} onClick={onClick} updatedAt={(data as any).updatedAt || (data as any).createdAt} />
     </CardBase>
   )
 }
@@ -502,8 +576,8 @@ export const EcosystemMapCard = ({ data, onClick }: EcosystemMapCardProps) => {
   const { textScale } = useAppConfig()
   const fSize = (base: number) => base * textScale
 
-  // 图标映射
-  const IconComponent = GitBranch
+  // 根据 data.icon 动态选择图标，如果没有则使用默认图标
+  const IconComponent = getIconComponent(data.icon, GitBranch)
 
   return (
     <CardBase className="mb-3">
@@ -550,7 +624,7 @@ export const EcosystemMapCard = ({ data, onClick }: EcosystemMapCardProps) => {
           <line x1="50%" y1="50%" x2="20%" y2="80%" stroke="hsl(var(--primary))" strokeWidth="2" />
         </svg>
       </div>
-      <ActionButton text={data.actionText || "查看全景生态图谱"} onClick={onClick} />
+      <ActionButton text={data.actionText || "查看全景生态图谱"} onClick={onClick} updatedAt={(data as any).updatedAt || (data as any).createdAt} />
     </CardBase>
   )
 }
@@ -571,7 +645,7 @@ export const StrategyWindowCard = ({ data, onClick }: StrategyWindowCardProps) =
   const fSize = (base: number) => base * textScale
 
   // 图标映射
-  const IconComponent = Crosshair
+  const IconComponent = getIconComponent(data.icon, Crosshair)
 
   return (
     <CardBase className="mb-3">
@@ -594,7 +668,7 @@ export const StrategyWindowCard = ({ data, onClick }: StrategyWindowCardProps) =
           </div>
         ))}
       </div>
-      <ActionButton text={data.actionText || "查看时间窗口推演"} onClick={onClick} />
+      <ActionButton text={data.actionText || "查看时间窗口推演"} onClick={onClick} updatedAt={(data as any).updatedAt || (data as any).createdAt} />
     </CardBase>
   )
 }
@@ -615,7 +689,7 @@ export const InfluencerCard = ({ data, onClick }: InfluencerCardProps) => {
   const fSize = (base: number) => base * textScale
 
   // 图标映射
-  const IconComponent = Users
+  const IconComponent = getIconComponent(data.icon, Users)
 
   return (
     <CardBase className="mb-3">
@@ -645,7 +719,7 @@ export const InfluencerCard = ({ data, onClick }: InfluencerCardProps) => {
           </div>
         ))}
       </div>
-      <ActionButton text={data.actionText || "查看人物观点库"} onClick={onClick} />
+      <ActionButton text={data.actionText || "查看人物观点库"} onClick={onClick} updatedAt={(data as any).updatedAt || (data as any).createdAt} />
     </CardBase>
   )
 }
@@ -665,8 +739,8 @@ export const ScenarioCard = ({ data, onClick }: ScenarioCardProps) => {
   const { textScale } = useAppConfig()
   const fSize = (base: number) => base * textScale
 
-  // 图标映射
-  const IconComponent = GitBranch
+  // 根据 data.icon 动态选择图标，如果没有则使用默认图标
+  const IconComponent = getIconComponent(data.icon, GitBranch)
 
   const getScenarioStyle = (color: string) => {
     if (color === "primary") {
@@ -703,7 +777,7 @@ export const ScenarioCard = ({ data, onClick }: ScenarioCardProps) => {
           </div>
         ))}
       </div>
-      <ActionButton text={data.actionText || "查看详细推演参数"} onClick={onClick} />
+      <ActionButton text={data.actionText || "查看详细推演参数"} onClick={onClick} updatedAt={(data as any).updatedAt || (data as any).createdAt} />
     </CardBase>
   )
 }
@@ -724,7 +798,7 @@ export const ShockSimulationCard = ({ data, onClick }: ShockSimulationCardProps)
   const fSize = (base: number) => base * textScale
 
   // 图标映射
-  const IconComponent = Network
+  const IconComponent = getIconComponent(data.icon, Network)
 
   // 使用统一颜色系统：根据风险值使用不同颜色
   // 风险值 0-40: 信息色（亮蓝色）- 低风险
@@ -793,7 +867,7 @@ export const ShockSimulationCard = ({ data, onClick }: ShockSimulationCardProps)
           )
         })}
       </div>
-      <ActionButton text={data.actionText || "查看压力测试报告"} onClick={onClick} />
+      <ActionButton text={data.actionText || "查看压力测试报告"} onClick={onClick} updatedAt={(data as any).updatedAt || (data as any).createdAt} />
     </CardBase>
   )
 }
@@ -814,7 +888,7 @@ export const FactorWeightingCard = ({ data, onClick }: FactorWeightingCardProps)
   const fSize = (base: number) => base * textScale
 
   // 图标映射
-  const IconComponent = DollarSign
+  const IconComponent = getIconComponent(data.icon, DollarSign)
 
   // 使用图表颜色系统为每个因素分配颜色
   // 根据权重值使用不同深浅的颜色（权重越高，颜色越深）
@@ -902,7 +976,7 @@ export const FactorWeightingCard = ({ data, onClick }: FactorWeightingCardProps)
           )
         })}
       </div>
-      <ActionButton text={data.actionText || "查看完整因子模型"} onClick={onClick} />
+      <ActionButton text={data.actionText || "查看完整因子模型"} onClick={onClick} updatedAt={(data as any).updatedAt || (data as any).createdAt} />
     </CardBase>
   )
 }
@@ -936,7 +1010,7 @@ export const CapitalEcosystemCard = ({ data, onClick }: CapitalEcosystemCardProp
   const fSize = (base: number) => base * textScale
 
   // 图标映射
-  const IconComponent = DollarSign
+  const IconComponent = getIconComponent(data.icon, DollarSign)
 
   return (
     <CardBase className="mb-3">
@@ -953,7 +1027,7 @@ export const CapitalEcosystemCard = ({ data, onClick }: CapitalEcosystemCardProp
           strokeColor={ChartColorsRaw.context.capital}
         />
       </div>
-      <ActionButton text={data.actionText || "查看完整资金生态分析"} onClick={onClick} />
+      <ActionButton text={data.actionText || "查看完整资金生态分析"} onClick={onClick} updatedAt={(data as any).updatedAt || (data as any).createdAt} />
     </CardBase>
   )
 }
@@ -963,7 +1037,7 @@ export const InsightCompressionCard = ({ data, onClick }: InsightCompressionCard
   const fSize = (base: number) => base * textScale
 
   // 图标映射
-  const IconComponent = Lightbulb
+  const IconComponent = getIconComponent(data.icon, Lightbulb)
 
   return (
     <div className="relative rounded-[24px] bg-foreground shadow-2xl p-5 mb-6 text-primary-foreground overflow-hidden">
@@ -1030,7 +1104,7 @@ interface CompanySnapshotCardProps {
 export const CompanySnapshotCard = ({ data, onClick }: CompanySnapshotCardProps) => {
   const { textScale } = useAppConfig()
   const fSize = (base: number) => base * textScale
-  const IconComponent = Building2
+  const IconComponent = getIconComponent(data.icon, Building2)
 
   const iconMap: Record<string, React.ElementType> = {
     DollarSign,

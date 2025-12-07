@@ -15,6 +15,10 @@ interface CardRendererProps {
   card: CardInstance
   /** 点击回调 */
   onClick?: () => void
+  /** 任务名称（用于未读列表显示） */
+  taskName?: string
+  /** 是否显示任务名称（而不是类型标签） */
+  showTaskName?: boolean
 }
 
 /**
@@ -26,8 +30,8 @@ interface CardRendererProps {
  * <CardRenderer card={cardInstance} />
  * ```
  */
-export function CardRenderer({ card, onClick }: CardRendererProps) {
+export function CardRenderer({ card, onClick, taskName, showTaskName }: CardRendererProps) {
   // 统一使用 CardFactory，通过 componentName 自动查找并渲染
-  return <CardFactory data={card} onClick={onClick} />
+  return <CardFactory data={card} onClick={onClick} taskName={taskName} showTaskName={showTaskName} />
 }
 

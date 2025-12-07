@@ -22,9 +22,9 @@ export async function apiRequest(endpoint: string, options: RequestInit = {}) {
     }
   }
   
-  const headers: HeadersInit = {
+  const headers: Record<string, string> = {
     'Content-Type': 'application/json',
-    ...(options.headers || {}),
+    ...(options.headers as Record<string, string> || {}),
   }
   
   // 优先使用用户 token（如果已登录）
@@ -94,30 +94,71 @@ export async function apiRequest(endpoint: string, options: RequestInit = {}) {
     
     let errorMessage = '请求失败'
     let responseBody: any = null
+    let responseText = ''
     try {
-      const text = await response.text()
-      console.log('🔍 [apiRequest] 响应 body (text):', text.substring(0, 500))
-      responseBody = JSON.parse(text)
-      // 后端可能返回 { success: false, error: "错误信息" } 或 { error: "错误信息" }
-      // 确保 error 不是 undefined
-      if (responseBody && typeof responseBody === 'object') {
-        errorMessage = responseBody.error || responseBody.message || `HTTP ${response.status}: ${response.statusText}`
+      responseText = await response.text()
+      if (responseText) {
+        console.log('🔍 [apiRequest] 响应 body (text):', responseText.substring(0, 500))
+        try {
+          responseBody = JSON.parse(responseText)
+          // 后端可能返回 { success: false, error: "错误信息" } 或 { error: "错误信息" }
+          // 确保 error 不是 undefined
+          if (responseBody && typeof responseBody === 'object') {
+            errorMessage = responseBody.error || responseBody.message || `HTTP ${response.status}: ${response.statusText}`
+          } else {
+            errorMessage = `HTTP ${response.status}: ${response.statusText || '请求失败'}`
+          }
+        } catch (parseError) {
+          // JSON 解析失败，使用原始文本
+          errorMessage = responseText || `HTTP ${response.status}: ${response.statusText || '请求失败'}`
+        }
       } else {
+        // 响应体为空
         errorMessage = `HTTP ${response.status}: ${response.statusText || '请求失败'}`
       }
     } catch (e) {
-      // 如果响应不是 JSON，使用状态文本
+      // 如果读取响应失败，使用状态文本
       errorMessage = `HTTP ${response.status}: ${response.statusText || '请求失败'}`
     }
     
-    console.error('❌ [apiRequest] 请求失败:', {
+    // 构建错误信息对象，避免显示空的 responseBody
+    const errorInfo: any = {
       url,
       status: response.status,
       statusText: response.statusText,
       traceId,
       errorMessage,
-      responseBody,
-    })
+    }
+    
+    // 只有当 responseBody 不为 null 时才添加
+    if (responseBody !== null) {
+      errorInfo.responseBody = responseBody
+    }
+    
+    // 如果响应文本存在但不是 JSON，也添加原始文本
+    if (responseText && !responseBody) {
+      errorInfo.responseText = responseText.substring(0, 200)
+    }
+    
+    // 对于404错误，如果是加载模板或用户个性化配置的请求，不显示错误（这是正常的，会使用默认值）
+    const isTemplateRequest = url.includes('/api/card-driven/templates/')
+    const isPersonalizationRequest = url.includes('/api/modules/system/user/') && url.includes('/personalization')
+    
+    if (response.status === 404 && (isTemplateRequest || isPersonalizationRequest)) {
+      // 404对于这些请求是正常的，不记录错误，直接抛出特殊错误让调用者处理
+      const notFoundError = new Error(isTemplateRequest ? `Template not found: 404` : `Personalization not found: 404`)
+      ;(notFoundError as any).isNotFound = true
+      ;(notFoundError as any).status = 404
+      if (isTemplateRequest) {
+        ;(notFoundError as any).isTemplateNotFound = true
+      }
+      if (isPersonalizationRequest) {
+        ;(notFoundError as any).isPersonalizationNotFound = true
+      }
+      throw notFoundError
+    }
+    
+    console.error('❌ [apiRequest] 请求失败:', errorInfo)
     
     // 如果是认证失败（401），清除无效的 token 和用户信息
     if (response.status === 401 && typeof window !== 'undefined') {

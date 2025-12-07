@@ -175,6 +175,14 @@ export interface ReportConfig {
   id: string
   /** 报告名称 */
   name: string
+  /** 报告摘要/核心洞察 */
+  summary?: string
+  /** 总市场规模（如 "$12.5B"） */
+  totalMarket?: string
+  /** 增长率（如 "+42% YoY"） */
+  growth?: string
+  /** 12个月趋势数据（用于TopOverviewCard） */
+  momentumData?: Array<{ m: string; growth: number; cap: number; heat: number }>
   /** 报告类别 */
   category: ReportCategory
   /** 版本号 */

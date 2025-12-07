@@ -9,10 +9,13 @@ import { CardBase } from "../ds/card-base"
 import { DesignTokens } from "@/lib/future-lens/design-tokens"
 
 // This is the core card component, isolated as requested.
-export const InsightCard = ({ data, onClick }: CardProps & { onClick?: () => void }) => {
+export const InsightCard = ({ data, onClick, taskName, showTaskName }: CardProps & { onClick?: () => void; taskName?: string; showTaskName?: boolean }) => {
   const { id, headline, subheadline, impact, type, isUnread, timeStr } = data
   const { textScale, language } = useAppConfig()
   const t = translations[language] || translations["zh"]
+  
+  // 如果显示任务名称，则从 metadata.tags 中获取（如果未提供 taskName prop）
+  const displayTaskName = showTaskName ? (taskName || (data as any)?.metadata?.tags?.[0] || "") : null
 
   const themeColors = {
     trend: {
@@ -57,16 +60,20 @@ export const InsightCard = ({ data, onClick }: CardProps & { onClick?: () => voi
         className="p-5 mb-3 group cursor-pointer"
         onClick={onClick} // Added click handler to enable navigation
       >
-      <div className="relative z-20 flex flex-col gap-3">
+      <div className="relative z-20 flex flex-col gap-2">
         {/* 1. Header */}
-        <div className="flex justify-between items-center h-5">
-          <div className="flex items-center gap-2.5">
-            {isUnread && (
-              <div
-                className={`w-1.5 h-1.5 rounded-full ${type === "risk" ? "bg-destructive" : "bg-blue-700"} shadow-sm animate-pulse`}
-              />
+        <div className="flex justify-between items-baseline h-5">
+          <div className="flex items-baseline">
+            {showTaskName && displayTaskName ? (
+              <span
+                className={DesignTokens.typography.caption}
+                style={{ fontSize: fSize(10) }}
+              >
+                {displayTaskName}
+              </span>
+            ) : (
+              <CategoryTag type={type} />
             )}
-            <CategoryTag type={type} />
           </div>
           <span className={DesignTokens.typography.caption} style={{ fontSize: fSize(10) }}>
             {timeStr}
@@ -74,7 +81,7 @@ export const InsightCard = ({ data, onClick }: CardProps & { onClick?: () => voi
         </div>
 
         {/* 2. Main Text - 优化：移除标题，副标题提升为主标题 */}
-        <div>
+        <div className="-mt-0.5">
           <h3 
             className={`${DesignTokens.typography.title} mb-0 leading-relaxed line-clamp-3`} 
             style={{ fontSize: fSize(14), lineHeight: 1.5 }}
@@ -87,7 +94,7 @@ export const InsightCard = ({ data, onClick }: CardProps & { onClick?: () => voi
         <div
           className={`relative rounded-lg border ${theme.actionBg} ${theme.actionBorder || ""} transition-colors duration-300 overflow-hidden ${theme.glow || ""}`}
         >
-          <div className="relative z-10 px-3 py-3 flex items-start gap-3">
+          <div className="relative z-10 px-3 py-3 flex items-start gap-2">
             {/* Icon */}
             <div className="flex-shrink-0 pt-0.5">
               <Stars size={13 * textScale} className={theme.iconColor} fill="currentColor" fillOpacity={0.2} />

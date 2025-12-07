@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@aino/client-sdk':
+        specifier: file:../AINO-client-sdk
+        version: file:../AINO-client-sdk
       '@emotion/is-prop-valid':
         specifier: ^1.4.0
         version: 1.4.0
@@ -212,6 +215,9 @@ packages:
 
   '@acemir/cssom@0.9.24':
     resolution: {integrity: sha512-5YjgMmAiT2rjJZU7XK1SNI7iqTy92DpaYVgG6x63FxkJ11UpYfLndHJATtinWJClAXiOlW9XWaUyAQf8pMrQPg==}
+
+  '@aino/client-sdk@file:../AINO-client-sdk':
+    resolution: {directory: ../AINO-client-sdk, type: directory}
 
   '@alloc/quick-lru@5.2.0':
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
@@ -2425,6 +2431,8 @@ packages:
 snapshots:
 
   '@acemir/cssom@0.9.24': {}
+
+  '@aino/client-sdk@file:../AINO-client-sdk': {}
 
   '@alloc/quick-lru@5.2.0': {}
 

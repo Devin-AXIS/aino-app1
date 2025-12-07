@@ -10,14 +10,20 @@ import { AIOrb } from "./ui/ai-orb"
 import { useAppConfig } from "@/lib/future-lens/config-context"
 import { translations } from "@/lib/future-lens/i18n"
 import type { InsightData } from "@/lib/future-lens/types"
+import { getAINOConfig } from "@/lib/aino-sdk/config"
+import { getIndustryAnalysisReportList } from "@/lib/future-lens/api/industry-analysis-api"
 import { AppBackground } from "./ds/app-background" // Import new background component
 import { GlassPanel } from "./ds/glass-panel" // Import new glass panel
 import { DesignTokens } from "@/lib/future-lens/design-tokens"
+import { DiscoverHeader } from "./discover/discover-header"
+import { DEFAULT_AGENTS, loadCustomAgents, saveCustomAgents } from "@/lib/future-lens/data/default-agents"
+import type { Agent, FilterState } from "@/lib/future-lens/types/agent-types"
 import { FloatingDock } from "./nav/floating-dock" // Import FloatingDock component
 import { BottomFadeOverlay } from "./nav/bottom-fade-overlay" // Import BottomFadeOverlay component
 import { NotificationBell } from "./ui/notification-bell" // Import notification bell
-import { getAllEvents } from "@/lib/future-lens/api/task-event-api-mock" // Import event API
+import { getAllEvents, getTaskListWithUnreadCount } from "@/lib/future-lens/api/task-event-api-mock" // Import event API
 import type { ReportWithCards, CardInstance } from "@/lib/future-lens/types/card-types"
+import { TaskCard } from "./cards/task-card" // Import TaskCard component
 
 // 懒加载大型视图组件（按需加载，提升首次加载性能）
 const DesignSystemGallery = lazy(() => import("./views/design-system-gallery").then(m => ({ default: m.DesignSystemGallery })))
@@ -62,15 +68,43 @@ const LoadingFallback = () => (
 
 const AI_DISCOVER_DATA = {
   industry: [
+    // 本地数据参考（置顶）
     {
       id: "ai-industry-report-v1",
       title: "AI产业分析",
-      category: "产业分析 · 全局洞察",
+      category: "产业分析 · 本地参考",
       description:
         "具身智能产业正处于从实验室走向商业试运营的临界点。尽管资本热度高涨，但供应链脆弱性与商业化闭环仍是最大挑战。建议关注掌握数据闭环的平台型企业。",
       growth: "+87%",
-      tags: ["产业报告", "全局分析", "16张卡片"],
+      tags: ["产业报告", "全局分析", "16张卡片", "本地数据"],
       trendData: [20, 25, 22, 30, 35, 42, 38, 45, 48, 52],
+      isLocal: true, // 标记为本地数据
+    },
+    // AI产业分析（后端数据）
+    {
+      id: "industry-analysis-ai",
+      title: "AI产业分析报告",
+      category: "产业分析 · 后端数据",
+      description:
+        "人工智能产业正处于快速发展期，技术创新和资本投入持续增长。从产业结构到趋势分析，从资金流向到生态建设，17张卡片全方位呈现AI产业现状。",
+      growth: "+95%",
+      tags: ["产业报告", "AI产业", "17张卡片", "后端数据"],
+      trendData: [30, 35, 40, 45, 50, 55, 60, 65, 70, 75],
+      industry: "ai", // 标记产业类型
+      isBackend: true, // 标记为后端数据
+    },
+    // 区块链产业分析（后端数据）
+    {
+      id: "industry-analysis-blockchain",
+      title: "区块链产业分析报告",
+      category: "产业分析 · 后端数据",
+      description:
+        "区块链产业正在从概念验证向实际应用转变。技术突破、生态建设、应用落地是当前的核心趋势。17张卡片全面分析区块链产业的发展现状和未来机遇。",
+      growth: "+78%",
+      tags: ["产业报告", "区块链产业", "17张卡片", "后端数据"],
+      trendData: [25, 28, 32, 35, 38, 42, 45, 48, 50, 52],
+      industry: "blockchain", // 标记产业类型
+      isBackend: true, // 标记为后端数据
     },
   ],
   company: [
@@ -97,7 +131,18 @@ const AI_DISCOVER_DATA = {
       trendData: [15, 18, 22, 25, 28, 30, 33, 36, 38, 40],
     },
   ],
-  business: [],
+  business: [
+    {
+      id: "ai-business-report-v1",
+      title: "AI商业分析",
+      category: "商业分析 · 战略洞察",
+      description:
+        "深度解析商业模式、竞争格局、市场机会与风险。从价值链到盈利模式，从市场定位到增长策略，16张卡片构建完整商业画像。",
+      growth: "+85%",
+      tags: ["商业报告", "战略分析", "16张卡片"],
+      trendData: [22, 24, 26, 28, 30, 32, 34, 36, 38, 40],
+    },
+  ],
 }
 
 type Message = {
@@ -115,9 +160,30 @@ export function MobileShell() {
   const router = useRouter() // Add router instance
   const searchParams = useSearchParams() // Get URL search params
   const [activeTab, setActiveTab] = useState<TabId>("push")
-  const [activeCategory, setActiveCategory] = useState<"industry" | "company" | "product" | "business">("industry") // Add state for active discover category
   const [selectedInsight, setSelectedInsight] = useState<InsightData | null>(null)
   const [selectedReport, setSelectedReport] = useState<string | null>(null) // Added state for selected AI report
+  const [industryReportList, setIndustryReportList] = useState<Array<any>>([]) // 动态获取的产业分析列表
+  const [industryListLoading, setIndustryListLoading] = useState(false) // 加载状态
+  
+  // 智能体相关状态
+  const [agents, setAgents] = useState<Agent[]>(() => {
+    // 初始化：系统智能体 + 自定义智能体
+    // 确保所有 agent 的 icon 都是有效的（组件或字符串）
+    const customAgents = loadCustomAgents()
+    // 过滤掉任何有问题的 agent（icon 是对象的情况）
+    const validCustomAgents = customAgents.filter((agent: Agent) => {
+      if (agent.icon && typeof agent.icon !== 'string' && typeof agent.icon !== 'function') {
+        // 如果 icon 是对象（可能是序列化后的无效数据），移除它
+        console.warn('发现无效的 agent icon，已移除:', agent.id)
+        return false
+      }
+      return true
+    })
+    return [...DEFAULT_AGENTS, ...validCustomAgents]
+  })
+  const [activeAgentId, setActiveAgentId] = useState<string>('industry')
+  const [viewMode, setViewMode] = useState<'recommended' | 'all'>('all')
+  const [filters, setFilters] = useState<FilterState>({})
   const [isSearchOpen, setIsSearchOpen] = useState(false) // Add state for search view
   const [isChatOpen, setIsChatOpen] = useState(false)
   const [isArchiveOpen, setIsArchiveOpen] = useState(false) // Added state for personal archive view
@@ -126,25 +192,46 @@ export function MobileShell() {
   const [isChartsOpen, setIsChartsOpen] = useState(false) // Add charts state
   const [isTaskActionSheetOpen, setIsTaskActionSheetOpen] = useState(false) // Add task action sheet state
   const [selectedTask, setSelectedTask] = useState<any>(null) // Selected task for creation
-  // 事件列表数据（首页显示所有事件，跨任务）
-  const [eventsList, setEventsList] = useState<CardInstance[]>([])
-  const [eventsLoading, setEventsLoading] = useState(true)
+  // 任务列表数据（首页显示所有任务，每个任务显示最新事件）
+  const [taskList, setTaskList] = useState<Array<{
+    taskId: string
+    taskName: string
+    latestEvent: CardInstance
+    unreadCount: number
+    unreadEventIds: string[]
+  }>>([])
+  const [tasksLoading, setTasksLoading] = useState(true)
 
-  // 加载所有事件（统一的数据加载方式）
+  // 初始化已读状态（强制重置为默认状态，用于演示）
   useEffect(() => {
-    const loadEvents = async () => {
+    if (typeof window !== "undefined") {
+      // 清除旧的已读状态
+      localStorage.removeItem("future-lens-read-status")
+      localStorage.removeItem("read-status-initialized")
+      // 导入并重置为默认状态
+      import("@/lib/future-lens/utils/read-status-manager").then((module) => {
+        module.resetToDefaultReadStatus()
+        // 标记已初始化
+        localStorage.setItem("read-status-initialized", "true")
+      })
+    }
+  }, [])
+
+  // 加载任务列表（包含未读计数）
+  useEffect(() => {
+    const loadTasks = async () => {
       try {
-        setEventsLoading(true)
-        const data = await getAllEvents()
-        setEventsList(data)
+        setTasksLoading(true)
+        const data = await getTaskListWithUnreadCount()
+        setTaskList(data)
       } catch (error) {
-        console.error("[MobileShell] 加载事件列表失败:", error)
+        console.error("[MobileShell] 加载任务列表失败:", error)
       } finally {
-        setEventsLoading(false)
+        setTasksLoading(false)
       }
     }
 
-    loadEvents()
+    loadTasks()
   }, [])
   const [messages, setMessages] = useState<Message[]>([])
   const [isThinking, setIsThinking] = useState(false)
@@ -166,6 +253,36 @@ export function MobileShell() {
       }
     }
   }, [searchParams, router])
+
+  // 加载产业分析报告列表（从后端动态获取）
+  useEffect(() => {
+    const loadIndustryReportList = async () => {
+      if (activeTab !== "discover" || activeAgentId !== "industry") {
+        return
+      }
+      
+      try {
+        setIndustryListLoading(true)
+        const config = getAINOConfig()
+        // 优先从URL参数获取applicationId，其次使用配置中的默认值
+        const urlAppId = typeof window !== 'undefined' 
+          ? new URLSearchParams(window.location.search).get('applicationId')
+          : null
+        const appId = urlAppId || config.applicationId || '35c7a96a-7567-46ef-a29d-b03f8a7052a3'
+        console.log('[MobileShell] 使用应用ID加载产业分析列表:', appId)
+        const reports = await getIndustryAnalysisReportList(appId, "industry-analysis")
+        console.log('[MobileShell] 加载到产业分析报告列表:', reports.length, reports)
+        setIndustryReportList(reports)
+      } catch (error) {
+        console.error('[MobileShell] 加载产业分析报告列表失败:', error)
+        setIndustryReportList([])
+      } finally {
+        setIndustryListLoading(false)
+      }
+    }
+    
+    loadIndustryReportList()
+  }, [activeTab, activeAgentId, searchParams])
 
   // 不再自动添加欢迎消息，只显示 AI 特效
   // useEffect(() => {
@@ -605,12 +722,29 @@ export function MobileShell() {
 
   const unreadNotificationsCount = 3
 
-  const discoverCategories = [
-    { id: "industry", label: "产业分析" },
-    { id: "company", label: "企业分析" },
-    { id: "product", label: "产品分析" },
-    { id: "business", label: "商业分析" },
-  ]
+  // 处理添加智能体
+  const handleAddAgent = (agent: Omit<Agent, 'id'>) => {
+    const newAgent: Agent = {
+      ...agent,
+      id: `custom-${Date.now()}`,
+    }
+    const updatedAgents = [...agents, newAgent]
+    setAgents(updatedAgents)
+    saveCustomAgents(updatedAgents.filter(a => a.type === 'custom'))
+    setActiveAgentId(newAgent.id)
+  }
+
+  const handleAgentsChange = (updatedAgents: Agent[]) => {
+    setAgents(updatedAgents)
+    saveCustomAgents(updatedAgents.filter(a => a.type === 'custom'))
+  }
+
+  // 处理智能体切换
+  const handleAgentChange = (agentId: string) => {
+    setActiveAgentId(agentId)
+    // 切换智能体时重置筛选
+    setFilters({})
+  }
 
   if (isNotificationsOpen) {
     return (
@@ -816,26 +950,18 @@ export function MobileShell() {
                 isDiscoverScrolled ? "bg-background/80 backdrop-blur-xl border-b border-border/50" : "bg-transparent"
               }`}
             >
-              <div className="px-4 py-3">
-                <div className="flex gap-2 overflow-x-auto scrollbar-hide">
-                  {discoverCategories.map((category) => (
-                    <button
-                      key={category.id}
-                      onClick={() => setActiveCategory(category.id as "industry" | "company" | "product" | "business")}
-                      className={`
-                        flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all
-                        ${
-                          activeCategory === category.id
-                            ? "bg-primary text-primary-foreground shadow-sm"
-                            : "bg-secondary/50 text-muted-foreground hover:bg-secondary"
-                        }
-                      `}
-                    >
-                      {category.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
+              <DiscoverHeader
+                agents={agents}
+                activeAgentId={activeAgentId}
+                onAgentChange={handleAgentChange}
+                onAddAgent={handleAddAgent}
+                onAgentsChange={handleAgentsChange}
+                viewMode={viewMode}
+                onViewModeChange={setViewMode}
+                filters={filters}
+                onFiltersChange={setFilters}
+                onSearch={() => setIsSearchOpen(true)}
+              />
             </div>
           )}
 
@@ -846,7 +972,7 @@ export function MobileShell() {
                 {/* 预留：任务筛选器（现在不显示，但结构已预留） */}
                 {/* <TaskFilter tasks={tasks} onFilterChange={handleFilterChange} /> */}
 
-                {eventsLoading ? (
+                {tasksLoading ? (
                   <div className="p-8 flex flex-col items-center justify-center opacity-40">
                     <div className="flex gap-1.5 mb-3">
                       <motion.div
@@ -870,16 +996,34 @@ export function MobileShell() {
                     </span>
                   </div>
                 ) : (
-                  eventsList.map((card: CardInstance) => {
-                    const eventId = card.metadata?.eventId || "event-001"
+                  taskList.map((task) => {
+                    const latestEventId = task.latestEvent.metadata?.eventId || "event-001"
+                    
+                    // 点击逻辑：未读=0或1直接进入详情，未读≥2进入未读列表页
+                    const handleClick = () => {
+                      if (task.unreadCount >= 2) {
+                        // 多个未读，进入未读列表页
+                        router.push(`/task/${task.taskId}/unread`)
+                      } else {
+                        // 0个或1个未读，直接进入事件详情页
+                        router.push(`/event/${latestEventId}`)
+                      }
+                    }
+                    
+                    const handleViewUnread = () => {
+                      // 查看未读按钮点击
+                      router.push(`/task/${task.taskId}/unread`)
+                    }
+                    
                     return (
-                      <CardRenderer
-                        key={card.id}
-                        card={card}
-                        onClick={() => {
-                          // 点击事件卡片，直接跳转到事件详情页
-                          router.push(`/event/${eventId}`)
-                        }}
+                      <TaskCard
+                        key={task.taskId}
+                        taskId={task.taskId}
+                        taskName={task.taskName}
+                        latestEvent={task.latestEvent.data as any}
+                        unreadCount={task.unreadCount}
+                        onClick={handleClick}
+                        onViewUnread={handleViewUnread}
                       />
                     )
                   })
@@ -944,22 +1088,93 @@ export function MobileShell() {
                 transition={{ duration: 0.3 }}
                 className="pb-4"
               >
-                {AI_DISCOVER_DATA[activeCategory]?.map((report) => (
-                  <CardFactory
-                    key={report.id}
-                    data={{
-                      id: report.id,
-                      type: "discover",
-                      title: report.title,
-                      category: report.category,
-                      description: report.description,
-                      growth: report.growth,
-                      tags: report.tags,
-                      trendData: report.trendData,
-                    }}
-                    onClick={() => setSelectedReport(String(report.id))}
-                  />
-                ))}
+                {(() => {
+                  // 根据当前选中的智能体过滤数据
+                  const activeAgent = agents.find(a => a.id === activeAgentId)
+                  const agentCategory = activeAgent?.category || 'industry'
+                  
+                  // 如果是产业分析分类，合并本地数据和后端数据
+                  let reportsToShow = AI_DISCOVER_DATA[agentCategory as keyof typeof AI_DISCOVER_DATA] || []
+                  
+                  if (agentCategory === "industry") {
+                    // 本地数据（置顶，只显示isLocal=true的）+ 后端数据
+                    const localReports = AI_DISCOVER_DATA.industry.filter((r: any) => r.isLocal)
+                    // 过滤掉本地数据中与后端数据重复的（通过industry字段匹配）
+                    const backendIndustries = new Set(industryReportList.map((r: any) => r.industry).filter(Boolean))
+                    const uniqueLocalReports = localReports.filter((r: any) => {
+                      // 如果本地数据有industry字段且后端也有，则过滤掉本地数据
+                      if (r.industry && backendIndustries.has(r.industry)) {
+                        return false
+                      }
+                      return true
+                    })
+                    reportsToShow = [...uniqueLocalReports, ...industryReportList]
+                    
+                    if (industryListLoading) {
+                      return (
+                        <div className="p-8 flex flex-col items-center justify-center opacity-40">
+                          <div className="flex gap-1.5 mb-3">
+                            <motion.div
+                              className="w-1.5 h-1.5 rounded-full bg-muted-foreground"
+                              animate={{ opacity: [0.3, 1, 0.3] }}
+                              transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY }}
+                            />
+                            <motion.div
+                              className="w-1.5 h-1.5 rounded-full bg-muted-foreground"
+                              animate={{ opacity: [0.3, 1, 0.3] }}
+                              transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY, delay: 0.2 }}
+                            />
+                            <motion.div
+                              className="w-1.5 h-1.5 rounded-full bg-muted-foreground"
+                              animate={{ opacity: [0.3, 1, 0.3] }}
+                              transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY, delay: 0.4 }}
+                            />
+                          </div>
+                          <span className="text-[10px] font-bold text-muted-foreground tracking-[0.2em] uppercase">
+                            加载中...
+                          </span>
+                        </div>
+                      )
+                    }
+                  }
+                  
+                  return reportsToShow.map((report) => {
+                    const handleClick = () => {
+                      console.log('[MobileShell] 点击报告卡片:', report.id, report)
+                      // 如果是后端数据的产业分析，跳转到产业分析页面
+                      if ((report as any).isBackend && (report as any).industry) {
+                        const config = getAINOConfig()
+                        // 使用正确的应用ID（确保使用35c7a96a-7567-46ef-a29d-b03f8a7052a3）
+                        const appId = config.applicationId || '35c7a96a-7567-46ef-a29d-b03f8a7052a3'
+                        const targetUrl = `/industry-analysis?applicationId=${appId}&industry=${(report as any).industry}`
+                        console.log('[MobileShell] 跳转到:', targetUrl)
+                        // 使用 window.location.href 确保路由跳转
+                        window.location.href = targetUrl
+                      } else {
+                        // 本地数据或其他报告，使用原有逻辑
+                        console.log('[MobileShell] 使用原有逻辑，设置selectedReport:', report.id)
+                        setSelectedReport(String(report.id))
+                      }
+                    }
+                    
+                    return (
+                      <CardFactory
+                        key={report.id}
+                        data={{
+                          id: report.id,
+                          type: "discover",
+                          title: report.title,
+                          category: report.category,
+                          description: report.description,
+                          growth: report.growth,
+                          tags: report.tags,
+                          trendData: report.trendData,
+                        }}
+                        onClick={handleClick}
+                      />
+                    )
+                  })
+                })()}
               </motion.div>
             )}
           </div>

@@ -61,12 +61,12 @@ export function getAINOConfig(): AINOConfig {
     }
   }
   
-  // 如果还是没有，使用硬编码的默认应用ID（正式可用的key: app-0a503b452b944ed6）
-  // 完整应用ID: 0a503b45-2b94-4ed6-b651-cf15e197b76c
-  // 对应key: app-0a503b452b944ed6
+  // 如果还是没有，使用硬编码的默认应用ID（正式可用的key: app-35c7a96a756746ef）
+  // 完整应用ID: 35c7a96a-7567-46ef-a29d-b03f8a7052a3
+  // 对应key: app-35c7a96a756746ef
   if (!applicationId) {
-    applicationId = '0a503b45-2b94-4ed6-b651-cf15e197b76c'
-    console.log('ℹ️ 使用默认应用配置（key: app-0a503b452b944ed6）')
+    applicationId = '35c7a96a-7567-46ef-a29d-b03f8a7052a3'
+    console.log('ℹ️ 使用默认应用配置（key: app-35c7a96a756746ef）')
     
     // 保存到localStorage，方便后续使用
     if (typeof window !== 'undefined') {

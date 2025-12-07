@@ -54,6 +54,37 @@ export function CardDetailView({ card, onBack }: CardDetailViewProps) {
   useEffect(() => {
     if (card.id) {
       setLoading(true)
+      
+      // 首先检查卡片数据中是否已有详情内容（从后端加载的 detail_content）
+      const cardDetailContent = (card.data as any).detailContent || (card.data as any).detail_content
+      
+      if (cardDetailContent) {
+        // 如果 detailContent 是字符串（Markdown），转换为 DetailContent 格式
+        if (typeof cardDetailContent === 'string') {
+          const detailContent: DetailContent = {
+            content: [
+              {
+                type: "markdown",
+                content: cardDetailContent
+              }
+            ]
+          }
+          setDetailContent(detailContent)
+          setLoading(false)
+          return
+        }
+        // 如果已经是 DetailContent 格式，直接使用
+        if (typeof cardDetailContent === 'object' && (cardDetailContent.content || cardDetailContent.tabs)) {
+          setDetailContent(cardDetailContent as DetailContent)
+          if (cardDetailContent.tabs && cardDetailContent.tabs.length > 0) {
+            setActiveTab(0)
+          }
+          setLoading(false)
+          return
+        }
+      }
+      
+      // 如果卡片数据中没有详情内容，尝试从 API 获取
       getCardDetail(card.id)
         .then((content) => {
           setDetailContent(content)
@@ -69,7 +100,7 @@ export function CardDetailView({ card, onBack }: CardDetailViewProps) {
           setLoading(false)
         })
     }
-  }, [card.id])
+  }, [card.id, card.data])
 
   return (
     <AnimatePresence>

@@ -40,11 +40,11 @@ export async function registerWithPhone(phone: string, code: string, userInfo?: 
     const config = await import('./config').then(m => m.getAINOConfig())
     let applicationId = config.applicationId
     
-    // 如果还是没有，使用硬编码的默认应用（正式可用的key: app-0a503b452b944ed6）
-    // 完整应用ID: 0a503b45-2b94-4ed6-b651-cf15e197b76c
+    // 如果还是没有，使用硬编码的默认应用（正式可用的key: app-35c7a96a756746ef）
+    // 完整应用ID: 35c7a96a-7567-46ef-a29d-b03f8a7052a3
     if (!applicationId) {
-      applicationId = '0a503b45-2b94-4ed6-b651-cf15e197b76c'
-      console.log('✅ 使用默认应用ID:', applicationId, '(key: app-0a503b452b944ed6)')
+      applicationId = '35c7a96a-7567-46ef-a29d-b03f8a7052a3'
+      console.log('✅ 使用默认应用ID:', applicationId, '(key: app-35c7a96a756746ef)')
       
       // 保存到localStorage，方便后续使用
       if (typeof window !== 'undefined') {
@@ -170,11 +170,11 @@ export async function loginWithPhoneAndCode(phone: string, code: string) {
       applicationId = localStorage.getItem('aino_application_id') || undefined
     }
     
-    // 如果还是没有，使用硬编码的默认应用（正式可用的key: app-0a503b452b944ed6）
-    // 完整应用ID: 0a503b45-2b94-4ed6-b651-cf15e197b76c
+    // 如果还是没有，使用硬编码的默认应用（正式可用的key: app-35c7a96a756746ef）
+    // 完整应用ID: 35c7a96a-7567-46ef-a29d-b03f8a7052a3
     if (!applicationId) {
-      applicationId = '0a503b45-2b94-4ed6-b651-cf15e197b76c'
-      console.log('✅ 使用默认应用ID:', applicationId, '(key: app-0a503b452b944ed6)')
+      applicationId = '35c7a96a-7567-46ef-a29d-b03f8a7052a3'
+      console.log('✅ 使用默认应用ID:', applicationId, '(key: app-35c7a96a756746ef)')
       
       // 保存到localStorage，方便后续使用
       if (typeof window !== 'undefined') {
@@ -331,7 +331,7 @@ export async function updateUserInfo(data: { name?: string; avatar?: string; pho
     
     // 如果还是没有，使用硬编码的默认应用
     if (!applicationId) {
-      applicationId = '0a503b45-2b94-4ed6-b651-cf15e197b76c'
+      applicationId = '35c7a96a-7567-46ef-a29d-b03f8a7052a3'
     }
 
     // 从 localStorage 获取当前用户ID（应用用户的 UUID）
@@ -456,11 +456,11 @@ export async function sendVerificationCode(phone: string) {
       applicationId = localStorage.getItem('aino_application_id') || undefined
     }
     
-    // 如果还是没有，使用硬编码的默认应用（正式可用的key: app-0a503b452b944ed6）
-    // 完整应用ID: 0a503b45-2b94-4ed6-b651-cf15e197b76c
+    // 如果还是没有，使用硬编码的默认应用（正式可用的key: app-35c7a96a756746ef）
+    // 完整应用ID: 35c7a96a-7567-46ef-a29d-b03f8a7052a3
     if (!applicationId) {
-      applicationId = '0a503b45-2b94-4ed6-b651-cf15e197b76c'
-      console.log('✅ 使用默认应用ID:', applicationId, '(key: app-0a503b452b944ed6)')
+      applicationId = '35c7a96a-7567-46ef-a29d-b03f8a7052a3'
+      console.log('✅ 使用默认应用ID:', applicationId, '(key: app-35c7a96a756746ef)')
       
       // 保存到localStorage，方便后续使用
       if (typeof window !== 'undefined') {
@@ -511,7 +511,7 @@ export async function changePassword(oldPassword: string, newPassword: string) {
     const config = await import('./config').then(m => m.getAINOConfig())
     let applicationId = config.applicationId
     if (!applicationId) {
-      applicationId = '0a503b45-2b94-4ed6-b651-cf15e197b76c'
+      applicationId = '35c7a96a-7567-46ef-a29d-b03f8a7052a3'
     }
 
     // 获取用户手机号
@@ -577,7 +577,7 @@ export async function setPassword(newPassword: string) {
     const config = await import('./config').then(m => m.getAINOConfig())
     let applicationId = config.applicationId
     if (!applicationId) {
-      applicationId = '0a503b45-2b94-4ed6-b651-cf15e197b76c'
+      applicationId = '35c7a96a-7567-46ef-a29d-b03f8a7052a3'
     }
 
     // 获取用户手机号

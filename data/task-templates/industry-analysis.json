@@ -1,0 +1,64 @@
+{
+  "id": "industry-analysis",
+  "name": "产业分析",
+  "configMode": "content-driven",
+  "framework": {
+    "requiredCards": [
+      "industry-stack",
+      "trend-radar",
+      "structural-shift",
+      "tech-timeline",
+      "industry-pace"
+    ],
+    "optionalCards": [
+      "capital-flow",
+      "capital-ecosystem",
+      "player-impact",
+      "narrative-capital",
+      "supply-chain-health",
+      "ecosystem-map",
+      "strategy-window",
+      "influencer",
+      "scenario",
+      "shock-simulation",
+      "factor-weighting",
+      "insight-compression"
+    ],
+    "defaultCardCount": 16
+  },
+  "contentDrivenRules": {
+    "industryMapping": {
+      "tech": ["tech-timeline", "tech-innovation"],
+      "finance": ["capital-flow", "capital-ecosystem"],
+      "manufacturing": ["supply-chain-health", "ecosystem-map"]
+    },
+    "companySizeMapping": {
+      "large": ["ecosystem-map", "strategy-window", "player-impact"],
+      "medium": ["capital-flow", "narrative-capital"],
+      "small": ["trend-radar", "industry-pace"]
+    }
+  },
+  "semantic": {
+    "moduleName": "产业分析",
+    "moduleKey": "industry-analysis",
+    "description": "分析产业趋势、结构、生态等",
+    "directories": [
+      {
+        "name": "产业分析报告",
+        "slug": "industry-analysis-report",
+        "semantic": "存储主报告配置和卡片ID列表"
+      },
+      {
+        "name": "产业堆叠分析",
+        "slug": "industry-stack",
+        "semantic": "存储产业结构分层数据"
+      },
+      {
+        "name": "趋势雷达",
+        "slug": "trend-radar",
+        "semantic": "存储趋势雷达图数据"
+      }
+    ]
+  }
+}
+

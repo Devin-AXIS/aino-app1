@@ -6,6 +6,7 @@ import { AppBackground } from "@/components/future-lens/ds/app-background"
 import type { ReportWithCards, CardInstance } from "@/lib/future-lens/types/card-types"
 import { getEventWithCards } from "@/lib/future-lens/api/task-event-api-mock"
 import { EventDetailLayout } from "@/components/future-lens/ai-report/layouts/event-detail-layout"
+import { markEventAsRead } from "@/lib/future-lens/utils/read-status-manager"
 
 interface EventDetailPageProps {
   eventId: string
@@ -29,6 +30,11 @@ export function EventDetailPage({ eventId, onBack, onEventChange }: EventDetailP
         setLoading(true)
         const data = await getEventWithCards(eventId || "event-001")
         setEventData(data)
+        
+        // 自动标记为已读
+        if (eventId) {
+          markEventAsRead(eventId)
+        }
       } catch (error) {
         console.error("[EventDetailPage] 加载事件失败:", error)
       } finally {

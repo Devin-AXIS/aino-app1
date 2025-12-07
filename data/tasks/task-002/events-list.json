@@ -1,0 +1,42 @@
+{
+  "taskId": "task-002",
+  "taskName": "市场趋势分析",
+  "events": [
+    {
+      "id": "event-004",
+      "name": "AI基础设施投资激增",
+      "createdAt": "2025-12-05T10:30:00Z",
+      "urgency": "high",
+      "impact": "high",
+      "status": "current"
+    },
+    {
+      "id": "event-005",
+      "name": "GPU租赁价格波动",
+      "createdAt": "2025-12-03T14:20:00Z",
+      "urgency": "medium",
+      "impact": "high",
+      "status": "current"
+    },
+    {
+      "id": "event-006",
+      "name": "云计算厂商降价",
+      "createdAt": "2025-11-30T09:00:00Z",
+      "urgency": "low",
+      "impact": "medium",
+      "status": "historical"
+    }
+  ],
+  "trendSummary": {
+    "period": "过去30天",
+    "totalEvents": 3,
+    "summary": "过去30天AI基础设施领域出现多个重要事件，投资和价格波动明显，需要密切关注市场变化。",
+    "insights": [
+      "AI基础设施投资持续增长",
+      "GPU租赁价格出现波动，可能影响成本",
+      "云计算厂商价格策略调整"
+    ],
+    "recommendation": "建议关注AI基础设施投资趋势，评估对业务成本的影响。"
+  }
+}
+
